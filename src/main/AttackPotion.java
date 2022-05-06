@@ -1,6 +1,5 @@
 package main;
 
-
 public class AttackPotion extends Items{
 
 	public AttackPotion(String name, int purchase, int sellBack, String description) {
@@ -11,6 +10,7 @@ public class AttackPotion extends Items{
 		int coins = player.getGold();
 		if (coins >= 15) {
 			player.setGold(coins- 15);
+			//add from inventory//
 		} else {
 			System.out.println(String.format("Insufficient funds, can't buy this potion. \nNeed %s more gold.", 15-coins));
 		}	
@@ -19,6 +19,7 @@ public class AttackPotion extends Items{
 	public void sellPotion(Player player) {
 		int coins = player.getGold();
 		player.setGold(coins+5);
+		//remove from inventory//
 		
 		
 	}
@@ -26,5 +27,6 @@ public class AttackPotion extends Items{
 	public void drinkPotion(Monster monster) {
 		int attack = monster.getDamage();
 		monster.setDamageAmount(attack + 20);
+		//remove from inventory//
 	}
 }

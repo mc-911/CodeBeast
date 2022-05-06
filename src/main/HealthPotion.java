@@ -11,6 +11,7 @@ public class HealthPotion extends Items{
 		int coins = player.getGold();
 		if (coins >= 10) {
 			player.setGold(coins- 10);
+			//add from inventory//
 		} else {
 			System.out.println(String.format("Insufficient funds, can't buy this potion. \nNeed %s more gold.", 10-coins));
 		}	
@@ -19,6 +20,7 @@ public class HealthPotion extends Items{
 	public void sellPotion(Player player) {
 		int coins = player.getGold();
 		player.setGold(coins+5);
+		//remove from inventory//
 		
 		
 	}
@@ -31,6 +33,7 @@ public class HealthPotion extends Items{
 			monster.setCurrentHealth(currentHealth + 25);
 			if (currentHealth > monster.getMaxHealth()) {
 				currentHealth = monster.getMaxHealth();
+			//remove from inventory//
 			}
 		}
 	}

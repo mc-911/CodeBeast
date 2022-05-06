@@ -179,7 +179,7 @@ public class Environment {
 		return battles.get(input);
 	}
 	public static void mainGameplay(Player player) {
-		/**Starts the main gameplay loop**/
+		/**Starts the main game play loop**/
 		int input = 0;
 		Battle fight;
 		boolean over = false;
