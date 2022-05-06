@@ -6,15 +6,16 @@ import java.util.Scanner;
 public class Player {
 	//Empty list of monsters
 	private ArrayList<Monster> monsters = new ArrayList<Monster>();
+	//The name of the user
 	private String name;
-	private int gold = 25;
+	private int gold = 50;
 	//Scale strength of enemies with points
 	private int points = 0;
 	private Monster activeMonster;
 	//Empty list of items
 	
 	public void setName(){
-		//used to get input from user and set player name
+		/**used to get input from user and set player name**/
 		String input;
 		boolean valid = false;
 		Scanner scanner = new Scanner(System.in);
@@ -30,7 +31,7 @@ public class Player {
 		
 	}
 	public boolean checkName(String name) {
-		//used to check if user;s input from setName() is a valid name
+		/**used to check if user's input from setName() is a valid name**/
 		boolean notValid;
 		if (name.length() < 4 || name.length() > 15) {
 			return false;
@@ -111,5 +112,11 @@ public class Player {
 	}
 	public String toString() {
 		return String.format("Name: %s\nGold: %s\nMonsters: %s", name, gold, stringMonsters());
+	}
+	public void sleepMon() {
+		for (Monster i : monsters) {
+			i.addHealth(i.getHealAmount());
+			
+		}
 	}
 }

@@ -25,7 +25,12 @@ public class Environment {
 	private static String starterString = "Time to pick your Monster\nYou have three options to pick from\n1. %s\n2. %s\n3. %s";
 	//An array of monster objects, used to 
 	private static Monster[] starters = new Monster[] {new Vesuvius(), new Everest(), new Parihaka(), new Flame(), new Jerry()};
+	//A format used to display to the user their current gold, the current day, and how many days they have left in the game
+	private static String userInfoF = "Gold: %s Day: %s Days Remaining: %s, Time: %s";
+	//A string array which holds a string corresponding to the current time
+	private static String[] times = {"Morning", "Afternoon", "Night"};
 	public static void setOver(boolean bool) {
+		/**Used to set gameOver to the parameter bool**/
 		gameOver = bool;
 	}
 	public static void setGameLength() {
@@ -126,6 +131,7 @@ public class Environment {
 		
 	}
 	public static ArrayList<Battle> generateBattles(Player player) {
+		/**Used to generate battles in mainGameplay, so that the user may pick a battle**/
 		ArrayList<Battle> battles = new ArrayList<Battle>();
 		Random random = new Random();
 		int num = random.nextInt(5);
@@ -172,10 +178,11 @@ public class Environment {
 		Battle fight;
 		boolean over = false;
 		System.out.println("Starting Main gameplay...");
-		for (int i = 0; i != gameLength && over == false; i++) {
+		for (int i = 1; i != gameLength && over == false; i++) {
 			while (time != 3) {
 				//main game play
 				ArrayList<Battle> battles = generateBattles(player);
+				System.out.println(String.format(userInfoF, player.getGold(), i, gameLength - i, Array.get(times, time) + "\n"));
 				System.out.println("Input 0 to view current battles\nInput 1 to go to the shop");
 				boolean picked = false;
 				while (picked == false) {
@@ -197,6 +204,7 @@ public class Environment {
 				time++;
 			}
 			System.out.println("Sleep time");
+			player.sleepMon();
 			
 		}
 		
