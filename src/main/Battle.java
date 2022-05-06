@@ -1,3 +1,4 @@
+package main;
 
 
 import java.lang.reflect.Array;
@@ -112,8 +113,10 @@ public class Battle {
 						playerLost = true;
 						break;
 					}
-					player.monsterMenu();
-					active = player.getActiveMonster();					
+					while (active.currentHealth == 0) {
+						active = (Monster) Array.get(player.getMonsters(),player.getMonsters().indexOf(active) + 1);
+					}
+									
 					
 				}
 			

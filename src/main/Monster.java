@@ -1,3 +1,4 @@
+package main;
 
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ public class Monster extends Purchasable{
 	private int damage;
 	private int healAmount;
 	private int points;
+	private boolean faintedToday;
 	//healAmount? 
 	int currentHealth;
 	static String levelUpFormat = "%s is now level %s\nMax Health increased to %s\nHeal Amount increased to %s";

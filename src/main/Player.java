@@ -1,5 +1,6 @@
+package main;
 
-
+import java.util.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -13,7 +14,9 @@ public class Player {
 	private int points = 0;
 	private Monster activeMonster;
 	//Empty list of items
-	
+	public void increasePoints(int amount) {
+		points += amount;
+	}
 	public void setName(){
 		/**used to get input from user and set player name**/
 		String input;
@@ -58,20 +61,65 @@ public class Player {
 				menuString = String.format("(x) Downed: %s", monsters.get(i).getName()) + menuString;
 			}
 		}
-		System.out.println("To switch monsters input the number next to your desired monster");
-		System.out.println(menuString);
-		boolean picked = false;
-		while (picked == false) {
+		System.out.println("Input 0 to change your active monster\nInput 1 to enter change order mode");
+		input = -1;
+		while (input < 0 || input > 1) {
 			input = Environment.getUserInt();
-			if (input > monsters.size() - 1|| input < 0 || monsters.get(input).currentHealth == 0) {
-				System.out.println(String.format("Input must be between %s and %s and you cannot select a downed monster", -1, monsters.size()));
+		}
+		System.out.println(menuString);
+		switch (input) {
+		case 0:
+			System.out.println("To switch monsters input the number next to your desired monster");
+			boolean picked = false;
+			while (picked == false) {
+				input = Environment.getUserInt();
+				if (input > monsters.size() - 1|| input < 0 || monsters.get(input).currentHealth == 0) {
+					System.out.println(String.format("Input must be between %s and %s and you cannot select a downed monster", -1, monsters.size()));
+				}
+				else {
+					setActiveMonster(input);
+					picked = true;
+				}
 			}
-			else {
-				setActiveMonster(input);
-				picked = true;
+			break;
+		case 1:
+			int firstMonIndex;
+			int secondMonIndex;
+			boolean pickedFirst = false;
+			boolean pickedSecond = false;
+			while (!pickedFirst){
+				System.out.println("Print out the position of the first monster you'd like to swap");
+				input = Environment.getUserInt();
+				if (input > monsters.size() - 1|| input < 0 ) {
+					System.out.println(String.format("Input must be between %s and %s", -1, monsters.size()));
+					
+				}
+				else {
+					System.out.println(String.format("First Monster: %s", monsters.get(input).getName()));
+					pickedFirst = true;
+				}
+				
 			}
+			firstMonIndex = input;
+			while (!pickedSecond){
+				System.out.println("Print out the position of the second monster you'd like to swap");
+				input = Environment.getUserInt();
+				if (input > monsters.size() - 1|| input < 0 ) {
+					System.out.println(String.format("Input must be between %s and %s", -1, monsters.size()));
+					
+				}
+				else {
+					System.out.println(String.format("First Monster: %s\nSecond Monster: %s", monsters.get(firstMonIndex).getName(), monsters.get(input).getName()));
+					pickedSecond = true;
+				}
+				
+			}
+			secondMonIndex = input;
+			Collections.swap(monsters, firstMonIndex, secondMonIndex);
+			
 			
 		}
+		
 		
 	}
 	public void addMonster(Monster creep) {
@@ -111,7 +159,7 @@ public class Player {
 		}
 	}
 	public String toString() {
-		return String.format("Name: %s\nGold: %s\nMonsters: %s", name, gold, stringMonsters());
+		return String.format("Name: %s\nGold: %s\nPoints: %s\nMonsters: %s", name, gold, points, stringMonsters());
 	}
 	public void sleepMon() {
 		for (Monster i : monsters) {

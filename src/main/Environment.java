@@ -1,3 +1,4 @@
+package main;
 
 
 import java.lang.reflect.Array;
@@ -76,17 +77,8 @@ public class Environment {
         		picked = true;
         	}
         }
-        
-        System.out.println("Time to name your Monster\nInput your monsters name\n(Note: If you input nothing your monster will be given the default name");
-        String name = getUserString();
-        if (name.length() == 0) {
-        	player.addMonster(starterslist.get(selected));
-        	System.out.println("worked");
-        }
-        else {
-        	starterslist.get(selected).setName(name);
-        	player.addMonster(starterslist.get(selected));
-        }
+        addMon(player, starterslist.get(selected));
+       
         
 		
 		
@@ -106,6 +98,20 @@ public class Environment {
 			selectDifficulty();
 		}
 
+		
+	}
+	public static void addMon(Player player, Monster monster) {
+		System.out.println("Time to name your Monster\nInput your monsters name\n(Note: If you input nothing your monster will be given the default name");
+        String name = getUserString();
+        if (name.length() == 0) {
+        	player.addMonster(monster);
+        	System.out.println("worked");
+        }
+        else {
+        	monster.setName(name);
+        	player.addMonster(monster);
+        }
+        
 		
 	}
 	public static int getUserInt() {
@@ -183,11 +189,11 @@ public class Environment {
 				//main game play
 				ArrayList<Battle> battles = generateBattles(player);
 				System.out.println(String.format(userInfoF, player.getGold(), i, gameLength - i, Array.get(times, time) + "\n"));
-				System.out.println("Input 0 to view current battles\nInput 1 to go to the shop");
+				System.out.println("Input 0 to view current battles\nInput 1 to go to the shop\nInput 2 to pass the time\nInput 3 to open your monster menu");
 				boolean picked = false;
 				while (picked == false) {
 				input = getUserInt();
-				if (input < 0|| input >1) {
+				if (input < 0|| input >3) {
 					System.out.println("Invalid Input");
 				}
 				else {
@@ -199,16 +205,31 @@ public class Environment {
 					showBattles(battles);
 					Battle battle = chooseBattle(battles);
 					battle.startBattle(player, time, hardmode, battles.indexOf(battle));
+					time++;
 					break;
+				case 2:
+					time++;
+					break;
+				case 3:
+					player.monsterMenu();
 				}
-				time++;
+				
+				
+					
+				
 			}
 			System.out.println("Sleep time");
+			monJoins eve = new monJoins();
+			eve.startEvent(player);
 			player.sleepMon();
+			time = 0;
 			
 		}
 		
 		
+	}
+	public static Monster[] getStarters() {
+		return starters;
 	}
 
 	public static void main(String[] args) {
