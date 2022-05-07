@@ -23,34 +23,42 @@ public class Shop {
 	public void buy(Player player, Monster monster) {
 		int coins = player.getGold();
 		int price = monster.getPurchasePrice();
+		System.out.println(price);
 		if (coins >= price) {
 			player.setGold(coins- price);
 			player.addMonster(monster);
+			System.out.println(String.format("Succesfully bought the item. Your gold balance is now %s", coins));
 		} else {
-			System.out.println(String.format("Insufficient funds, can't buy this potion. \nNeed %s more gold.", 50-coins));
+			System.out.println(String.format("Insufficient funds, can't buy this potion. \nNeed %s more gold.", price-coins));
 		}	
 	}
 	
 	public void buy(Player player, Items item) {
 		int coins = player.getGold();
-		if (coins >= 50) {
-			player.setGold(coins- 50);
+		int price = item.getPurchasePrice();
+		if (coins >= price) {
+			player.setGold(coins- price);
 			player.addItem(item);
+			System.out.println(String.format("Succesfully bought the item. Your gold balance is now %s", coins));
 		} else {
-			System.out.println(String.format("Insufficient funds, can't buy this potion. \nNeed %s more gold.", 50-coins));
+			System.out.println(String.format("Insufficient funds, can't buy this potion. \nNeed %s more gold.", price-coins));
 		}	
 	}
 	
 	public void sell(Player player, Items item) {
 		int coins = player.getGold();
-		player.setGold(coins+25);
+		int price = item.getPurchasePrice();
+		player.setGold(coins+price);
 		player.removeItem(item);
+		System.out.println(String.format("Succesfully sold your item. Your gold balance is now %s", coins));
 	}
 	
 	public void sell(Player player, Monster monster) {
 		int coins = player.getGold();
-		player.setGold(coins+25);
+		int price = monster.getPurchasePrice();
+		player.setGold(coins+price);
 		player.removeMonster(monster);
+		System.out.println(String.format("Succesfully sold your item. Your gold balance is now %s", coins));
 	}
 	
 	public void shopMenu(Player player) {
