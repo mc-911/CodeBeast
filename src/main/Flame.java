@@ -15,6 +15,8 @@ public class Flame extends Monster{
 		super.setDamageAmount(10);
 		super.setMaxHealth(200);
 		super.sethealAmount(10);
+		super.setPurchasePrice(10);
+		super.setSellBackPrice(5);
 		super.setDescription("Delightful young man.");
 	}	
 	

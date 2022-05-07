@@ -21,16 +21,20 @@ public class Shop {
 	}
 	
 	public void buy(Player player, Monster monster) {
-		int coins = player.getGold();
-		int price = monster.getPurchasePrice();
-		System.out.println(price);
-		if (coins >= price) {
-			player.setGold(coins- price);
-			player.addMonster(monster);
-			System.out.println(String.format("Succesfully bought the item. Your gold balance is now %s", coins));
+		if (player.getMonsters().size() < 4) {
+			int coins = player.getGold();
+			int price = monster.getPurchasePrice();
+			System.out.println(price);
+			if (coins >= price) {
+				player.setGold(coins- price);
+				player.addMonster(monster);
+				System.out.println(String.format("Succesfully bought the item. Your gold balance is now %s", coins));
+			} else {
+				System.out.println(String.format("Insufficient funds, can't buy this potion. \nNeed %s more gold.", price-coins));
+			}	
 		} else {
-			System.out.println(String.format("Insufficient funds, can't buy this potion. \nNeed %s more gold.", price-coins));
-		}	
+			System.out.println("You are allowed a maximum of 4 monsters and you either have 4 or more.");
+		}
 	}
 	
 	public void buy(Player player, Items item) {
@@ -103,6 +107,7 @@ public class Shop {
 				System.out.println(String.format("%s. %s", i, monster));
 				i++;
 			}
+			System.out.println(player.getMonsters());
 			System.out.println("Select the monster you want to sell.");
 			picked = false;
 			while (picked == false) {
@@ -115,6 +120,7 @@ public class Shop {
 				picked = true;
 			}
 			}
+			sell(player, (Monster) Array.get(monsters, input));
 			break;
 		case 2:
 			for (Items item : items) {
@@ -132,6 +138,7 @@ public class Shop {
 			else {
 				picked = true;
 			}
+			buy(player, (Items) Array.get(items, input));
 			}
 			break;
 		case 3:
@@ -151,6 +158,7 @@ public class Shop {
 				picked = true;
 			}
 			}
+			sell(player, (Items) Array.get(items, input));
 			break;
 			
 			
