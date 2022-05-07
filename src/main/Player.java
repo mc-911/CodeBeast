@@ -5,15 +5,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 public class Player {
-	//Empty list of monsters
-	private ArrayList<Monster> monsters = new ArrayList<Monster>();
+	//Empty list of userMonsters
+	private ArrayList<Monster> userMonsters = new ArrayList<Monster>();
 	//The name of the user
 	private String name;
 	private int gold = 50;
 	//Scale strength of enemies with points
 	private int points = 0;
 	private Monster activeMonster;
-	//Empty list of items
+	//Empty list of user's items
+	private ArrayList<Items> userItems = new ArrayList<Items>();
 	public void increasePoints(int amount) {
 		points += amount;
 	}
@@ -53,12 +54,12 @@ public class Player {
 	public  void monsterMenu() {
 		int input;
 		String menuString = "";
-		for (int i = 0; i != monsters.size(); i++) {
-			if (monsters.get(i).getCurrentHealth() != 0){
-			menuString = String.format("(%s) %s ", i, monsters.get(i).getName()) + menuString;
+		for (int i = 0; i != userMonsters.size(); i++) {
+			if (userMonsters.get(i).getCurrentHealth() != 0){
+			menuString = String.format("(%s) %s ", i, userMonsters.get(i).getName()) + menuString;
 			}
 			else {
-				menuString = String.format("(x) Downed: %s", monsters.get(i).getName()) + menuString;
+				menuString = String.format("(x) Downed: %s", userMonsters.get(i).getName()) + menuString;
 			}
 		}
 		System.out.println("Input 0 to change your active monster\nInput 1 to enter change order mode");
@@ -69,12 +70,12 @@ public class Player {
 		System.out.println(menuString);
 		switch (input) {
 		case 0:
-			System.out.println("To switch monsters input the number next to your desired monster");
+			System.out.println("To switch userMonsters input the number next to your desired monster");
 			boolean picked = false;
 			while (picked == false) {
 				input = Environment.getUserInt();
-				if (input > monsters.size() - 1|| input < 0 || monsters.get(input).currentHealth == 0) {
-					System.out.println(String.format("Input must be between %s and %s and you cannot select a downed monster", -1, monsters.size()));
+				if (input > userMonsters.size() - 1|| input < 0 || userMonsters.get(input).currentHealth == 0) {
+					System.out.println(String.format("Input must be between %s and %s and you cannot select a downed monster", -1, userMonsters.size()));
 				}
 				else {
 					setActiveMonster(input);
@@ -90,12 +91,12 @@ public class Player {
 			while (!pickedFirst){
 				System.out.println("Print out the position of the first monster you'd like to swap");
 				input = Environment.getUserInt();
-				if (input > monsters.size() - 1|| input < 0 ) {
-					System.out.println(String.format("Input must be between %s and %s", -1, monsters.size()));
+				if (input > userMonsters.size() - 1|| input < 0 ) {
+					System.out.println(String.format("Input must be between %s and %s", -1, userMonsters.size()));
 					
 				}
 				else {
-					System.out.println(String.format("First Monster: %s", monsters.get(input).getName()));
+					System.out.println(String.format("First Monster: %s", userMonsters.get(input).getName()));
 					pickedFirst = true;
 				}
 				
@@ -104,26 +105,48 @@ public class Player {
 			while (!pickedSecond){
 				System.out.println("Print out the position of the second monster you'd like to swap");
 				input = Environment.getUserInt();
-				if (input > monsters.size() - 1|| input < 0 ) {
-					System.out.println(String.format("Input must be between %s and %s", -1, monsters.size()));
+				if (input > userMonsters.size() - 1|| input < 0 ) {
+					System.out.println(String.format("Input must be between %s and %s", -1, userMonsters.size()));
 					
 				}
 				else {
-					System.out.println(String.format("First Monster: %s\nSecond Monster: %s", monsters.get(firstMonIndex).getName(), monsters.get(input).getName()));
+					System.out.println(String.format("First Monster: %s\nSecond Monster: %s", userMonsters.get(firstMonIndex).getName(), userMonsters.get(input).getName()));
 					pickedSecond = true;
 				}
 				
 			}
 			secondMonIndex = input;
-			Collections.swap(monsters, firstMonIndex, secondMonIndex);
+			Collections.swap(userMonsters, firstMonIndex, secondMonIndex);
 			
 			
 		}
 		
 		
 	}
+	public void addItem(Items item) {
+		userItems.add(item);
+	}
+	public void removeItem(Items item) {
+		userItems.remove(item);
+	}
+	public ArrayList<Items> getItems() {
+		return userItems;
+	}
+	public void getInventory() {
+		if (userItems.size() == 0) {
+			System.out.println("No items in inventory.");
+		}else {
+			System.out.println(getItems());
+		}
+		for (Monster monster : userMonsters) {
+			System.out.println(monster);
+		}
+	}
 	public void addMonster(Monster creep) {
-		monsters.add(creep);
+		userMonsters.add(creep);
+	}
+	public void removeMonster(Monster creep) {
+		userMonsters.remove(creep);
 	}
 	public String getName() {
 		return name;
@@ -135,25 +158,25 @@ public class Player {
 		return gold;
 	}
 	public Monster getMonster(int i) {
-		return monsters.get(i);
+		return userMonsters.get(i);
 	}
 	public ArrayList<Monster> getMonsters() {
-		return monsters;
+		return userMonsters;
 	}
 	public void setActiveMonster(int i){
-		activeMonster = monsters.get(i);
+		activeMonster = userMonsters.get(i);
 	}
 	public Monster getActiveMonster() {
 		return activeMonster;
 	}
 	public String stringMonsters() {
 		String strMon = "";
-		if (monsters.size() == 0) {
-			return "No Monsters in party";
+		if (userMonsters.size() == 0) {
+			return "No userMonsters in party";
 		}
 		else {
-			for (int i = 0; i != monsters.size(); i++) {
-				strMon = monsters.get(i).getName() + " " + strMon;
+			for (int i = 0; i != userMonsters.size(); i++) {
+				strMon = userMonsters.get(i).getName() + " " + strMon;
 			}
 			return strMon;
 		}
@@ -162,7 +185,7 @@ public class Player {
 		return String.format("Name: %s\nGold: %s\nPoints: %s\nMonsters: %s", name, gold, points, stringMonsters());
 	}
 	public void sleepMon() {
-		for (Monster i : monsters) {
+		for (Monster i : userMonsters) {
 			i.addHealth(i.getHealAmount());
 			
 		}

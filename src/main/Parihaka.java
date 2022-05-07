@@ -15,6 +15,7 @@ public class Parihaka extends Monster{
 		super.setDamageAmount(30);
 		super.setMaxHealth(50);
 		super.sethealAmount(5);
+		super.setDescription("Sexy dark man.");
 	}	
 
 }

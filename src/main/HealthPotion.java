@@ -3,7 +3,7 @@ package main;
 
 public class HealthPotion extends Items{
 
-	public HealthPotion(String name, int purchase, int sellBack, String description) {
+	public HealthPotion() {
 		super("Health Potion", 10, 5, "Will increse your current health by 25.");
 	}
 	

@@ -2,7 +2,7 @@ package main;
 
 public class LvlUpPotion extends Items{
 
-	public LvlUpPotion(String name, int purchase, int sellBack, String description) {
+	public LvlUpPotion() {
 		super("Level Up Potion", 25, 20, "Will increase the level of your monster.");
 	}
 	

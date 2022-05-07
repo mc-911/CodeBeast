@@ -66,7 +66,7 @@ public class Monster extends Purchasable{
 	}
 	public String toString() {
 		/**Returns a string showing a monster's name, damage, currentHealth, maxHealth, damage, healAmount**/
-		return String.format("Name: %s\nHealth: %s/%s\nDamage: %s\nHeal Amount: %s", name, currentHealth, maxHealth, damage, healAmount);
+		return String.format("Name: %s\nHealth: %s/%s\nDamage: %s\nHeal Amount: %s \nDescription: %s \n", name, currentHealth, maxHealth, damage, healAmount, super.getDescription());
 		
 	}
 	public int getMaxHealth() {

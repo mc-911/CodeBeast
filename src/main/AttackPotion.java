@@ -2,7 +2,7 @@ package main;
 
 public class AttackPotion extends Items{
 
-	public AttackPotion(String name, int purchase, int sellBack, String description) {
+	public AttackPotion() {
 		super("Attack Potion", 15, 10, "Will increase your monster's attack by 20.");
 	}
 	

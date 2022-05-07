@@ -18,6 +18,7 @@ public class Vesuvius extends Monster {
 		super.setDamageAmount(15);
 		super.setMaxHealth(100);
 		super.sethealAmount(1);
+		super.setDescription("Italian mafia don.");
 	}
 	
 }

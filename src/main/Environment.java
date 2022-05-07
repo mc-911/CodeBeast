@@ -2,6 +2,7 @@ package main;
 
 
 import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -189,11 +190,11 @@ public class Environment {
 				//main game play
 				ArrayList<Battle> battles = generateBattles(player);
 				System.out.println(String.format(userInfoF, player.getGold(), i, gameLength - i, Array.get(times, time) + "\n"));
-				System.out.println("Input 0 to view current battles\nInput 1 to go to the shop\nInput 2 to pass the time\nInput 3 to open your monster menu");
+				System.out.println("Input 0 to view current battles\nInput 1 to go to the shop\nInput 2 to pass the time\nInput 3 to open your monster menu\nInput 4 to view your inventory.");
 				boolean picked = false;
 				while (picked == false) {
 				input = getUserInt();
-				if (input < 0|| input >3) {
+				if (input < 0|| input >4) {
 					System.out.println("Invalid Input");
 				}
 				else {
@@ -207,11 +208,16 @@ public class Environment {
 					battle.startBattle(player, time, hardmode, battles.indexOf(battle));
 					time++;
 					break;
+				case 1:
+					Shop shop = new Shop();
+					shop.shopMenu(player);
 				case 2:
 					time++;
 					break;
 				case 3:
 					player.monsterMenu();
+				case 4:
+					player.getInventory();
 				}
 				
 				

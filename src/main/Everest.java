@@ -15,5 +15,6 @@ public class Everest extends Monster{
 		super.setDamageAmount(25);
 		super.setMaxHealth(250);
 		super.sethealAmount(5);
+		super.setDescription("big juicy furry vulumptious balls.");
 	}	
 }

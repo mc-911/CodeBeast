@@ -37,7 +37,7 @@ public abstract class Purchasable {
 	}
 	
 	public String toString() {
-		return String.format("Name: %s \nPrice: %s \nSell-back Price: %s \nDescription: %s", name, purchasePrice, sellBackPrice, description);
+		return String.format("Name: %s \nPrice: %s \nSell-back Price: %s \nDescription: %s \n", name, purchasePrice, sellBackPrice, description);
 	}
 	
 	
