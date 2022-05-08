@@ -211,13 +211,16 @@ public class Environment {
 				case 1:
 					Shop shop = new Shop();
 					shop.shopMenu(player);
+					break;
 				case 2:
 					time++;
 					break;
 				case 3:
 					player.monsterMenu();
+					break;
 				case 4:
 					player.getInventory();
+					break;
 				}
 				
 				

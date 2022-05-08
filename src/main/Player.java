@@ -136,8 +136,12 @@ public class Player {
 		if (userItems.size() == 0) {
 			System.out.println("No items in inventory.");
 		}else {
-			System.out.println(getItems());
+			System.out.println("Items:\n");
+			for (Items item : userItems) {
+				System.out.println(item);
+			}
 		}
+		System.out.println("Monsters:\n");
 		for (Monster monster : userMonsters) {
 			System.out.println(monster);
 		}
