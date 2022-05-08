@@ -3,30 +3,33 @@ package main;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+/** The shop class will have the place where the player can buy and sell monsters and items **/
 
 public class Shop {
-	/**an array of items that will be sold in the shop **/
+	/** an array of items that will be sold in the shop **/
 	private static Items[] items = new Items[] {new HealthPotion(), new AttackPotion(), new MaxHealthPotion(), new LvlUpPotion()};
 	/** an array of monsters that will be sold in the shop**/
 	Monster[] monsters = new Monster[] {new Vesuvius(), new Everest(), new Parihaka(), new Flame(), new Jerry()};
 	
+	/** a method that will print out the available items in the shop **/
 	public void displayItems() {
 		for (Items item: items) {
 			System.out.println(item);
 		}
 	}
 	
+	/** a method that will print out the available monsters in the shop **/
 	public void displayMonsters() {
 		for (Monster monster: monsters) {
 			System.out.println(monster);
 		}
 	}
 	
+	/** a method that will buy a monster that the player selects **/
 	public void buy(Player player, Monster monster) {
 		if (player.getMonsters().size() < 4) {
 			int coins = player.getGold();
 			int price = monster.getPurchasePrice();
-			System.out.println(price);
 			if (coins >= price) {
 				player.setGold(coins- price);
 				player.addMonster(monster);
@@ -39,6 +42,7 @@ public class Shop {
 		}
 	}
 	
+	/** a method that will buy an item that the player selects **/
 	public void buy(Player player, Items item) {
 		int coins = player.getGold();
 		int price = item.getPurchasePrice();
@@ -51,6 +55,7 @@ public class Shop {
 		}	
 	}
 	
+	/** a method that will sell an item that the player selects **/
 	public void sell(Player player, Items item) {
 		int coins = player.getGold();
 		int price = item.getPurchasePrice();
@@ -59,6 +64,7 @@ public class Shop {
 		System.out.println(String.format("Succesfully bought the item. Your gold balance is now %s", player.getGold()));
 	}
 	
+	/** a method that will sell a monster that the player selects **/
 	public void sell(Player player, Monster monster) {
 		int coins = player.getGold();
 		int price = monster.getPurchasePrice();
@@ -67,6 +73,7 @@ public class Shop {
 		System.out.println(String.format("Succesfully bought the item. Your gold balance is now %s", player.getGold()));
 	}
 	
+	/** a method that has the shop menu. the player will select the item or monster they want to buy. they can also view their inventory **/
 	public void shopMenu(Player player) {
 		boolean picked = false;
 		int input = 0;
@@ -135,7 +142,7 @@ public class Shop {
 				}
 				sell(player, (Items) Array.get(items, input));
 			}
-			//for going back//
+			//for going back to the main shop menu//
 			if (input == 2) {
 				shopMenu(player);
 			}
@@ -197,7 +204,7 @@ public class Shop {
 				sell(player, (Monster) Array.get(monsters, input));
 				
 			}
-			//for going back//
+			//for going back to the main shop menu//
 			if (input == 2) {
 				shopMenu(player);
 			}
