@@ -1,4 +1,4 @@
-package main;
+ package main;
 /** A subclass of Purchasable that sets all the details of the items in the shop **/
 public class Items extends Purchasable{
 	
@@ -8,6 +8,9 @@ public class Items extends Purchasable{
 		super.setPurchasePrice(purchase);
 		super.setSellBackPrice(sellBack);
 		super.setDescription(description);
+	}
+	
+	public void drinkPotion(Monster monster, Player player) {
 	}
 
 }

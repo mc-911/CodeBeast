@@ -1,5 +1,6 @@
 package main;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -135,15 +136,52 @@ public class Player {
 	public void getInventory() {
 		if (userItems.size() == 0) {
 			System.out.println("No items in inventory.");
+			System.out.println("Monsters:\n");
+			for (Monster monster : userMonsters) {
+				System.out.println(monster);
+		}
 		}else {
 			System.out.println("Items:\n");
 			for (Items item : userItems) {
 				System.out.println(item);
 			}
+			System.out.println("Monsters:\n");
+			for (Monster monster : userMonsters) {
+				System.out.println(monster);
 		}
-		System.out.println("Monsters:\n");
-		for (Monster monster : userMonsters) {
-			System.out.println(monster);
+			System.out.println("Input 0 to use an item on a monster of your choosing.");
+			boolean picked = false;
+			int input = 0;
+			while (picked == false) {
+				input = Environment.getUserInt();
+				if (input < 0|| input > 1) {
+					System.out.println("Invalid Input");
+			}
+			else {
+				picked = true;
+			}
+			}
+			int j = 0;
+			if (input == 0) {
+				System.out.println("Select the monster that you would like to apply the item to.");
+				for (Monster monster : userMonsters) {
+					System.out.println(String.format("%d. %s", j, monster));
+					j++;
+				}
+				picked = false;
+				int i = 0;
+				while (picked == false) {
+					i = Environment.getUserInt();
+					if (i < 0|| i > (userMonsters.size()-1)) {
+						System.out.println("Invalid Input");
+				}
+				else {
+					picked = true;
+				}
+				}
+				//drink potion and apply effects to the monster//
+				userItems.get(input).drinkPotion(userMonsters.get(i), this);
+			}
 		}
 	}
 	public void addMonster(Monster creep) {
