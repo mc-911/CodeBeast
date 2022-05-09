@@ -33,7 +33,18 @@ public class Shop {
 			if (coins >= price) {
 				player.setGold(coins- price);
 				player.addMonster(monster);
-				System.out.println(String.format("Succesfully bought the item. Your gold balance is now %s", player.getGold()));
+				System.out.println(String.format("Succesfully bought the Monster. Your gold balance is now %s", player.getGold()));
+				System.out.println("Would you like to name your new monster?\nInput 0 for yes, or 1 for no");
+				switch (Environment.getUserInt()) {
+				case 0:
+					System.out.println("Name your monster");
+					monster.setName(Environment.getUserString());
+					break;
+				case 1:
+					break;
+				}
+					
+					
 			} else {
 				System.out.println(String.format("Insufficient funds, can't buy this potion. \nNeed %s more gold.", price-coins));
 			}	
@@ -72,14 +83,7 @@ public class Shop {
 		player.removeMonster(monster);
 		System.out.println(String.format("Succesfully bought the item. Your gold balance is now %s", player.getGold()));
 	}
-	public void displayList(Purchasable[] p) {
-		int i = 0;
-		for (Purchasable d : p) {
-			System.out.println(String.format("%s. %s", i, d));
-			i++;
-		}
-		
-	}
+	
 	/** a method that has the shop menu. the player will select the item or monster they want to buy. they can also view their inventory **/
 	public void shopMenu(Player player) {
 		boolean picked = false;
@@ -93,21 +97,21 @@ public class Shop {
 			input = Environment.getUserIntBounds(0, 2);
 			if (input == 0) {
 				// for buying the item//
-				displayList(items);
+				Environment.displayList(items);
 				System.out.println("Select the item you want to buy.");
 				input = Environment.getUserIntBounds(0, 4);
 				System.out.print(input);
 				buy(player, (Items) Array.get(items, input));
 			//want to sell item//
 			}
-			if (input == 1){
-				displayList(items);
+			else if (input == 1){
+				Environment.displayList(items);
 				System.out.println("Select the item you want to sell.");
 				input = Environment.getUserIntBounds(0, player.getItems().size());
 				sell(player, (Items) Array.get(items, input));
 			}
 			//for going back to the main shop menu//
-			if (input == 2) {
+			else if (input == 2) {
 				shopMenu(player);
 			}
 			
@@ -118,21 +122,22 @@ public class Shop {
 			input = Environment.getUserIntBounds(0, 2);
 			//for buying monsters//
 			if (input == 0) {
-				displayList(monsters);
+				System.out.println("Buying Monster");
+				Environment.displayList(monsters);
 				System.out.println("Select the monster you want to buy.");
 				input = Environment.getUserIntBounds(0, 4);
 				buy(player, (Monster) Array.get(monsters, input));
 			}
 			//for selling monsters//
-			if (input == 1) {
+			else if (input == 1) {
 				Purchasable[] arr = player.getMonsters().toArray(new Purchasable[player.getMonsters().size()]);
-				displayList(arr);
+				Environment.displayList(arr);
 				System.out.println("Select the monster you want to sell.");
 				input = Environment.getUserIntBounds(0, player.getMonsters().size());
 				sell(player, (Monster) Array.get(monsters, input));
 			}
 			//for going back to the main shop menu//
-			if (input == 2) {
+			else if (input == 2) {
 				shopMenu(player);
 			}
 		}

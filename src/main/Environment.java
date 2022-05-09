@@ -41,7 +41,7 @@ public class Environment {
 		picked = false;
 		while (picked == false) {
 			input = Environment.getUserInt();
-			if (input < 0|| input > 2) {
+			if (input < num1|| input > num2) {
 				System.out.println("Invalid Input");
 			}
 			else {
@@ -49,6 +49,14 @@ public class Environment {
 			}
 		}
 		return input;
+	}
+	public static void displayList(Purchasable[] p) {
+		int i = 0;
+		for (Purchasable d : p) {
+			System.out.println(String.format("%s. %s", i, d));
+			i++;
+		}
+		
 	}
 	public static void setGameLength() {
 		/**Has the user input their desired game length, doesn't allow any invalid inputs**/
@@ -161,7 +169,7 @@ public class Environment {
 			num = 3;
 		}
 		for (int i = 1; i <= num; i++) {
-			battles.add(new Battle(player, time, hardmode, i));
+			battles.add(new Battle(player));
 		}
 		return battles;
 	}
@@ -178,44 +186,32 @@ public class Environment {
 		int input = 0;
 		boolean picked = false;
 		while (picked == false) {
-			input = getUserInt();
-			if (input < 0 || input > battles.size() - 1) {
-				System.out.println(String.format("Input must be between -1 and %s", battles.size()));
+			input = getUserIntBounds(0, battles.size());
+			if (battles.get(input).getDone() == true) {
+				System.out.println("You can't select a battle you've already done!");
 			}
 			else {
-				if (battles.get(input).getDone() == true) {
-					System.out.println("You can't select a battle you've already done!");
-				}
-				else {
-					picked = true;
-				}
-				
+				picked = true;
 			}
+				
+			
 		}
 		return battles.get(input);
-	}
+	} 
 	public static void mainGameplay(Player player) {
 		/**Starts the main game play loop**/
 		int input = 0;
 		Battle fight;
 		boolean over = false;
+		int day = 1;
 		System.out.println("Starting Main gameplay...");
 		for (int i = 1; i != gameLength && over == false; i++) {
-			while (time != 3) {
+			while (time != 3 && !(player.getMonsters().size() == 0 && player.getGold() < 15)) {
 				//main game play
 				ArrayList<Battle> battles = generateBattles(player);
 				System.out.println(String.format(userInfoF, player.getGold(), i, gameLength - i, Array.get(times, time) + "\n"));
-				System.out.println("Input 0 to view current battles\nInput 1 to go to the shop\nInput 2 to pass the time\nInput 3 to open your monster menu\nInput 4 to view your inventory.");
-				boolean picked = false;
-				while (picked == false) {
-				input = getUserInt();
-				if (input < 0|| input >4) {
-					System.out.println("Invalid Input");
-				}
-				else {
-					picked = true;
-				}
-				}
+				System.out.println("Input 0 to view current battles\nInput 1 to go to the shop\nInput 2 to pass the time\nInput 3 to open your monster menu\nInput 4 to view your inventory\nInput 5 to view yourself.");
+				input = getUserIntBounds(0, 5);
 				switch (input) {
 				case 0:
 					showBattles(battles);
@@ -236,21 +232,25 @@ public class Environment {
 				case 4:
 					player.getInventory();
 					break;
+				case 5:
+					System.out.println(player);
+					break;
 				}
-				
-				
-					
-				
 			}
+			day++;
 			System.out.println("Sleep time");
 			monJoins eve = new monJoins();
 			eve.startEvent(player);
 			player.sleepMon();
 			time = 0;
-			
 		}
+		gameOver(player, day);
 		
 		
+	}
+	public static void gameOver(Player player, int day) {
+		System.out.println("GAME OVER");
+		System.out.println(String.format("Name: %s\nGame Duration: %s/%s days\nGold: %s\nPoints: %s", player.getName(), day, gameLength, player.getGold(), player.getPoints()));
 	}
 	public static Monster[] getStarters() {
 		return starters;

@@ -13,7 +13,7 @@ public class Monster extends Purchasable{
 	private int points;
 	private boolean faintedToday;
 	//healAmount? 
-	int currentHealth;
+	private int currentHealth;
 	static String levelUpFormat = "%s is now level %s\nMax Health increased to %s\nHeal Amount increased to %s";
 	public Monster(String name) {
 		this.name = name;
@@ -30,7 +30,9 @@ public class Monster extends Purchasable{
 	}
 	public void setDamageAmount(int amount){
 		/**Sets damage to be amount**/
+		
 		damage = amount;
+		
 		
 	}
 	public void sethealAmount(int amount){

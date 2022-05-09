@@ -4,12 +4,12 @@ public class LvlUpPotion extends Items{
 	
 	/** constructor for the level up potion from the items super class **/
 	public LvlUpPotion() {
-		super("Level Up Potion", 25, 20, "Will increase the level of your monster.");
+		super("Points Potion", 25, 20, "Will increase the points of your monster.");
 	}
 	
 	/** a method that will allow the player to drink the potion thereby removing it from the player's inventory and adding the affects to the monster **/
 	public void drinkPotion(Monster monster, Player player) {
-		monster.levelUp();
+		monster.increasePoints(25);
 		player.removeItem(this);
 	}
 

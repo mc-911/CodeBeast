@@ -19,6 +19,17 @@ public class Player {
 	public void increasePoints(int amount) {
 		points += amount;
 	}
+	public int getPoints() {
+		return points;
+	}
+	public void nextMon() {
+		int i = userMonsters.indexOf(activeMonster);
+		while (activeMonster.getCurrentHealth() == 0) {
+			activeMonster = userMonsters.get(i);
+			i++;
+		}
+		
+	}
 	public void setName(){
 		/**used to get input from user and set player name**/
 		String input;
@@ -57,67 +68,32 @@ public class Player {
 		String menuString = "";
 		for (int i = 0; i != userMonsters.size(); i++) {
 			if (userMonsters.get(i).getCurrentHealth() != 0){
-			menuString = String.format("(%s) %s ", i, userMonsters.get(i).getName()) + menuString;
+			menuString = menuString + String.format("%s. %s ", i, userMonsters.get(i).getName()) ;
 			}
 			else {
-				menuString = String.format("(x) Downed: %s", userMonsters.get(i).getName()) + menuString;
+				menuString =  menuString + String.format("(x) Downed: %s", userMonsters.get(i).getName());
 			}
 		}
-		System.out.println("Input 0 to change your active monster\nInput 1 to enter change order mode");
-		input = -1;
-		while (input < 0 || input > 1) {
-			input = Environment.getUserInt();
-		}
+		System.out.println("Monster Order: " + menuString);
+		Environment.displayList(userMonsters.toArray(new Purchasable[userMonsters.size()]));
+		System.out.println("Input 0 to go back\nInput 1 to enter change order mode");
+		
+		input = Environment.getUserIntBounds(0, 1);
 		System.out.println(menuString);
 		switch (input) {
 		case 0:
-			System.out.println("To switch userMonsters input the number next to your desired monster");
-			boolean picked = false;
-			while (picked == false) {
-				input = Environment.getUserInt();
-				if (input > userMonsters.size() - 1|| input < 0 || userMonsters.get(input).currentHealth == 0) {
-					System.out.println(String.format("Input must be between %s and %s and you cannot select a downed monster", -1, userMonsters.size()));
-				}
-				else {
-					setActiveMonster(input);
-					picked = true;
-				}
-			}
 			break;
 		case 1:
 			int firstMonIndex;
 			int secondMonIndex;
-			boolean pickedFirst = false;
-			boolean pickedSecond = false;
-			while (!pickedFirst){
-				System.out.println("Print out the position of the first monster you'd like to swap");
-				input = Environment.getUserInt();
-				if (input > userMonsters.size() - 1|| input < 0 ) {
-					System.out.println(String.format("Input must be between %s and %s", -1, userMonsters.size()));
-					
-				}
-				else {
-					System.out.println(String.format("First Monster: %s", userMonsters.get(input).getName()));
-					pickedFirst = true;
-				}
-				
-			}
-			firstMonIndex = input;
-			while (!pickedSecond){
-				System.out.println("Print out the position of the second monster you'd like to swap");
-				input = Environment.getUserInt();
-				if (input > userMonsters.size() - 1|| input < 0 ) {
-					System.out.println(String.format("Input must be between %s and %s", -1, userMonsters.size()));
-					
-				}
-				else {
-					System.out.println(String.format("First Monster: %s\nSecond Monster: %s", userMonsters.get(firstMonIndex).getName(), userMonsters.get(input).getName()));
-					pickedSecond = true;
-				}
-				
-			}
-			secondMonIndex = input;
+			System.out.println("Enter the position of the first monster you'd like to swap");
+			firstMonIndex = Environment.getUserIntBounds(0, userMonsters.size());
+			System.out.println(String.format("First Monster: %s", userMonsters.get(input).getName()));
+			System.out.println("Enter the position of the second monster you'd like to swap");
+			secondMonIndex = Environment.getUserIntBounds(0, userMonsters.size());
+			System.out.println(String.format("First Monster: %s\nSecond Monster: %s", userMonsters.get(firstMonIndex).getName(), userMonsters.get(input).getName()));
 			Collections.swap(userMonsters, firstMonIndex, secondMonIndex);
+			activeMonster = userMonsters.get(0);
 			
 			
 		}
@@ -137,53 +113,23 @@ public class Player {
 		if (userItems.size() == 0) {
 			System.out.println("No items in inventory.");
 			System.out.println("Monsters:\n");
-			for (Monster monster : userMonsters) {
-				System.out.println(monster);
 		}
-		}else {
+		else {
 			System.out.println("Items:\n");
 			for (Items item : userItems) {
 				System.out.println(item);
 			}
-			System.out.println("Monsters:\n");
-			for (Monster monster : userMonsters) {
-				System.out.println(monster);
 		}
-			System.out.println("Input 0 to use an item on a monster of your choosing.");
-			boolean picked = false;
-			int input = 0;
-			while (picked == false) {
-				input = Environment.getUserInt();
-				if (input < 0|| input > 1) {
-					System.out.println("Invalid Input");
-			}
-			else {
-				picked = true;
-			}
-			}
-			int j = 0;
-			if (input == 0) {
-				System.out.println("Select the monster that you would like to apply the item to.");
-				for (Monster monster : userMonsters) {
-					System.out.println(String.format("%d. %s", j, monster));
-					j++;
-				}
-				picked = false;
-				int i = 0;
-				while (picked == false) {
-					i = Environment.getUserInt();
-					if (i < 0|| i > (userMonsters.size()-1)) {
-						System.out.println("Invalid Input");
-				}
-				else {
-					picked = true;
-				}
-				}
-				//drink potion and apply effects to the monster//
-				userItems.get(input).drinkPotion(userMonsters.get(i), this);
-			}
+		System.out.println(stringMonsters());
+		if (userItems.size() != 0) {
+		System.out.println("Input a number to select an item.");
+		Items item = userItems.get(Environment.getUserIntBounds(0, userItems.size()));
+		Environment.displayList(userMonsters.toArray(new Purchasable[userMonsters.size()]));
+		System.out.println("Select the monster that you would like to apply the item to.");
+		item.drinkPotion(userMonsters.get(Environment.getUserIntBounds(0, userMonsters.size())), this);
 		}
 	}
+	
 	public void addMonster(Monster creep) {
 		userMonsters.add(creep);
 	}
@@ -223,8 +169,20 @@ public class Player {
 			return strMon;
 		}
 	}
+	public String stringItems() {
+		String strItems = "";
+		if (userItems.size() == 0) {
+			return "You have no items";
+		}
+		else {
+			for (int i = 0; i != userMonsters.size(); i++) {
+				strItems = userItems.get(i).getName() + " " + strItems;
+			}
+			return strItems;
+		}
+	}
 	public String toString() {
-		return String.format("Name: %s\nGold: %s\nPoints: %s\nMonsters: %s", name, gold, points, stringMonsters());
+		return String.format("Name: %s\nGold: %s\nPoints: %s\nMonsters: %s\nItems: %s", name, gold, points, stringMonsters(), stringItems());
 	}
 	public void sleepMon() {
 		for (Monster i : userMonsters) {

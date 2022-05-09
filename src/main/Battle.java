@@ -7,7 +7,6 @@ import java.util.Random;
 
 public class Battle {
 	ArrayList<Monster> foeMonsters = new ArrayList<Monster>();
-	static Monster[] monArray = new Monster[] {new Vesuvius(), new Everest(), new Parihaka(), new Flame(), new Jerry()};
 	static String choiceMenu = "Input 0 to attack using %s\nInput 1 to inspect the foe\nInput 2 to open the Monster Menu to switch your active Monster";
 	int activeMonster = 0;
 	Monster leading;
@@ -18,21 +17,31 @@ public class Battle {
 	
 	public void genMonsters() {
 		Random random = new Random();
+		int num;
 		for (int i = 0; i != 5; i++) {
-			foeMonsters.add((Monster) Array.get(monArray, random.nextInt(5)));
-		}
-		
-	}
-	public void scaleMonsters(int time, boolean hard, int rank) {
-		for (int i = 0; i != foeMonsters.size(); i++) {
-			if (hard == true){
-				foeMonsters.get(i).setHardFoe();
+			num = random.nextInt(5);
+			switch (num) {
+			case 0:
+				foeMonsters.add(new Jerry());
+				break;
+			
+			case 1:
+				foeMonsters.add(new Flame());
+				break;
+			case 2:
+				foeMonsters.add(new Parihaka());
+				break;
+			case 3:
+				foeMonsters.add(new Vesuvius());
+				break;
+			case 4:
+				foeMonsters.add(new Everest());
 			}
-			foeMonsters.get(i).setCurrentHealth(foeMonsters.get(i).getCurrentHealth() * 1 + (int) time / 2 * rank / 2);
-			foeMonsters.get(i).setMaxHealth(foeMonsters.get(i).getCurrentHealth() * 1 + (int) time / 2 * rank / 2);
+			
 		}
 		
 	}
+
 	public String toString() {
 		String monNames = "";
 		for (int i = 0; i != foeMonsters.size(); i++) {
@@ -51,6 +60,12 @@ public class Battle {
 		
 	}
 	public void startBattle(Player player, int time, boolean hard, int rank) {
+		int multe = 1;
+		if (hard) {
+			multe = 2;
+		}
+		System.out.println("Time: " + time + " rank: " + rank);
+		int dmgIncrease = 5 * (rank + 1) * multe * (time + 1);
 		System.out.println("Battle Started");
 		Monster leading;
 		boolean turnOver;
@@ -62,6 +77,7 @@ public class Battle {
 		System.out.println("Battle Started");
 		for (int i =0; i != foeMonsters.size(); i++) {
 			leading = foeMonsters.get(i);
+			leading.setDamageAmount(leading.getDamage() + (int) dmgIncrease);
 			monDead = false;
 			while (monDead == false && playerLost == false) {
 				turnOver = false;
@@ -69,20 +85,10 @@ public class Battle {
 					System.out.println(String.format("A evil looking monster named %s is preparing to attack!", leading.getName()));
 					System.out.println(String.format(choiceMenu, active.getName()));
 					System.out.println(String.format("%s HP: %s/%s DMG: %s\n%s HP: %s/%s DMG: %s", leading.getName(), leading.getCurrentHealth(),leading.getMaxHealth(),leading.getDamage(), active.getName(),active.getCurrentHealth(),active.getMaxHealth(),active.getDamage()));
-					
-					inputValid = false;
-					while (inputValid == false) {
-						input = Environment.getUserInt();
-						if (input < 0 || input > 4) {
-							System.out.println("Input must either be 0, 1, or 2");
-						}
-						else {
-							inputValid = true;
-						}
-					}
+					input = Environment.getUserIntBounds(0, 2);
 					switch (input) {
 					case 0:
-						player.getMonster(activeMonster).attack(foeMonsters.get(i));
+						active.attack(leading);
 						System.out.println(String.format("%s dealt %s damage to %s", active.getName(), active.getDamage(), leading.getName()));
 						turnOver = true;
 						break;
@@ -98,7 +104,7 @@ public class Battle {
 					}
 				
 				}
-				if (leading.currentHealth == 0) {
+				if (leading.getCurrentHealth() == 0) {
 					System.out.println(leading.getName() + " is down!");
 					monDead = true;
 				}
@@ -113,9 +119,8 @@ public class Battle {
 						playerLost = true;
 						break;
 					}
-					while (active.currentHealth == 0) {
-						active = (Monster) Array.get(player.getMonsters(),player.getMonsters().indexOf(active) + 1);
-					}
+					player.nextMon();
+					active = player.getActiveMonster();
 									
 					
 				}
@@ -128,8 +133,8 @@ public class Battle {
 			
 		}
 		if (playerLost == false) {
-			//an integer which is determined by hard, used to scale gold earned and the points gained for each monster
 			System.out.println("You Win!!");
+			//an integer which is determined by hard, used to scale gold earned and the points gained for each monster
 			int mult = 1;
 			if (hard) {
 				mult = 5;
@@ -137,7 +142,7 @@ public class Battle {
 			for (Monster mon : player.getMonsters()) {
 				mon.increasePoints(5 * time * rank * mult);
 			}
-			player.setGold(player.getGold() + 5 * time * rank * mult);
+			player.setGold(player.getGold() + 5 * (time +1) * (rank + 1) * mult);
 			System.out.println(String.format("You've gained %s gold", 5 * time * rank * mult));
 		}
 		
@@ -145,9 +150,9 @@ public class Battle {
 	public boolean getDone() {
 		return done;
 	}
-	public Battle(Player player, int time, boolean hard, int rank) {
+	public Battle(Player player) {
 		genMonsters();
-		scaleMonsters(time, hard, rank);
+
 
 		
 	}
