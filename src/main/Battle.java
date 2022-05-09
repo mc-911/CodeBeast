@@ -140,7 +140,7 @@ public class Battle {
 				mult = 5;
 			}
 			for (Monster mon : player.getMonsters()) {
-				mon.increasePoints(5 * time * rank * mult);
+				mon.increasePoints(5 * (time +1) * (rank + 1) * mult);
 			}
 			player.setGold(player.getGold() + 5 * (time +1) * (rank + 1) * mult);
 			System.out.println(String.format("You've gained %s gold", 5 * time * rank * mult));
