@@ -35,6 +35,21 @@ public class Environment {
 		/**Used to set gameOver to the parameter bool**/
 		gameOver = bool;
 	}
+	public static int getUserIntBounds(int num1, int num2) {
+		int input = 0;
+		boolean picked;
+		picked = false;
+		while (picked == false) {
+			input = Environment.getUserInt();
+			if (input < 0|| input > 2) {
+				System.out.println("Invalid Input");
+			}
+			else {
+				picked = true;
+			}
+		}
+		return input;
+	}
 	public static void setGameLength() {
 		/**Has the user input their desired game length, doesn't allow any invalid inputs**/
 		String length;

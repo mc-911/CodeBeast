@@ -72,137 +72,64 @@ public class Shop {
 		player.removeMonster(monster);
 		System.out.println(String.format("Succesfully bought the item. Your gold balance is now %s", player.getGold()));
 	}
-	
+	public void displayList(Purchasable[] p) {
+		int i = 0;
+		for (Purchasable d : p) {
+			System.out.println(String.format("%s. %s", i, d));
+			i++;
+		}
+		
+	}
 	/** a method that has the shop menu. the player will select the item or monster they want to buy. they can also view their inventory **/
 	public void shopMenu(Player player) {
 		boolean picked = false;
 		int input = 0;
 		System.out.println(String.format("Welcome to the Shop! Current gold = %s\nSelect 0 to display Items in Shop. Select 1 to display Monsters in Shop.", player.getGold()));
-		while (picked == false) {
-			input = Environment.getUserInt();
-			if (input < 0|| input > 1) {
-				System.out.println("Invalid Input");
-		}
-		else {
-			picked = true;
-		}
-		}
-		// for viewing items//
+		input = Environment.getUserIntBounds(0, 1);
 		if (input == 0) {
+			// for viewing items//
 			displayItems();
 			System.out.println("Input 0 to buy Item.\nInput 1 to sell Item.\nInput 2 to go back.");
-			picked = false;
-			while (picked == false) {
-				input = Environment.getUserInt();
-				if (input < 0|| input > 2) {
-					System.out.println("Invalid Input");
-			}
-			else {
-				picked = true;
-			}
-			}
-			// for buying the item//
+			input = Environment.getUserIntBounds(0, 2);
 			if (input == 0) {
-				int i = 0;
-				for (Items item : items) {
-					System.out.println(String.format("%s. %s", i, item));
-					i++;
-				}
+				// for buying the item//
+				displayList(items);
 				System.out.println("Select the item you want to buy.");
-				picked = false;
-				while (picked == false) {
-					input = Environment.getUserInt();
-					if (input < 0|| input > 4) {
-						System.out.println("Invalid Input");
-				}
-				else {
-					picked = true;
-				}
+				input = Environment.getUserIntBounds(0, 4);
 				System.out.print(input);
 				buy(player, (Items) Array.get(items, input));
-				}
 			//want to sell item//
 			}
 			if (input == 1){
-				int i = 0;
-				for (Items item : player.getItems()) {
-					System.out.println(String.format("%s. %s", i, item));
-					i++;
-				}
+				displayList(items);
 				System.out.println("Select the item you want to sell.");
-				picked = false;
-				while (picked == false) {
-					input = Environment.getUserInt();
-					if (input < 0|| input > 4) {
-						System.out.println("Invalid Input");
-				}
-				else {
-					picked = true;
-				}
-				}
+				input = Environment.getUserIntBounds(0, player.getItems().size());
 				sell(player, (Items) Array.get(items, input));
 			}
 			//for going back to the main shop menu//
 			if (input == 2) {
 				shopMenu(player);
 			}
+			
 		//for viewing monsters//
 		}else {
 			displayMonsters();
 			System.out.println("Input 0 to buy Monster.\nInput 1 to sell Monster\nInput 2 to go back.");
-			picked = false;
-			while (picked == false) {
-				input = Environment.getUserInt();
-				if (input < 0|| input > 2) {
-					System.out.println("Invalid Input");
-			}
-			else {
-				picked = true;
-			}
-			}
+			input = Environment.getUserIntBounds(0, 2);
 			//for buying monsters//
 			if (input == 0) {
-				int i = 0;
-				for (Monster monster : monsters) {
-					System.out.println(String.format("%s. %s", i, monster));
-					i++;
-				}
+				displayList(monsters);
 				System.out.println("Select the monster you want to buy.");
-				picked = false;
-				while (picked == false) {
-					input = Environment.getUserInt();
-					input = input -1;
-					if (input < 0|| input > 4) {
-						System.out.println("Invalid Input");
-				}
-				else {
-					picked = true;
-				}
-				}
+				input = Environment.getUserIntBounds(0, 4);
 				buy(player, (Monster) Array.get(monsters, input));
 			}
 			//for selling monsters//
 			if (input == 1) {
-				int i = 0;
-				for (Monster monster : player.getMonsters()) {
-					System.out.println(String.format("%s. %s", i, monster));
-					i++;
-				}
-				System.out.println(player.getMonsters());
+				Purchasable[] arr = player.getMonsters().toArray(new Purchasable[player.getMonsters().size()]);
+				displayList(arr);
 				System.out.println("Select the monster you want to sell.");
-				picked = false;
-				while (picked == false) {
-					input = Environment.getUserInt();
-					input = input -1;
-					if (input < 0|| input > 4) {
-						System.out.println("Invalid Input");
-				}
-				else {
-					picked = true;
-				}
-				}
+				input = Environment.getUserIntBounds(0, player.getMonsters().size());
 				sell(player, (Monster) Array.get(monsters, input));
-				
 			}
 			//for going back to the main shop menu//
 			if (input == 2) {
