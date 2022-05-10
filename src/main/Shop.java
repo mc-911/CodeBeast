@@ -32,21 +32,14 @@ public class Shop {
 			int price = monster.getPurchasePrice();
 			if (coins >= price) {
 				player.setGold(coins- price);
-				player.addMonster(monster);
 				System.out.println(String.format("Succesfully bought the Monster. Your gold balance is now %s", player.getGold()));
 				System.out.println("Would you like to name your new monster?\nInput 0 for yes, or 1 for no");
-				switch (Environment.getUserInt()) {
-				case 0:
-					System.out.println("Name your monster");
-					monster.setName(Environment.getUserString());
-					break;
-				case 1:
-					break;
-				}
+				Environment.addMon(player, monster);
+				
 					
 					
 			} else {
-				System.out.println(String.format("Insufficient funds, can't buy this potion. \nNeed %s more gold.", price-coins));
+				System.out.println(String.format("Insufficient funds, can't buy this Monster. \nNeed %s more gold.", price-coins));
 			}	
 		} else {
 			System.out.println("You are allowed a maximum of 4 monsters and you either have 4 or more.");

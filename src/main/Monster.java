@@ -11,6 +11,7 @@ public class Monster extends Purchasable{
 	private int damage;
 	private int healAmount;
 	private int points;
+	private int daysFainted;
 	private boolean faintedToday;
 	//healAmount? 
 	private int currentHealth;
@@ -62,13 +63,16 @@ public class Monster extends Purchasable{
 		/**Returns healAmount**/
 		return name;
 	}
+	public int getdaysFainted() {
+		return daysFainted;
+	}
 	public int getDamage() {
 		/**Returns healAmount**/
 		return damage;
 	}
 	public String toString() {
 		/**Returns a string showing a monster's name, damage, currentHealth, maxHealth, damage, healAmount**/
-		return String.format("Name: %s\nHealth: %s/%s\nDamage: %s\nHeal Amount: %s\nPrice: %s \nSell Price: %s \nDescription: %s \n", name, currentHealth, maxHealth, damage, healAmount, super.getPurchasePrice(), super.getSellBackPrice(), super.getDescription());
+		return String.format("Name: %s\nHealth: %s/%s\nDamage: %s\nHeal Amount: %s\nPrice: %s \nSell Price: %s \nDescription: %s \nLevel: %s", name, currentHealth, maxHealth, damage, healAmount, super.getPurchasePrice(), super.getSellBackPrice(), super.getDescription(), level);
 		
 	}
 	public int getMaxHealth() {
@@ -78,6 +82,9 @@ public class Monster extends Purchasable{
 	public int getCurrentHealth() {
 		/**Returns the monster's currentHealth**/
 		return currentHealth;
+	}
+	public int getLevel() {
+		return level;
 	}
 	public void setHardFoe() {
 		/**Used to scale an enemy's damage up, only used if the game is on hard**/

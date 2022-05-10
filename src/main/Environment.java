@@ -107,6 +107,38 @@ public class Environment {
 		
 		
 	}
+	public static void  randomEventCheck(Player player) {
+		Random rand = new Random();
+		monJoins monJoin = new monJoins();
+		monLeaves monLeave = new monLeaves();
+		monRandLvlUp up = new monRandLvlUp();
+		int num;
+		boolean occured =false;
+		System.out.println("During the night...");
+		ArrayList<RandomEvent> randList;
+		for (Monster mon : player.getMonsters()) {
+			randList = new ArrayList<>(Arrays.asList(monLeave, monLeave, monLeave, monLeave, up, up, up, up, up, up, up, up));
+			for (int i = mon.getdaysFainted(); i != 0; i-- ) {randList.add(monLeave);}
+			num = rand.nextInt(100);
+			if (num <= randList.size()) {
+				randList.get(num).startEvent(mon, player);
+				occured = true;
+			}
+			
+		}
+		if (player.getMonsters().size() != 4) {
+			randList = new ArrayList<>(Arrays.asList(monJoin, monJoin, monJoin, monJoin, monJoin, monJoin, monJoin, monJoin, monJoin, monJoin, monJoin, monJoin, monJoin, monJoin, monJoin, monJoin, monJoin, monJoin, monJoin, monJoin, monJoin));
+			for (int i = player.getMonsters().size(); i != 0; i--) {randList.add(monJoin);}
+			num = rand.nextInt(100);
+			if (num <= randList.size()) {
+				randList.get(num).startEvent(null, player);
+				occured = true;
+			}
+		}
+		if (!occured) {
+			System.out.println("Nothing happened!");
+		}
+	}
 	public static void selectDifficulty() {
 		/**Has the user choose the difficulty of the game**/
 		System.out.println("Select your difficulty\nInput 0 for normal mode or input 1 for hardmode");
@@ -239,8 +271,7 @@ public class Environment {
 			}
 			day++;
 			System.out.println("Sleep time");
-			monJoins eve = new monJoins();
-			eve.startEvent(player);
+			randomEventCheck(player);
 			player.sleepMon();
 			time = 0;
 		}
