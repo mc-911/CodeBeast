@@ -20,15 +20,17 @@ public class Monster extends Purchasable{
 		this.name = name;
 		
 	}
+	/**Sets setMaxHealth to be amount**/
 	public void setMaxHealth(int amount) {
-		/**Sets setMaxHealth to be amount**/
+		
 		maxHealth = amount;
 	}
+	/**Sets currentHealth to be amount**/
 	public void setCurrentHealth(int amount) {
-		/**Sets currentHealth to be amount**/
 		currentHealth = amount;
 		
 	}
+	/**Sets damage to be amount**/
 	public void setDamageAmount(int amount){
 		/**Sets damage to be amount**/
 		
@@ -40,6 +42,14 @@ public class Monster extends Purchasable{
 		/**Sets healAmount to be amount**/
 		healAmount = amount;
 		
+	}
+	/**An instance method which used to set daysFainted to the methods parameter amount, returns void**/
+	public void setDaysFainted(int amount) {
+		daysFainted = amount;
+	}
+	/**An instance method used to set faintedToday to the methods parameter bool, takes a variable bool of data type boolean as its parameter, returns void**/
+	public void setFaintedToday(boolean bool) {
+		faintedToday = bool;
 	}
 	public void addHealth(int amount) {
 		/**Used to increase a monster's currentHealth by amount whilst not exceeding the monster's maxHealth**/
@@ -54,6 +64,15 @@ public class Monster extends Purchasable{
 	public void setName(String name) {
 		/**Used to set the monsters name to the parameter name, name is the user's input**/
 		this.name = name; 
+	}
+	public void setHardFoe() {
+		/**Used to scale an enemy's damage up, only used if the game is on hard**/
+		damage = (int) Math.round(damage * 1.5);
+		
+	}
+	/**An instance method which returns faintedToday, returns boolean**/
+	public boolean getFaintedToday() {
+		return faintedToday;
 	}
 	public int getHealAmount() {
 		/**Returns healAmount**/
@@ -86,11 +105,7 @@ public class Monster extends Purchasable{
 	public int getLevel() {
 		return level;
 	}
-	public void setHardFoe() {
-		/**Used to scale an enemy's damage up, only used if the game is on hard**/
-		damage = (int) Math.round(damage * 1.5);
-		
-	}
+	
 	
 	public void attack(Monster other) {
 		/**Used in Battle to have a monster attack another monster (other)**/

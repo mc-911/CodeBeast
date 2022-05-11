@@ -15,23 +15,23 @@ import java.util.Random;
 public class Environment {
 	/**a boolean variable used to determine the difficulty of the game, used to scale battles**/
 	private static boolean hardmode = false;
-	//a boolean variable used to see if the game is over is only used when the user has let all their monsters fainted and the user cant buy anymore
+	/**a boolean variable used to see if the game is over is only used when the user has let all their monsters fainted and the user cant buy anymore**/
 	private static boolean gameOver = false;
-	//an int variable used to keep track of how long the game has gone on for, can't be greater than gameLength
+	/**an int variable used to keep track of how long the game has gone on for, can't be greater than gameLength**/
 	private int currentDay = 1;
-	//can either be 1 (morning) 2 (afternoon) or 3 (night)
+	/**A static String variable which either contains 1 (meaning the time is morning) 2, (meaning the time is afternoon) or 3 (meaning the time is night)**/
 	private static int time = 0;
-	//A String variable which is used in conjuction with String.Format() in showBattle() to show the user which battles they can fight
+	/**A String variable which is used in conjuction with String.Format() in showBattle() to show the user which battles they can fight**/
 	private static String battleFormat = "%s. Enemies: %s";
-	//the max amount of days the game can go on for
+	/**A static String variable which contains the max amount of days the game can go on for**/
 	private static int gameLength;
-	//A String used to display to the user which monsters they can pick as their starter
+	/**A String used to display to the user which monsters they can pick as their starter**/
 	private static String starterString = "Time to pick your Monster\nYou have three options to pick from\n1. %s\n2. %s\n3. %s";
-	//An array of monster objects, used to 
+	/**An array of monster objects, used to have the user pick a starting monster**/
 	private static Monster[] starters = new Monster[] {new Vesuvius(), new Everest(), new Parihaka(), new Flame(), new Jerry()};
-	//A format used to display to the user their current gold, the current day, and how many days they have left in the game
+	/**A format used to display to the user their current gold, the current day, and how many days they have left in the game**/
 	private static String userInfoF = "Gold: %s Day: %s Days Remaining: %s, Time: %s";
-	//A string array which holds a string corresponding to the current time
+	/**A string array which holds a string corresponding to the current time**/
 	private static String[] times = {"Morning", "Afternoon", "Night"};
 	
 	/**A method used to set gameOver to the parameter bool returns void**/
@@ -272,7 +272,7 @@ public class Environment {
 		int day = 1;
 		System.out.println("Starting Main gameplay...");
 		for (int i = 1; i != gameLength && over == false; i++) {
-			while (time != 3 && !(player.getMonsters().size() == 0 && player.getGold() < 15)) {
+			while (time != 3 && !(player.getMonsters().size() == 0 && player.getGold() < 10)) {
 				//main game play
 				ArrayList<Battle> battles = generateBattles(player);
 				System.out.println(String.format(userInfoF, player.getGold(), i, gameLength - i, Array.get(times, time) + "\n"));
@@ -309,6 +309,7 @@ public class Environment {
 			player.sleepMon();
 			time = 0;
 		}
+		
 		gameOver(player, day);
 		
 		
