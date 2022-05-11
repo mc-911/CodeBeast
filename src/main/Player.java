@@ -79,7 +79,6 @@ public class Player {
 		System.out.println("Input 0 to go back\nInput 1 to enter change order mode");
 		
 		input = Environment.getUserIntBounds(0, 1);
-		System.out.println(menuString);
 		switch (input) {
 		case 0:
 			break;

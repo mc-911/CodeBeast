@@ -24,7 +24,6 @@ public class Battle {
 			case 0:
 				foeMonsters.add(new Jerry());
 				break;
-			
 			case 1:
 				foeMonsters.add(new Flame());
 				break;
