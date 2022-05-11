@@ -3,6 +3,7 @@ package main;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 /** The shop class will have the place where the player can buy and sell monsters and items **/
 
 public class Shop {
@@ -77,8 +78,23 @@ public class Shop {
 		System.out.println(String.format("Succesfully bought the item. Your gold balance is now %s", player.getGold()));
 	}
 	
+	/** adds a rarity system to the shop **/
+	public void rareMonster() {
+		Random rand = new Random();
+		Goolops goolops = new Goolops();
+		Youngly youngly = new Youngly();
+		Gloomlops gloomlops = new Gloomlops();
+		int num = rand.nextInt(20);
+		boolean occured =false;
+		Monster[] rareMonsters = {goolops, goolops, goolops, goolops, youngly, youngly, youngly, youngly, gloomlops, gloomlops};
+		if (num < rareMonsters.length) {
+			monsters = new Monster[] {new Vesuvius(), new Everest(), new Parihaka(), new Flame(), new Jerry(), rareMonsters[num]};
+		}
+	}
+	
 	/** a method that has the shop menu. the player will select the item or monster they want to buy. they can also view their inventory **/
 	public void shopMenu(Player player) {
+		rareMonster();
 		boolean picked = false;
 		int input = 0;
 		System.out.println(String.format("Welcome to the Shop! Current gold = %s\nSelect 0 to display Items in Shop. Select 1 to display Monsters in Shop.", player.getGold()));
@@ -118,7 +134,7 @@ public class Shop {
 				System.out.println("Buying Monster");
 				Environment.displayList(monsters);
 				System.out.println("Select the monster you want to buy.");
-				input = Environment.getUserIntBounds(0, 4);
+				input = Environment.getUserIntBounds(0, monsters.length-1);
 				buy(player, (Monster) Array.get(monsters, input));
 			}
 			//for selling monsters//
@@ -136,3 +152,4 @@ public class Shop {
 		}
 	}
 }
+
