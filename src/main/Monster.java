@@ -117,7 +117,7 @@ public class Monster extends Purchasable{
 		damage = (int) Math.round(damage * 1.5);
 		maxHealth = (int) Math.round(maxHealth * 1.5);
 		healAmount = (int) Math.round(healAmount * 1.5);
-		System.out.println(String.format(levelUpFormat, level, maxHealth, healAmount));
+		System.out.println(String.format(levelUpFormat, name, level, maxHealth, healAmount));
 		
 	}
 	public void checkPoints() {
