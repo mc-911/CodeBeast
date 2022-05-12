@@ -33,7 +33,7 @@ public class Environment {
 	private static String userInfoF = "Gold: %s Day: %s Days Remaining: %s, Time: %s";
 	/**A string array which holds a string corresponding to the current time**/
 	private static String[] times = {"Morning", "Afternoon", "Night"};
-	
+	private static EnvironmentWindow window;
 	/**A method used to set gameOver to the parameter bool returns void**/
 	public static void setOver(boolean bool) {
 		
@@ -325,9 +325,10 @@ public class Environment {
 	}
 	/**A main method it starts the game**/
 	public static void main(String[] args) {
-		
+		window = new EnvironmentWindow();
+		window.showWindow();
 		Player player = new Player();
-		player.setName();
+		player.setName(window);
 		setGameLength();
 		pickMonsters(player);
 		selectDifficulty();

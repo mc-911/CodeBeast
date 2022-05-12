@@ -30,14 +30,14 @@ public class Player {
 		}
 		
 	}
-	public void setName(){
+	public void setName(EnvironmentWindow window){
 		/**used to get input from user and set player name**/
 		String input;
 		boolean valid = false;
 		Scanner scanner = new Scanner(System.in);
 		while (valid == false) {
 			System.out.println("Please input your Player name\n(Note: Must be between 3 and 15 characters and no numbers or special characters");
-			input = scanner.nextLine();
+			input = Environment.getUserString();
 			valid = checkName(input);
 			name = input;
 			if (valid == false) {
