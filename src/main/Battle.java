@@ -158,6 +158,7 @@ public class Battle {
 		/**Checks if the user has won the battle, if this is the case it'll then perform several functions in order to increase the points of every monster the user has, increase the points of the user, and increase the gold of the user**/
 		if (playerLost == false) {
 			System.out.println("You Win!!");
+			
 			int mult = 1;
 			if (hard) {
 				mult = 5;
