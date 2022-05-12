@@ -9,6 +9,8 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 import javax.swing.JLayeredPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class EnvironmentWindow {
 
@@ -17,6 +19,8 @@ public class EnvironmentWindow {
 	private JComboBox combobox;
 	private JLayeredPane pane;
 	private JTextPane textPane;
+	private boolean buttonPressed = false;
+	private JButton btnNewButton_1;
 	/**
 	 * Launch the application.
 	 */
@@ -50,12 +54,18 @@ public class EnvironmentWindow {
 		frame.getContentPane().setLayout(null);
 		
 		textPane = new JTextPane();
-		textPane.setText("Stuff goes here");
 		textPane.setEditable(false);
 		textPane.setBounds(10, 11, 709, 336);
 		frame.getContentPane().add(textPane);
 		
 		JButton btnNewButton = new JButton("Select");
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				buttonPressed = true;
+				System.out.println("FartMeister");
+			}
+		});
 		btnNewButton.setBounds(10, 371, 340, 72);
 		frame.getContentPane().add(btnNewButton);
 		
@@ -68,12 +78,18 @@ public class EnvironmentWindow {
 		textField.setBounds(0, 0, 329, 72);
 		layeredPane.add(textField);
 		textField.setColumns(10);
-		textField.setEnabled(false);
-		JComboBox comboBox = new JComboBox();
-		combobox = comboBox;
-		layeredPane.setLayer(comboBox, 1);
-		comboBox.setBounds(0, 0, 329, 72);
-		layeredPane.add(comboBox);
+		
+		btnNewButton_1 = new JButton("clear");
+		btnNewButton_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				textPane.setText("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+				
+			}
+		});
+		btnNewButton_1.setBounds(10, 454, 89, 23);
+		frame.getContentPane().add(btnNewButton_1);
+		
 	}
 	/**An instance method, used to swap the positions of this windows ComboBox and textField, returns void**/
 	public void swapCombo() {
@@ -100,6 +116,10 @@ public class EnvironmentWindow {
 	public void setTextPane(String text) {
 		textPane.setText(text);
 	}
+	/**An instance method used to set buttonPressed, takes a boolean parameter bool as its parameter, returns void**/
+	public void setButtionPressed(boolean bool) {
+		buttonPressed = bool;
+	}
 	/**An instance method used to get the text shown in textPane, returns String**/
 	public String getTextPane() {
 		return textPane.getText();
@@ -108,5 +128,18 @@ public class EnvironmentWindow {
 	public void showWindow() {
 		this.frame.setVisible(true);
 		
+	}
+	/**An instance method, used to get the text in textField, returns String**/
+	public String getText() {
+		return textField.getText();
+	}
+	/**An instance method, used to set the set in textField, takes a String parameter str as its parameter, returns void**/
+	public void setText(String str) {
+		System.out.println(str + "<--");
+		textField.setText(str);
+	}
+	/**An instance method, that is used to check if the button has been pressed, returns boolean**/
+	public boolean getButtonPressed() {
+		return buttonPressed;
 	}
 }

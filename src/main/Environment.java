@@ -48,7 +48,7 @@ public class Environment {
 		while (picked == false) {
 			input = Environment.getUserInt();
 			if (input < num1|| input > num2) {
-				System.out.println("Invalid Input");
+				printMsg(String.format("Your input must be between %s, and %s (inclusive)", num1, num2));
 			}
 			else {
 				picked = true;
@@ -69,24 +69,9 @@ public class Environment {
 	public static void setGameLength() {
 		
 		String length;
-		Scanner scanner1 = new Scanner(System.in);
-		System.out.println("Please input game length\ngame length can be between 5 and 15 days");
-		try {
-		gameLength =Integer.parseInt(scanner1.nextLine());
-		if (gameLength < 6 || gameLength > 14) {
-			throw new IllegalStateException();
-		}
+		printMsg("Please input game length\ngame length can be between 5 and 15 days");
+		gameLength = getUserIntBounds(6, 14);
 		
-		}
-		catch (java.lang.NumberFormatException e) {
-			System.out.println("Your input must be an integer\n(i.e 10, 56, 28)");
-			setGameLength();
-			
-		}
-		catch (IllegalStateException e) {
-			System.out.println("Your input must be between 5 and 15");
-			setGameLength();
-		}
 	
 		
 	}
@@ -201,7 +186,6 @@ public class Environment {
 	/**A static method used to get an input of data type integer from the user, returns int**/
 	public static int getUserInt() {
 		/**A Scanner object used to get user input**/
-		 Scanner scanner = new Scanner(System.in);
 		 /**A variable of boolean type, used to keep track of whether or not the user has inputed a valid integer**/
 		 boolean selected = false;
 		 /**A variable of integer data type, used to store the user's input**/
@@ -209,7 +193,7 @@ public class Environment {
 		 /**A while loop used to get the user's input via scanner.nextLine() if the input is a valid integer it'll successfully convert the input into an integer and store it in input selected will be set to true  and the while loop will end, if not it'll throw a java.lang.NumberFormatException which will be caught and will print out an error message then the loop will continue**/ 
 		 while (selected == false) {
 			 try {
-				 input = Integer.parseInt(scanner.nextLine());
+				 input = Integer.parseInt(getUserString());
 				 selected = true;
 			 }
 			 catch (java.lang.NumberFormatException e) {
@@ -221,8 +205,30 @@ public class Environment {
 	
 	/**A static method used to get a String from the user's input, returns String**/
 	public static String getUserString() {
-		Scanner scanner = new Scanner(System.in);
-		return scanner.nextLine();
+		boolean pressed = false;
+		while (pressed == false) {
+			pressed = window.getButtonPressed();
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		String str = window.getText();
+		System.out.println(str);
+		window.setText("");
+		window.setButtionPressed(false);
+		return str;
+		
+		
+	}
+	/**A static method used to print a msg in a windows textPane, takes a String parameter str as its parameter, returns void**/
+	public static void printMsg(String str) {
+		window.setTextPane(window.getTextPane() + "\n" + str);
+		if (window.getTextPane().split("\r\n|\r|\n").length >= 20) {
+			window.setTextPane(str);
+		}
 		
 	}
 	/**A static method used to generate battles in mainGameplay, so that the user may pick a battle, takes a Player object player has its parameter, returns ArrayList<Battle>**/
@@ -328,7 +334,7 @@ public class Environment {
 		window = new EnvironmentWindow();
 		window.showWindow();
 		Player player = new Player();
-		player.setName(window);
+		player.setName();
 		setGameLength();
 		pickMonsters(player);
 		selectDifficulty();
