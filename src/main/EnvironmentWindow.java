@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JLayeredPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Font;
 
 public class EnvironmentWindow {
 
@@ -49,13 +50,14 @@ public class EnvironmentWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 741, 549);
+		frame.setBounds(100, 100, 1125, 827);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		textPane = new JTextPane();
+		textPane.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		textPane.setEditable(false);
-		textPane.setBounds(10, 11, 709, 336);
+		textPane.setBounds(20, 11, 1067, 522);
 		frame.getContentPane().add(textPane);
 		
 		JButton btnNewButton = new JButton("Select");
@@ -66,18 +68,8 @@ public class EnvironmentWindow {
 				System.out.println("FartMeister");
 			}
 		});
-		btnNewButton.setBounds(10, 371, 340, 72);
+		btnNewButton.setBounds(10, 550, 545, 183);
 		frame.getContentPane().add(btnNewButton);
-		
-		JLayeredPane layeredPane = new JLayeredPane();
-		pane = layeredPane;
-		layeredPane.setBounds(378, 371, 329, 72);
-		frame.getContentPane().add(layeredPane);
-		textField = new JTextField();
-		layeredPane.setLayer(textField, 0);
-		textField.setBounds(0, 0, 329, 72);
-		layeredPane.add(textField);
-		textField.setColumns(10);
 		
 		btnNewButton_1 = new JButton("clear");
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
@@ -89,6 +81,10 @@ public class EnvironmentWindow {
 		});
 		btnNewButton_1.setBounds(10, 454, 89, 23);
 		frame.getContentPane().add(btnNewButton_1);
+		textField = new JTextField();
+		textField.setBounds(565, 550, 522, 183);
+		frame.getContentPane().add(textField);
+		textField.setColumns(10);
 		
 	}
 	/**An instance method, used to swap the positions of this windows ComboBox and textField, returns void**/

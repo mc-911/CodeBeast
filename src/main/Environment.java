@@ -209,7 +209,7 @@ public class Environment {
 		while (pressed == false) {
 			pressed = window.getButtonPressed();
 			try {
-				Thread.sleep(5);
+				Thread.sleep(1);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -226,7 +226,7 @@ public class Environment {
 	/**A static method used to print a msg in a windows textPane, takes a String parameter str as its parameter, returns void**/
 	public static void printMsg(String str) {
 		window.setTextPane(window.getTextPane() + "\n" + str);
-		if (window.getTextPane().split("\r\n|\r|\n").length >= 20) {
+		if (window.getTextPane().split("\r\n|\r|\n").length >= 30) {
 			window.setTextPane(str);
 		}
 		
