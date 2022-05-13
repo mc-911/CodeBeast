@@ -38,7 +38,6 @@ public class Player {
 			Environment.printMsg("Please input your Player name\n(Note: Must be between 3 and 15 characters and no numbers or special characters");
 			input = Environment.getUserString();
 			valid = checkName(input);
-			Environment.printMsg(input);
 			name = input;
 			if (valid == false) {
 				Environment.printMsg("Invalid name");

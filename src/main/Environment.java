@@ -207,13 +207,8 @@ public class Environment {
 	public static String getUserString() {
 		boolean pressed = false;
 		while (pressed == false) {
+			System.out.println("");
 			pressed = window.getButtonPressed();
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		String str = window.getText();
 		printMsg(str);

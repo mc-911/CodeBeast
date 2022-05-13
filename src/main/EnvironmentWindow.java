@@ -133,6 +133,7 @@ public class EnvironmentWindow {
 	public void setText(String str) {
 		System.out.println(str + "<--");
 		textField.setText(str);
+	
 	}
 	/**An instance method, that is used to check if the button has been pressed, returns boolean**/
 	public boolean getButtonPressed() {
