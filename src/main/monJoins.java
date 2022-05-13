@@ -8,7 +8,7 @@ public class monJoins extends RandomEvent{
 		Random rand = new Random();
 		int i = rand.nextInt(5);
 		Monster mone = (Monster) Array.get(new Monster[] {new Vesuvius(), new Everest(), new Parihaka(), new Flame(), new Jerry()}, i);
-		System.out.println(String.format("A monster named %s joins your party!", mone.getName()));
+		Environment.printMsg(String.format("A monster named %s joins your party!", mone.getName()));
 		Environment.addMon(player, mone);
 	}
 	

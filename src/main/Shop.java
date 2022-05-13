@@ -15,14 +15,14 @@ public class Shop {
 	/** a method that will print out the available items in the shop **/
 	public void displayItems() {
 		for (Items item: items) {
-			System.out.println(item);
+			Environment.printMsg(item.toString());
 		}
 	}
 	
 	/** a method that will print out the available monsters in the shop **/
 	public void displayMonsters() {
 		for (Monster monster: monsters) {
-			System.out.println(monster);
+			Environment.printMsg(monster.toString());
 		}
 	}
 	
@@ -33,17 +33,17 @@ public class Shop {
 			int price = monster.getPurchasePrice();
 			if (coins >= price) {
 				player.setGold(coins- price);
-				System.out.println(String.format("Succesfully bought the Monster. Your gold balance is now %s", player.getGold()));
-				System.out.println("Would you like to name your new monster?\nInput 0 for yes, or 1 for no");
+				Environment.printMsg(String.format("Succesfully bought the Monster. Your gold balance is now %s", player.getGold()));
+				Environment.printMsg("Would you like to name your new monster?\nInput 0 for yes, or 1 for no");
 				Environment.addMon(player, monster);
 				
 					
 					
 			} else {
-				System.out.println(String.format("Insufficient funds, can't buy this Monster. \nNeed %s more gold.", price-coins));
+				Environment.printMsg(String.format("Insufficient funds, can't buy this Monster. \nNeed %s more gold.", price-coins));
 			}	
 		} else {
-			System.out.println("You are allowed a maximum of 4 monsters and you either have 4 or more.");
+			Environment.printMsg("You are allowed a maximum of 4 monsters and you either have 4 or more.");
 		}
 	}
 	
@@ -54,9 +54,9 @@ public class Shop {
 		if (coins >= price) {
 			player.setGold(coins- price);
 			player.addItem(item);
-			System.out.println(String.format("Succesfully bought the item. Your gold balance is now %s", player.getGold()));
+			Environment.printMsg(String.format("Succesfully bought the item. Your gold balance is now %s", player.getGold()));
 		} else {
-			System.out.println(String.format("Insufficient funds, can't buy this potion. \nNeed %s more gold.", price-coins));
+			Environment.printMsg(String.format("Insufficient funds, can't buy this potion. \nNeed %s more gold.", price-coins));
 		}	
 	}
 	
@@ -66,7 +66,7 @@ public class Shop {
 		int price = item.getPurchasePrice();
 		player.setGold(coins+price);
 		player.removeItem(item);
-		System.out.println(String.format("Succesfully bought the item. Your gold balance is now %s", player.getGold()));
+		Environment.printMsg(String.format("Succesfully bought the item. Your gold balance is now %s", player.getGold()));
 	}
 	
 	/** a method that will sell a monster that the player selects **/
@@ -75,7 +75,7 @@ public class Shop {
 		int price = monster.getPurchasePrice();
 		player.setGold(coins+price);
 		player.removeMonster(monster);
-		System.out.println(String.format("Succesfully bought the item. Your gold balance is now %s", player.getGold()));
+		Environment.printMsg(String.format("Succesfully bought the item. Your gold balance is now %s", player.getGold()));
 	}
 	
 	/** adds a rarity system to the shop **/
@@ -97,17 +97,17 @@ public class Shop {
 		rareMonster();
 		boolean picked = false;
 		int input = 0;
-		System.out.println(String.format("Welcome to the Shop! Current gold = %s\nSelect 0 to display Items in Shop. Select 1 to display Monsters in Shop.", player.getGold()));
+		Environment.printMsg(String.format("Welcome to the Shop! Current gold = %s\nSelect 0 to display Items in Shop. Select 1 to display Monsters in Shop.", player.getGold()));
 		input = Environment.getUserIntBounds(0, 1);
 		if (input == 0) {
 			// for viewing items//
 			displayItems();
-			System.out.println("Input 0 to buy Item.\nInput 1 to sell Item.\nInput 2 to go back.");
+			Environment.printMsg("Input 0 to buy Item.\nInput 1 to sell Item.\nInput 2 to go back.");
 			input = Environment.getUserIntBounds(0, 2);
 			if (input == 0) {
 				// for buying the item//
 				Environment.displayList(items);
-				System.out.println("Select the item you want to buy.");
+				Environment.printMsg("Select the item you want to buy.");
 				input = Environment.getUserIntBounds(0, 4);
 				System.out.print(input);
 				buy(player, (Items) Array.get(items, input));
@@ -115,7 +115,7 @@ public class Shop {
 			}
 			else if (input == 1){
 				Environment.displayList(items);
-				System.out.println("Select the item you want to sell.");
+				Environment.printMsg("Select the item you want to sell.");
 				input = Environment.getUserIntBounds(0, player.getItems().size());
 				sell(player, (Items) Array.get(items, input));
 			}
@@ -127,13 +127,13 @@ public class Shop {
 		//for viewing monsters//
 		}else {
 			displayMonsters();
-			System.out.println("Input 0 to buy Monster.\nInput 1 to sell Monster\nInput 2 to go back.");
+			Environment.printMsg("Input 0 to buy Monster.\nInput 1 to sell Monster\nInput 2 to go back.");
 			input = Environment.getUserIntBounds(0, 2);
 			//for buying monsters//
 			if (input == 0) {
-				System.out.println("Buying Monster");
+				Environment.printMsg("Buying Monster");
 				Environment.displayList(monsters);
-				System.out.println("Select the monster you want to buy.");
+				Environment.printMsg("Select the monster you want to buy.");
 				input = Environment.getUserIntBounds(0, monsters.length-1);
 				buy(player, (Monster) Array.get(monsters, input));
 			}
@@ -141,7 +141,7 @@ public class Shop {
 			else if (input == 1) {
 				Purchasable[] arr = player.getMonsters().toArray(new Purchasable[player.getMonsters().size()]);
 				Environment.displayList(arr);
-				System.out.println("Select the monster you want to sell.");
+				Environment.printMsg("Select the monster you want to sell.");
 				input = Environment.getUserIntBounds(0, player.getMonsters().size());
 				sell(player, (Monster) Array.get(monsters, input));
 			}

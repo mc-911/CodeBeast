@@ -150,7 +150,7 @@ public class Monster extends Purchasable{
 		damage = (int) Math.round(damage * 1.5);
 		maxHealth = (int) Math.round(maxHealth * 1.5);
 		healAmount = (int) Math.round(healAmount * 1.5);
-		System.out.println(String.format(levelUpFormat, name, level, maxHealth, healAmount));
+		Environment.printMsg(String.format(levelUpFormat, name, level, maxHealth, healAmount));
 		
 	}
 	/**An instance method used to check if an instance of Monster is ready to level up by comparing its points to a formula if it is it calls levelUp(), returns void**/

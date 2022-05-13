@@ -3,7 +3,7 @@ package main;
 public class monRandLvlUp extends RandomEvent{
 	/**An instance method, used to start this random event, takes a Monster variable mon and a Player variable player as its parameters, returns void**/
 	public void startEvent(Monster mon, Player player) {
-		System.out.println("During the night..");
+		Environment.printMsg("During the night..");
 		mon.levelUp();
 	}
 

@@ -74,9 +74,9 @@ public class Player {
 				menuString =  menuString + String.format("(x) Downed: %s", userMonsters.get(i).getName());
 			}
 		}
-		System.out.println("Monster Order: " + menuString);
+		Environment.printMsg("Monster Order: " + menuString);
 		Environment.displayList(userMonsters.toArray(new Purchasable[userMonsters.size()]));
-		System.out.println("Input 0 to go back\nInput 1 to enter change order mode");
+		Environment.printMsg("Input 0 to go back\nInput 1 to enter change order mode");
 		
 		input = Environment.getUserIntBounds(0, 1);
 		switch (input) {
@@ -85,12 +85,12 @@ public class Player {
 		case 1:
 			int firstMonIndex;
 			int secondMonIndex;
-			System.out.println("Enter the position of the first monster you'd like to swap");
+			Environment.printMsg("Enter the position of the first monster you'd like to swap");
 			firstMonIndex = Environment.getUserIntBounds(0, userMonsters.size());
-			System.out.println(String.format("First Monster: %s", userMonsters.get(input).getName()));
-			System.out.println("Enter the position of the second monster you'd like to swap");
+			Environment.printMsg(String.format("First Monster: %s", userMonsters.get(input).getName()));
+			Environment.printMsg("Enter the position of the second monster you'd like to swap");
 			secondMonIndex = Environment.getUserIntBounds(0, userMonsters.size());
-			System.out.println(String.format("First Monster: %s\nSecond Monster: %s", userMonsters.get(firstMonIndex).getName(), userMonsters.get(input).getName()));
+			Environment.printMsg(String.format("First Monster: %s\nSecond Monster: %s", userMonsters.get(firstMonIndex).getName(), userMonsters.get(input).getName()));
 			Collections.swap(userMonsters, firstMonIndex, secondMonIndex);
 			activeMonster = userMonsters.get(0);
 			
@@ -110,21 +110,21 @@ public class Player {
 	}
 	public void getInventory() {
 		if (userItems.size() == 0) {
-			System.out.println("No items in inventory.");
-			System.out.println("Monsters:\n");
+			Environment.printMsg("No items in inventory.");
+			Environment.printMsg("Monsters:\n");
 		}
 		else {
-			System.out.println("Items:\n");
+			Environment.printMsg("Items:\n");
 			for (Items item : userItems) {
-				System.out.println(item);
+				Environment.printMsg(item.toString());
 			}
 		}
-		System.out.println(stringMonsters());
+		Environment.printMsg(stringMonsters());
 		if (userItems.size() != 0) {
-		System.out.println("Input a number to select an item.");
+		Environment.printMsg("Input a number to select an item.");
 		Items item = userItems.get(Environment.getUserIntBounds(0, userItems.size()));
 		Environment.displayList(userMonsters.toArray(new Purchasable[userMonsters.size()]));
-		System.out.println("Select the monster that you would like to apply the item to.");
+		Environment.printMsg("Select the monster that you would like to apply the item to.");
 		item.drinkPotion(userMonsters.get(Environment.getUserIntBounds(0, userMonsters.size())), this);
 		}
 	}

@@ -6,7 +6,7 @@ public class suddenLevel extends RandomEvent {
 	public void startEvent(Monster mon, Player player) {
 		Random random = new Random();
 		int picked_i = random.nextInt(player.getMonsters().size());
-		System.out.println("You check on one of your monsters during the night...");
+		Environment.printMsg("You check on one of your monsters during the night...");
 		player.getMonster(picked_i).levelUp();
 		
 		

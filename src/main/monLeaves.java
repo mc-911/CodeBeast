@@ -3,7 +3,7 @@ package main;
 public class monLeaves extends RandomEvent{
 	/**An instance method, used to start this random event, takes a Monster variable mon and a Player variable player as its parameters, returns void**/
 	public void startEvent(Monster mon, Player player) {
-		System.out.println("You wake up in the middle of the night to find!\n" + mon.getName() + " has left!");
+		Environment.printMsg("You wake up in the middle of the night to find!\n" + mon.getName() + " has left!");
 		player.getMonsters().remove(mon);
 	}
 

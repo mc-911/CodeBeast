@@ -60,7 +60,7 @@ public class Environment {
 	public static void displayList(Purchasable[] p) {
 		int i = 0;
 		for (Purchasable d : p) {
-			System.out.println(String.format("%s. %s", i, d));
+			printMsg(String.format("%s. %s", i, d));
 			i++;
 		}
 		
@@ -82,12 +82,12 @@ public class Environment {
         int selected = 0;
         boolean picked = false;
         int input;
-        System.out.println(String.format(starterString, starterslist.get(0), starterslist.get(1), starterslist.get(2)));
-        System.out.println("Input the number next your choosen monster to pick it!\n(Your input must be an integer)");
+        printMsg(String.format(starterString, starterslist.get(0), starterslist.get(1), starterslist.get(2)));
+        printMsg("Input the number next your choosen monster to pick it!\n(Your input must be an integer)");
         while (picked == false) {
         	input = getUserInt();
         	if (!(input >= 1 && input <= 3)) {
-        		System.out.println("Input must be either 1, 2, or 3");
+        		printMsg("Input must be either 1, 2, or 3");
         	}
         	else {
         		selected = input - 1;
@@ -114,7 +114,7 @@ public class Environment {
 		int num;
 		/**A variable of boolean data type  used to keep track of whether or not an event has**/
 		boolean occured =false;
-		System.out.println("During the night...");
+		printMsg("During the night...");
 		/**A list of RandomEvent objects used to determine the probability that an event occurs, the amount of times a specific RandomEvent object occurs in the list is its likelihood of occurring**/
 		ArrayList<RandomEvent> randList;
 		/**A forEarch loop used to iterate through the user's list of monsters, and to determine for each one if an event should fire which event should fire then fires that event via calling startEvent(mon,player)**/
@@ -145,12 +145,12 @@ public class Environment {
 		}
 		/**An if statement checks if occured is false, if occured is false it will print "Nothing happaend! this should only occur when no Random Event has occured"**/
 		if (!occured) {
-			System.out.println("Nothing happened!");
+			printMsg("Nothing happened!");
 		}
 	}
 	/**A method that is used to have the user choose the difficulty of the game returns void**/
 	public static void selectDifficulty() {
-		System.out.println("Select your difficulty\nInput 0 for normal mode or input 1 for hardmode");
+		printMsg("Select your difficulty\nInput 0 for normal mode or input 1 for hardmode");
 		/**A variable of data type int which holds the user's input, used to determine the state of hardmode (the difficulty of the game)**/
 		int input = getUserInt();
 		/**An if statement used to check if the user's input is valid if it's not goes to the else statement and calls selectDifficulty, if it is valid goes to the inner if statement and checks if input is 1 if it is it'll proceed to set hardmode to true**/
@@ -161,7 +161,7 @@ public class Environment {
 			
 		}
 		else {
-			System.out.println("Input must be either 0 or 1");
+			printMsg("Input must be either 0 or 1");
 			selectDifficulty();
 		}
 
@@ -169,12 +169,12 @@ public class Environment {
 	}
 	/**A static method used to add a Monster object monster to the user's list of monsters, takes a Player object Player player and, a Monster object Monster monster as its parameters, returns void **/
 	public static void addMon(Player player, Monster monster) {
-		System.out.println("Time to name your Monster\nInput your monsters name\n(Note: If you input nothing your monster will be given the default name");
+		printMsg("Time to name your Monster\nInput your monsters name\n(Note: If you input nothing your monster will be given the default name");
 		/**A variable of String datatype used to store the name that the user wishes to call monster**/
         String name = getUserString();
         if (name.length() == 0) {
         	player.addMonster(monster);
-        	System.out.println("worked");
+        	printMsg("worked");
         }
         else {
         	monster.setName(name);
@@ -197,7 +197,7 @@ public class Environment {
 				 selected = true;
 			 }
 			 catch (java.lang.NumberFormatException e) {
-		         System.out.println("Your input must be an integer\n(i.e 1, 2, 3)");
+		         printMsg("Your input must be an integer\n(i.e 1, 2, 3)");
 		     }
 		 }
 		 return input;
@@ -216,7 +216,7 @@ public class Environment {
 			}
 		}
 		String str = window.getText();
-		System.out.println(str);
+		printMsg(str);
 		window.setText("");
 		window.setButtionPressed(false);
 		return str;
@@ -248,19 +248,19 @@ public class Environment {
 	public static void showBattles(ArrayList<Battle> battles) {
 		
 		for (int i = 0; i != battles.size(); i++) {
-			System.out.println(String.format(battleFormat, i, battles.get(i)));
+			printMsg(String.format(battleFormat, i, battles.get(i)));
 		}
 		
 	}
 	/**A static method that Has the user choose a battle to start, takes ArrayList<Battle> battles as its parameter, returns void**/
 	public static Battle chooseBattle(ArrayList<Battle> battles) {
-		System.out.println("Pick your battle");
+		printMsg("Pick your battle");
 		int input = 0;
 		boolean picked = false;
 		while (picked == false) {
 			input = getUserIntBounds(0, battles.size());
 			if (battles.get(input).getDone() == true) {
-				System.out.println("You can't select a battle you've already done!");
+				printMsg("You can't select a battle you've already done!");
 			}
 			else {
 				picked = true;
@@ -276,13 +276,13 @@ public class Environment {
 		Battle fight;
 		boolean over = false;
 		int day = 1;
-		System.out.println("Starting Main gameplay...");
+		printMsg("Starting Main gameplay...");
 		for (int i = 1; i != gameLength && over == false; i++) {
 			while (time != 3 && !(player.getMonsters().size() == 0 && player.getGold() < 10)) {
 				//main game play
 				ArrayList<Battle> battles = generateBattles(player);
-				System.out.println(String.format(userInfoF, player.getGold(), i, gameLength - i, Array.get(times, time) + "\n"));
-				System.out.println("Input 0 to view current battles\nInput 1 to go to the shop\nInput 2 to pass the time\nInput 3 to open your monster menu\nInput 4 to view your inventory\nInput 5 to view yourself.");
+				printMsg(String.format(userInfoF, player.getGold(), i, gameLength - i, Array.get(times, time) + "\n"));
+				printMsg("Input 0 to view current battles\nInput 1 to go to the shop\nInput 2 to pass the time\nInput 3 to open your monster menu\nInput 4 to view your inventory\nInput 5 to view yourself.");
 				input = getUserIntBounds(0, 5);
 				switch (input) {
 				case 0:
@@ -305,12 +305,12 @@ public class Environment {
 					player.getInventory();
 					break;
 				case 5:
-					System.out.println(player);
+					printMsg(player.toString());
 					break;
 				}
 			}
 			day++;
-			System.out.println("Sleep time");
+			printMsg("Sleep time");
 			randomEventCheck(player);
 			player.sleepMon();
 			time = 0;
@@ -322,8 +322,8 @@ public class Environment {
 	}
 	/**A static method, is used to end the game, takes Player player, and int day as its parameters, returns void**/
 	public static void gameOver(Player player, int day) {
-		System.out.println("GAME OVER");
-		System.out.println(String.format("Name: %s\nGame Duration: %s/%s days\nGold: %s\nPoints: %s", player.getName(), day, gameLength, player.getGold(), player.getPoints()));
+		printMsg("GAME OVER");
+		printMsg(String.format("Name: %s\nGame Duration: %s/%s days\nGold: %s\nPoints: %s", player.getName(), day, gameLength, player.getGold(), player.getPoints()));
 	}
 	/**A static method used to get starters**/
 	public static Monster[] getStarters() {
