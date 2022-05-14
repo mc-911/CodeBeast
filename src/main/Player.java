@@ -45,7 +45,7 @@ public class Player {
 		}
 		
 	}
-	public boolean checkName(String name) {
+	public static boolean checkName(String name) {
 		/**used to check if user's input from setName() is a valid name**/
 		boolean notValid;
 		if (name.length() < 4 || name.length() > 15) {

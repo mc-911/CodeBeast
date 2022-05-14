@@ -40,21 +40,16 @@ public class Environment {
 		gameOver = bool;
 	}
 	/**A method that gets the user's input as an integer makes sure that the input is between num1 and num2 (inclusive) returns an integer**/
-	public static int getUserIntBounds(int num1, int num2) {
-		
-		int input = 0;
+	public static boolean  getUserIntBounds(int num1, int num2, GameWindow window, int input) {
 		boolean picked;
 		picked = false;
-		while (picked == false) {
-			input = Environment.getUserInt();
-			if (input < num1|| input > num2) {
-				printMsg(String.format("Your input must be between %s, and %s (inclusive)", num1, num2));
-			}
-			else {
-				picked = true;
-			}
+		if (input < num1|| input > num2) {
+			window.printMsg(String.format("Your input must be between %s, and %s (inclusive)", num1, num2));
 		}
-		return input;
+		else {
+			picked = true;
+		}
+		return picked;
 	}
 	/**A static method used to display an array of purchasable items (which will contain either monsters or items but not both) in an ordered manner to the user returns void**/
 	public static void displayList(Purchasable[] p) {
@@ -184,36 +179,27 @@ public class Environment {
 		
 	}
 	/**A static method used to get an input of data type integer from the user, returns int**/
-	public static int getUserInt() {
+	public static boolean getUserInt(String str, GameWindow window) {
 		/**A Scanner object used to get user input**/
 		 /**A variable of boolean type, used to keep track of whether or not the user has inputed a valid integer**/
 		 boolean selected = false;
 		 /**A variable of integer data type, used to store the user's input**/
 		 int input = 0;
 		 /**A while loop used to get the user's input via scanner.nextLine() if the input is a valid integer it'll successfully convert the input into an integer and store it in input selected will be set to true  and the while loop will end, if not it'll throw a java.lang.NumberFormatException which will be caught and will print out an error message then the loop will continue**/ 
-		 while (selected == false) {
-			 try {
-				 input = Integer.parseInt(getUserString());
-				 selected = true;
-			 }
-			 catch (java.lang.NumberFormatException e) {
-		         printMsg("Your input must be an integer\n(i.e 1, 2, 3)");
-		     }
+		 
+		 try {
+			 input = Integer.parseInt(str);
+			 selected = true;
 		 }
-		 return input;
+		 catch (java.lang.NumberFormatException e) {
+	         window.printMsg("Your input must be an integer\n(i.e 1, 2, 3)");
+	     }
+		 return selected;
 	}
 	
 	/**A static method used to get a String from the user's input, returns String**/
-	public static String getUserString() {
-		boolean pressed = false;
-		while (pressed == false) {
-			System.out.println("");
-			pressed = window.getButtonPressed();
-		}
+	public static String getUserString(GameWindow window) {
 		String str = window.getText();
-		printMsg(str);
-		window.setText("");
-		window.setButtionPressed(false);
 		return str;
 		
 		
