@@ -8,8 +8,8 @@ public class LvlUpPotion extends Items{
 	}
 	
 	/** a method that will allow the player to drink the potion thereby removing it from the player's inventory and adding the affects to the monster **/
-	public void drinkPotion(Monster monster, Player player) {
-		monster.increasePoints(25);
+	public void drinkPotion(Monster monster, Player player, GameWindow window) {
+		monster.increasePoints(25, window);
 		player.removeItem(this);
 	}
 

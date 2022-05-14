@@ -10,7 +10,7 @@ public class Items extends Purchasable{
 		super.setDescription(description);
 	}
 	
-	public void drinkPotion(Monster monster, Player player) {
+	public void drinkPotion(Monster monster, Player player, GameWindow window) {
 	}
 
 }

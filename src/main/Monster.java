@@ -137,27 +137,26 @@ public class Monster extends Purchasable{
 		
 	}
 	/**An instance method, Used to increase the amount of points a monster and to check if the monster is ready to level up, takes an int variable amount as its parameter, returns void**/
-	public void increasePoints(int amount) {
-		
+	public void increasePoints(int amount, GameWindow window) {
 		points += amount;
-		checkPoints();
+		checkPoints(window);
 		
 	}
 	/**An instance variable, its used to "level up" a monster what this does is it increases an instance of Monsters damage, maxHealth, healAmount based on some formulas, and displays these changes to the user, returns void**/
-	public void levelUp() {
+	public void levelUp(GameWindow window) {
 		level++;
 		points = 0;
 		damage = (int) Math.round(damage * 1.5);
 		maxHealth = (int) Math.round(maxHealth * 1.5);
 		healAmount = (int) Math.round(healAmount * 1.5);
-		Environment.printMsg(String.format(levelUpFormat, name, level, maxHealth, healAmount));
+		window.printMsg(String.format(levelUpFormat, name, level, maxHealth, healAmount));
 		
 	}
 	/**An instance method used to check if an instance of Monster is ready to level up by comparing its points to a formula if it is it calls levelUp(), returns void**/
-	public void checkPoints() {
+	public void checkPoints(GameWindow window) {
 		
 		if (points >= 100 * level) {
-			levelUp();
+			levelUp(window);
 		}
 	}
 

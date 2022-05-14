@@ -8,7 +8,7 @@ public class AttackPotion extends Items{
 	}
 	
 	/** a method that will allow the player to drink the potion thereby removing it from the player's inventory and adding the affects to the monster **/
-	public void drinkPotion(Monster monster, Player player) {
+	public void drinkPotion(Monster monster, Player player, GameWindow window) {
 		int attack = monster.getDamage();
 		monster.setDamageAmount(attack + 20);
 		player.removeItem(this);

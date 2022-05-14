@@ -30,7 +30,6 @@ public class MainWindow extends GameWindow{
 	private boolean buttonPressed = false;
 	private JButton btnNewButton_1;
 	private JButton battles;
-	private JButton view_inventory;
 	private JButton shop;
 	private JButton mon_menu;
 	private JButton view_self;
@@ -133,7 +132,6 @@ public class MainWindow extends GameWindow{
 				view_self.setEnabled(false);
 				shop.setEnabled(false);
 				pass_time.setEnabled(false);
-				view_inventory.setEnabled(false);
 				disabled = true;
 				for (Battle i : battlelist) {
 				combobox.addItem(i);
@@ -149,23 +147,23 @@ public class MainWindow extends GameWindow{
 		}
 		);
 		
-		mon_menu = new JButton("Open your monsters menu");
+		mon_menu = new JButton("Open Menu");
 		mon_menu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				menuWindow = new MenuWindow(player, getSelf());
-				
+				getSelf().closeWindow();
 			}
 		});
 		layeredPane.setLayer(mon_menu, 1);
-		mon_menu.setBounds(0, 90, 184, 93);
+		mon_menu.setBounds(0, 90, 355, 93);
 		layeredPane.add(mon_menu);
 		
-		view_inventory = new JButton("view inventory");
-		layeredPane.setLayer(view_inventory, 1);
-		view_inventory.setBounds(183, 90, 172, 93);
-		layeredPane.add(view_inventory);
-		
 		shop = new JButton("Go to Shop");
+		shop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Create a ShopWindow Class
+			}
+		});
 		layeredPane.setLayer(shop, 1);
 		shop.setBounds(183, 0, 172, 93);
 		layeredPane.add(shop);
@@ -205,7 +203,6 @@ public class MainWindow extends GameWindow{
 		view_self.setEnabled(true);
 		shop.setEnabled(true);
 		pass_time.setEnabled(true);
-		view_inventory.setEnabled(true);
 		disabled = false;
 	}
 	public void startBattle(Battle battle) {

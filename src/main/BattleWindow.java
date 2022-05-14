@@ -171,7 +171,7 @@ public class BattleWindow extends GameWindow{
 		layeredPane.setLayer(panel, 0);
 		layeredPane.setLayer(exit, 1);
 		for (Monster mon : player.getMonsters()) {
-			mon.increasePoints(goldEarned);
+			mon.increasePoints(goldEarned, getSelf());
 			printMsg(String.format("%s's points increased by %s", mon.getName(), goldEarned));
 		}
 		player.setGold(player.getGold() + goldEarned);

@@ -8,6 +8,7 @@ import javax.swing.JTextPane;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Collections;
 import java.awt.event.ActionEvent;
 
 public class MenuWindow extends GameWindow{
@@ -20,6 +21,9 @@ public class MenuWindow extends GameWindow{
 	private JComboBox comboBox_1;
 	private JComboBox comboBox;
 	private MainWindow mainWindow;
+	private JButton btnNewButton;
+	private int firstIndex;
+	private int secondIndex;
 
 	/**
 	 * Launch the application.
@@ -69,11 +73,48 @@ public class MenuWindow extends GameWindow{
 							printMsg(i + ". " + player.getMonster(i).toString());
 						}
 					}
+					viewItems.setText("Back");
+					viewMonsters.setText("Enter change Monster Order mode");
+					state = 1;
+					break;
+				case 1:
 					comboBox.setEnabled(true);
 					comboBox_1.setEnabled(true);
-					viewItems.setText("Back");
-					state = 1;
+					for (Monster i: player.getMonsters()) {
+						comboBox.addItem(i);
+					}
+					for (Monster i: player.getMonsters()) {
+						comboBox_1.addItem(i);
+					}
+					state = 2;
+					viewMonsters.setText("Press to swap monsters");
+					break;
+				case 2:
+					firstIndex = player.getMonsters().indexOf(combobox.getSelectedItem());
+					secondIndex = player.getMonsters().indexOf(combobox.getSelectedItem());		
+					if (firstIndex != secondIndex) {
+						printMsg(String.format("%s and %s have been swapped", player.getMonster(firstIndex), player.getMonster(secondIndex)));
+						Collections.swap(player.getMonsters(), firstIndex, secondIndex);
+						comboBox.removeAll();
+						comboBox_1.removeAll();
+						state = 0;
+						viewMonsters.setText("View Monsters");
+						viewItems.setText("View Items");
+					}
+					else {
+						printMsg("You have selected the same monster for each of the dropDown menus");
+					}
+					break;
+				case 3:
+					viewItems.setText("View Items");
+					viewMonsters.setText("View Monsters");
+					comboBox.setEnabled(false);
+					comboBox_1.setEnabled(false);
+					state = 0;
+					break;
+					
 				}
+				
 				
 					
 			}
@@ -85,12 +126,45 @@ public class MenuWindow extends GameWindow{
 		viewItems.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switch (state) {
+				case 0:
+					comboBox.setEnabled(true);
+					comboBox.setEnabled(true);
+					for (Monster i: player.getMonsters()) {
+						comboBox.addItem(i);
+					}
+					for (Items i: player.getItems()) {
+						comboBox_1.addItem(i);
+						printMsg(i.toString());
+					}
+					viewMonsters.setText("Back");
+					viewItems.setText("Press to select item to use on monster");
+					state = 3;
+					break;
 				case 1:
 					viewItems.setText("View Items");
+					viewMonsters.setText("View Monsters");
+					state = 0;
+					comboBox.removeAllItems();
+					comboBox_1.removeAllItems();
+					break;
+				case 2:
+					comboBox.setEnabled(false);
+					comboBox_1.setEnabled(false);
+					comboBox.removeAll();
+					comboBox_1.removeAll();
+					viewMonsters.setText("Enter change Monster Order mode");
+					state = 1;
+					break;
+				case 3:
+					Items item = (Items) comboBox_1.getSelectedItem();
+					Monster mon = (Monster) comboBox.getSelectedItem();
+					item.drinkPotion(mon, player, getSelf());
+					viewItems.setText("View Items");
+					viewMonsters.setText("View Monsters");
 					comboBox.setEnabled(false);
 					comboBox_1.setEnabled(false);
 					state = 0;
-					
+					break;
 				}
 			}
 		});
@@ -104,9 +178,19 @@ public class MenuWindow extends GameWindow{
 		comboBox_1 = new JComboBox();
 		comboBox_1.setBounds(593, 574, 157, 22);
 		frame.getContentPane().add(comboBox_1);
-		pane.setVisible(true);
 		comboBox.setEnabled(false);
 		comboBox_1.setEnabled(false);
+		
+		btnNewButton = new JButton("Exit");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainWindow.show();
+				frame.dispose();
+			}
+		});
+		btnNewButton.setBounds(505, 736, 89, 23);
+		frame.getContentPane().add(btnNewButton);
+		frame.setVisible(true);
 	}
 
 }
