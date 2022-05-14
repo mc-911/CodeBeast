@@ -80,6 +80,7 @@ public class EnvironmentWindow extends GameWindow{
 							}
 							else {
 								state += 1;
+								player.setName(txtInputHere.getText());
 								printMsg("Please input game length\r\n"+ "game length can be between 5 and 15 days");
 							}
 							txtInputHere.setText("");
@@ -124,12 +125,13 @@ public class EnvironmentWindow extends GameWindow{
 					        	printMsg("worked");
 					        }
 					        else {
-					        	starterList.get(index).setName(txtInputHere.getText());
-					        	player.addMonster(starterList.get(index - 1));
+					        	starterList.get(index - 1).setName(txtInputHere.getText());
+					        	player.getMonsters().add(starterList.get(index-1));
 					        	printMsg("Picked" + starterList.get(index-1));
 					        	state = 0;
 					        	p_state += 1;					        						        	
 					        }
+							player.setActiveMonster(0);
 							exit();
 						 	break;
 						}

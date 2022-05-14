@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -34,7 +35,7 @@ public class MainWindow extends GameWindow{
 	private JButton mon_menu;
 	private JButton view_self;
 	private JButton pass_time;
-	private Player player = new Player();
+	private Player player;
 	private JFrame frame;
 	private WindowManager manager;
 	private boolean disabled = false;
@@ -44,6 +45,9 @@ public class MainWindow extends GameWindow{
 	private BattleWindow battleWindow;
 	private	int gameLength;
 	private boolean hard;
+	private int day;
+	/**A string array which holds a string corresponding to the current time**/
+	private static String[] times = {"Morning", "Afternoon", "Night"};
 	
 	/**
 	 * Launch the application.
@@ -54,10 +58,13 @@ public class MainWindow extends GameWindow{
 	 * Create the application.
 	 */
 	public MainWindow(Player player, int gameLength, boolean hard) {
+		day = 1;
+		this.player = player;
 		this.gameLength = gameLength;
 		this.hard = hard;
 		battlelist = Environment.generateBattles(player);
 		initialize();
+		printMsg(String.format("Gold: %s Day: %s Days Remaining: %s, Time: %s", player.getGold(), day, gameLength - day, Array.get(times, time) + "\n"));
 	}
 
 	/**
@@ -84,8 +91,13 @@ public class MainWindow extends GameWindow{
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Battle battle = (Battle) combobox.getSelectedItem();
+				if(battle.getDone()) {
+					printMsg("You may not select this battle, as you've already fought it!");
+				}
+				else {
 				printMsg(battle.toString());
 				startBattle(battle);
+				}
 			}
 		});
 		btnNewButton.addMouseListener(new MouseAdapter() {
@@ -152,6 +164,11 @@ public class MainWindow extends GameWindow{
 		layeredPane.add(shop);
 		
 		view_self = new JButton("view yourself");
+		view_self.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				printMsg(player.toString());
+			}
+		});
 		layeredPane.setLayer(view_self, 1);
 		view_self.setBounds(350, 90, 172, 93);
 		layeredPane.add(view_self);
@@ -176,6 +193,7 @@ public class MainWindow extends GameWindow{
 		
 	}
 	public void turnAllOn() {
+		combobox.setEnabled(false);
 		mon_menu.setEnabled(true);
 		view_self.setEnabled(true);
 		shop.setEnabled(true);
@@ -185,13 +203,18 @@ public class MainWindow extends GameWindow{
 	}
 	public void startBattle(Battle battle) {
 		super.getFrame().setVisible(false);
-		battleWindow = new BattleWindow(this, battle, player);
+		battleWindow = new BattleWindow(this, battle, player, time, hard, battlelist.indexOf(battle));
+		time++;
+		checkTime();
+		turnAllOn();
 		
 	}
 	
 	
 	public void checkTime() {
+		printMsg(String.format("Gold: %s Day: %s Days Remaining: %s, Time: %s", player.getGold(), day, gameLength - day, Array.get(times, time) + "\n"));
 		if (time == 2) {
+			day++;
 			time = 0;
 			printMsg("New Day");
 			battlelist = Environment.generateBattles(player);

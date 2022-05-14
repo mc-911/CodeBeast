@@ -30,19 +30,10 @@ public class Player {
 		}
 		
 	}
-	public void setName(){
+	public void setName(String str){
 		/**used to get input from user and set player name**/
-		String input;
-		boolean valid = false;
-		while (valid == false) {
-			Environment.printMsg("Please input your Player name\n(Note: Must be between 3 and 15 characters and no numbers or special characters");
-			input = Environment.getUserString();
-			valid = checkName(input);
-			name = input;
-			if (valid == false) {
-				Environment.printMsg("Invalid name");
-			}
-		}
+		name = str;
+		
 		
 	}
 	public static boolean checkName(String name) {
@@ -61,6 +52,21 @@ public class Player {
 		}
 		return true;
 		
+	}
+	public String getMonsterOrder() {
+		String menuString = "";
+		if (userMonsters.size() == 0) {
+			return "No monsters";
+		}
+		for (int i = 0; i != userMonsters.size(); i++) {
+			if (userMonsters.get(i).getCurrentHealth() != 0){
+			menuString = menuString + String.format("%s. %s ", i, userMonsters.get(i).getName()) ;
+			}
+			else {
+				menuString =  menuString + String.format("(x) Downed: %s", userMonsters.get(i).getName());
+			}
+		}
+		return menuString;
 	}
 	public  void monsterMenu() {
 		int input;

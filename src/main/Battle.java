@@ -191,7 +191,12 @@ public class Battle {
 	public ArrayList<Monster> getFoeMonsters(){
 		return foeMonsters;
 	}
+	public void setDone(boolean bool) {
+		done = bool;
+	}
+	
 	/**A constructor takes a Player variable player as its parameter, will then run genMonsters()**/
+
 	public Battle() {
 		genMonsters();
 

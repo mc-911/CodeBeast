@@ -70,5 +70,8 @@ public abstract class GameWindow {
 	public GameWindow getSelf() {
 		return this;
 	}
+	public void show() {
+		frame.setVisible(true);
+	}
 
 }

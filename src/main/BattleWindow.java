@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.JTabbedPane;
+import javax.swing.JPanel;
 
 public class BattleWindow extends GameWindow{
 	private JComboBox combobox;
@@ -35,6 +36,11 @@ public class BattleWindow extends GameWindow{
 	private MainWindow mainWindow;
 	private Monster leading;
 	private Battle battle;
+	private int dmgIncrease;
+	private int goldEarned;
+	private JLayeredPane layeredPane;
+	private JButton exit;
+	private JPanel panel;
 	/**
 	 * Launch the application.
 	 */
@@ -44,11 +50,18 @@ public class BattleWindow extends GameWindow{
 	 * Create the application.
 	 * @wbp.parser.entryPoint
 	 */
-	public BattleWindow(MainWindow window, Battle battle, Player player) {
+	public BattleWindow(MainWindow window, Battle battle, Player player, int time, boolean hard, int rank) {
+		int mult = 1;
+		if (hard) {
+			mult = 2;
+		}
+		goldEarned =  5* (time +1) * (rank + 1) * mult;
+		dmgIncrease = 5 * (rank + 1) * mult * (time + 1);
 		this.player = player;
 		this.mainWindow = window;	
 		leading = battle.getLeading();
 		this.battle = battle;
+		player.setActiveMonster(0);
 		initialize();
 	}
 
@@ -69,37 +82,54 @@ public class BattleWindow extends GameWindow{
 		pane.setBounds(20, 11, 1067, 522);
 		getFrame().getContentPane().add(pane);
 		
-		JLayeredPane layeredPane = new JLayeredPane();
+		layeredPane = new JLayeredPane();
 		layeredPane.setBounds(283, 550, 522, 183);
 		frame.getContentPane().add(layeredPane);
 		
-		Attack = new JButton("Attack");
-		layeredPane.setLayer(Attack, 1);
-		Attack.setBounds(0, 0, 184, 183);
-		layeredPane.add(Attack);
-		Attack.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {
-			printMsg(String.format("%s dealt %s damage to %s", leading.getName(), leading.getDamage(), player.getActiveMonster().getName()));
-			checkFoe();
+		exit = new JButton("Exit");
+		exit.setBounds(0, 0, 522, 183);
+		layeredPane.add(exit);
 		
-		}
-		}
-		);
+		panel = new JPanel();
+		layeredPane.setLayer(panel, 1);
+		panel.setBounds(0, 0, 522, 183);
+		layeredPane.add(panel);
+		panel.setLayout(null);
+		
+		Attack = new JButton("Attack");
+		Attack.setBounds(0, 0, 184, 183);
+		panel.add(Attack);
+		layeredPane.setLayer(Attack, 1);
 		
 		View = new JButton("Inspect ");
-		layeredPane.setLayer(View, 1);
 		View.setBounds(183, 0, 172, 183);
-		layeredPane.add(View);
+		panel.add(View);
+		layeredPane.setLayer(View, 1);
 		
 		pass_time = new JButton("Monster Menu");
+		pass_time.setBounds(350, 0, 172, 183);
+		panel.add(pass_time);
 		pass_time.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		layeredPane.setLayer(pass_time, 1);
-		pass_time.setBounds(350, 0, 172, 183);
-		layeredPane.add(pass_time);
-		frame.setVisible(true);
+		Attack.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {
+			player.getActiveMonster().attack(leading);
+			printMsg(String.format("%s dealt %s damage to %s", player.getActiveMonster().getName(), player.getActiveMonster().getDamage(), leading.getName()));
+			checkFoe();
 		
+		}
+		}
+		);
+		exit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainWindow.show();
+				frame.dispose();
+			}
+		});
+		frame.setVisible(true);
+		printMsg(String.format("%s HP: %s/%s DMG: %s\n%s HP: %s/%s DMG: %s", leading.getName(), leading.getCurrentHealth(),leading.getMaxHealth(),leading.getDamage(), player.getActiveMonster().getName(),player.getActiveMonster().getCurrentHealth(),player.getActiveMonster().getMaxHealth(),player.getActiveMonster().getDamage()));
 	
 		
 	}
@@ -113,8 +143,9 @@ public class BattleWindow extends GameWindow{
 	
 	public void checkFoe() {
 		if ((leading.getCurrentHealth() == 0 )) {
+			printMsg(leading.getName() + " is down!");
 			if (battle.getFoeMonsters().indexOf(leading) == battle.getFoeMonsters().size() - 1) {
-				//battle won
+				won();
 			}
 			else {
 				leading = battle.getLeading();
@@ -124,14 +155,33 @@ public class BattleWindow extends GameWindow{
 			leading.attack(player.getActiveMonster());
 			printMsg(String.format("%s dealt %s damage to %s", leading.getName(), leading.getDamage(), player.getActiveMonster().getName()));
 			if (player.getActiveMonster().getCurrentHealth() == 0) {
+				printMsg(String.format("%s is out!", player.getActiveMonster().getName()));
 				if (battle.checkAllDowned(player)) {
-					//User has lost
+					lost();
 				}
 				else {
 					player.nextMon();
 				}
 			}
 		}
+		printMsg(String.format("%s HP: %s/%s DMG: %s\n%s HP: %s/%s DMG: %s", leading.getName(), leading.getCurrentHealth(),leading.getMaxHealth(),leading.getDamage(), player.getActiveMonster().getName(),player.getActiveMonster().getCurrentHealth(),player.getActiveMonster().getMaxHealth(),player.getActiveMonster().getDamage()));
+	
+	}
+	public void won() {
+		layeredPane.setLayer(panel, 0);
+		layeredPane.setLayer(exit, 1);
+		for (Monster mon : player.getMonsters()) {
+			mon.increasePoints(goldEarned);
+			printMsg(String.format("%s's points increased by %s", mon.getName(), goldEarned));
+		}
+		player.setGold(player.getGold() + goldEarned);
+		printMsg(String.format("You've gained %s gold", goldEarned));
+		
+	}
+	public void lost() {
+		layeredPane.setLayer(panel, 0);
+		layeredPane.setLayer(exit, 1);
+		printMsg("You lost lol");
 		
 	}
 }
