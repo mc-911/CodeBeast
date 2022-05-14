@@ -19,6 +19,7 @@ public class Battle {
 	/**A variable of boolean data type is used to see if the user has already fought this battle**/
 	boolean done;
 	/**A method which is used to generate the monsters in foeMonsters that the user will fight against in this battle**/
+	BattleWindow window;
 	public void genMonsters() {
 		/**A variable of data type Random which points to a new Random object, it's to get a random integer [0,4]**/
 		Random random = new Random();
@@ -67,7 +68,7 @@ public class Battle {
 		
 	}
 	/**An instance method which starts the actual fight of this instance of Battle, takes a Player object player, an int variable time, a boolean variable hard  an int variable rank as it's parameters, returns void**/
-	public void startBattle(Player player, int time, boolean hard, int rank) {
+	public void startBattle(Player player, int time, boolean hard, int rank, BattleWindow window) {
 		/**A variable of int datatype points to an int, which is used (in conjunction with time, rank, hard) to calculate the following the how much damage an enemy monster does, the amount of gold the user earns once the user wins the battle, the amount of points the user gets once they win, the amount of points each of the user's monsters get when the user wins the battle**/
 		int multe = 1;
 		/**An if statement that checks if the games difficulty is hard (if hard is equal to true), if it is it proceeds to set multe to contain 2, stuff listed in the comment of multe but by even more if the difficulty of the game is hard**/
@@ -76,7 +77,7 @@ public class Battle {
 		}
 		/**A int variable contains an integer which is bonus damage an enemy monster gets, its value is determined via a formula**/
 		int dmgIncrease = 5 * (rank + 1) * multe * (time + 1);
-		Environment.printMsg("Battle Started");
+		window.printMsg("Battle Started");
 		/**A Monster variable used to contain an instance of Monster which will be the enemy monster the user is currently fighting**/
 		Monster leading;
 		/**A boolean variable used to contain a boolean, is used to determine if the user's turn is over during battling**/
@@ -88,7 +89,7 @@ public class Battle {
 		player.setActiveMonster(0);
 		player.nextMon();
 		active = player.getActiveMonster();
-		Environment.printMsg("Battle Started");
+		window.printMsg("Battle Started");
 		/**A for loop used to start the main loop of the battle where we will set leading to contain the monster at index i in foeMonsters, then it will start a while loop which will contain the main loop of this battling system, where the user has several options to choose from, given that the user defeats the monster in leading the next iteration of the for loop will occur which'll set leading to contain the next monster in foeMonsters**/
 		for (int i =0; i != foeMonsters.size(); i++) {
 			leading = foeMonsters.get(i);
@@ -176,8 +177,22 @@ public class Battle {
 		return done;
 	}
 	
+	public Monster getLeading() {
+		Monster mon;
+		mon = foeMonsters.get(0);
+		for (Monster i: foeMonsters) {
+			if (i.getCurrentHealth() != 0) {
+				mon = i;
+				break;
+			}
+		}
+		return mon;
+	}
+	public ArrayList<Monster> getFoeMonsters(){
+		return foeMonsters;
+	}
 	/**A constructor takes a Player variable player as its parameter, will then run genMonsters()**/
-	public Battle(Player player) {
+	public Battle() {
 		genMonsters();
 
 

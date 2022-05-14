@@ -221,16 +221,16 @@ public class Environment {
 			num = 3;
 		}
 		for (int i = 1; i <= num; i++) {
-			battles.add(new Battle(player));
+			battles.add(new Battle());
 		}
 		return battles;
 	}
 	/**A static method which Shows the available battles to the user, takes An ArrayList<Battle> battles as its parameter, returns void**/
-	public static void showBattles(ArrayList<Battle> battles) {
-		
+	public static void showBattles(ArrayList<Battle> battles, GameWindow window) {
 		for (int i = 0; i != battles.size(); i++) {
-			printMsg(String.format(battleFormat, i, battles.get(i)));
+			window.printMsg(String.format(battleFormat, i, battles.get(i)));
 		}
+		System.out.println("Should have printed");
 		
 	}
 	/**A static method that Has the user choose a battle to start, takes ArrayList<Battle> battles as its parameter, returns void**/

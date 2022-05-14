@@ -6,8 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -16,48 +20,43 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
-public class MainWindow {
+public class MainWindow extends GameWindow{
 
 
-	private JFrame frame;
 	private JTextField txtInputHere;
 	private JComboBox combobox;
 	private JLayeredPane pane;
-	private JTextPane txtpnpleaseInputYour;
 	private boolean buttonPressed = false;
-	private int state = 0;
-	private int p_state = 0;
-	private String str;
+	private JButton btnNewButton_1;
+	private JButton battles;
+	private JButton view_inventory;
+	private JButton shop;
+	private JButton mon_menu;
+	private JButton view_self;
+	private JButton pass_time;
 	private Player player = new Player();
-	private Monster[] starters = new Monster[] {new Vesuvius(), new Everest(), new Parihaka(), new Flame(), new Jerry()};
-	private List<Monster> starterList;
-	private int index;
-	private JButton btnNewButton_2;
-	private JButton btnNewButton_5;
-	private JButton btnNewButton_3;
-	private JButton btnNewButton_4;
-	private JButton btnNewButton_6;
-	private JButton btnNewButton_7;
+	private JFrame frame;
+	private WindowManager manager;
+	private boolean disabled = false;
+	private int mode;
+	private ArrayList<Battle> battlelist;
+	private int time;
+	private BattleWindow battleWindow;
+	private	int gameLength;
+	private boolean hard;
+	
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainWindow window = new MainWindow();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the application.
 	 */
-	public MainWindow() {
+	public MainWindow(Player player, int gameLength, boolean hard) {
+		this.gameLength = gameLength;
+		this.hard = hard;
+		battlelist = Environment.generateBattles(player);
 		initialize();
 	}
 
@@ -65,68 +64,28 @@ public class MainWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		JComboBox combobox = new JComboBox();
+		combobox.setEnabled(true);
+		combobox.setBounds(293, 550, 261, 22);
+		JFrame frame = new JFrame();
+		super.setFrame(frame);
 		frame.setBounds(100, 100, 1125, 827);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		
-		txtpnpleaseInputYour = new JTextPane();
-		txtpnpleaseInputYour.setText("Please input your Player name");
-		txtpnpleaseInputYour.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		txtpnpleaseInputYour.setEditable(false);
-		txtpnpleaseInputYour.setBounds(20, 11, 1067, 522);
-		frame.getContentPane().add(txtpnpleaseInputYour);
+		frame.getContentPane().setLayout(null);	
+		JTextPane pane = new JTextPane();
+		super.setInputhere(pane);
+		pane.setText("Please input your Player name");
+		pane.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		pane.setEditable(false);
+		pane.setBounds(20, 11, 1067, 522);
+		getFrame().getContentPane().add(pane);
 		 
-		JButton btnNewButton = new JButton("Disabled");
-		btnNewButton.setEnabled(false);
+		JButton btnNewButton = new JButton("Select");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(state);
-				switch (p_state) {
-					case 0:
-						switch (state) {
-						case 0:
-							printMsg("Please input your Player name\n(Note: Must be between 3 and 15 characters and no numbers or special characters");
-							str = txtInputHere.getText();
-							if (!Player.checkName(str)) {
-								printMsg("Invalid name");
-							}
-							else {
-								state += 1;
-								starterList = pickMonsters(player);
-							}
-							txtInputHere.setText("");
-							break;
-						case 1:
-							if (checkInt(txtInputHere.getText())) {
-								if (checkInt(txtInputHere.getText(), 1, 3)) {
-									index = Integer.parseInt(txtInputHere.getText());
-									state += 1;
-									printMsg("Time to name your Monster\nInput your monsters name\n(Note: If you input nothing your monster will be given the default name");
-								}
-							}
-							txtInputHere.setText("");
-							break;
-						
-						case 2:
-							if (txtInputHere.getText().strip() == "") {
-					        	player.addMonster(starterList.get(index));
-					        	printMsg("worked");
-					        }
-					        else {
-					        	starterList.get(index).setName(txtInputHere.getText());
-					        	player.addMonster(starterList.get(index - 1));
-					        	printMsg("Picked" + starterList.get(index-1));
-					        	state = 0;
-					        	p_state += 1;					        						        	
-					        }
-						 	break;
-						}
-						
-						
-				}
-				
-				System.out.println(state);
+				Battle battle = (Battle) combobox.getSelectedItem();
+				printMsg(battle.toString());
+				startBattle(battle);
 			}
 		});
 		btnNewButton.addMouseListener(new MouseAdapter() {
@@ -135,7 +94,7 @@ public class MainWindow {
 			
 				
 		}});
-		btnNewButton.setBounds(10, 550, 545, 183);
+		btnNewButton.setBounds(10, 550, 273, 183);
 		frame.getContentPane().add(btnNewButton);
 		
 		JLayeredPane layeredPane = new JLayeredPane();
@@ -148,39 +107,97 @@ public class MainWindow {
 		txtInputHere.setHorizontalAlignment(SwingConstants.LEFT);
 		txtInputHere.setColumns(10);
 		
-		JButton button = new JButton("New button");
-		button.setBounds(0, 0, 216, 172);
-		layeredPane.add(button);
+		battles = new JButton("View Battles");
+		layeredPane.setLayer(battles, 1);
+		battles.setBounds(0, 0, 184, 93);
+		layeredPane.add(battles);
+		battles.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {
+			if (!disabled) {
+				btnNewButton.setEnabled(true);
+				combobox.setEnabled(true);
+				Environment.showBattles(battlelist, getSelf());
+				mon_menu.setEnabled(false);
+				view_self.setEnabled(false);
+				shop.setEnabled(false);
+				pass_time.setEnabled(false);
+				view_inventory.setEnabled(false);
+				disabled = true;
+				for (Battle i : battlelist) {
+				combobox.addItem(i);
+				}
+			}
+			else {
+				combobox.setEnabled(false);
+				btnNewButton.setEnabled(false);
+				combobox.removeAllItems();
+				turnAllOn();
+			}
+		}
+		}
+		);
 		
-		btnNewButton_2 = new JButton("View Battles");
-		layeredPane.setLayer(btnNewButton_2, 1);
-		btnNewButton_2.setBounds(0, 0, 184, 93);
-		layeredPane.add(btnNewButton_2);
+		mon_menu = new JButton("Open your monsters menu");
+		layeredPane.setLayer(mon_menu, 1);
+		mon_menu.setBounds(0, 90, 184, 93);
+		layeredPane.add(mon_menu);
 		
-		btnNewButton_5 = new JButton("Open your monsters menu");
-		layeredPane.setLayer(btnNewButton_5, 1);
-		btnNewButton_5.setBounds(0, 90, 184, 93);
-		layeredPane.add(btnNewButton_5);
+		view_inventory = new JButton("view inventory");
+		layeredPane.setLayer(view_inventory, 1);
+		view_inventory.setBounds(183, 90, 172, 93);
+		layeredPane.add(view_inventory);
 		
-		btnNewButton_3 = new JButton("view inventory");
-		layeredPane.setLayer(btnNewButton_3, 1);
-		btnNewButton_3.setBounds(183, 90, 172, 93);
-		layeredPane.add(btnNewButton_3);
+		shop = new JButton("Go to Shop");
+		layeredPane.setLayer(shop, 1);
+		shop.setBounds(183, 0, 172, 93);
+		layeredPane.add(shop);
 		
-		btnNewButton_4 = new JButton("Go to Shop");
-		layeredPane.setLayer(btnNewButton_4, 1);
-		btnNewButton_4.setBounds(183, 0, 172, 93);
-		layeredPane.add(btnNewButton_4);
+		view_self = new JButton("view yourself");
+		layeredPane.setLayer(view_self, 1);
+		view_self.setBounds(350, 90, 172, 93);
+		layeredPane.add(view_self);
 		
-		btnNewButton_6 = new JButton("view yourself");
-		layeredPane.setLayer(btnNewButton_6, 1);
-		btnNewButton_6.setBounds(350, 90, 172, 93);
-		layeredPane.add(btnNewButton_6);
+		pass_time = new JButton("Pass time");
+		pass_time.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				checkTime();
+				printMsg("Time Pased");
+			}
+		});
+		layeredPane.setLayer(pass_time, 1);
+		pass_time.setBounds(350, 0, 172, 93);
+		layeredPane.add(pass_time);
+	
+		frame.getContentPane().add(combobox);
+		frame.setVisible(true);
+		btnNewButton.setEnabled(false);
+		combobox.setEnabled(false);
 		
-		btnNewButton_7 = new JButton("Pass time");
-		layeredPane.setLayer(btnNewButton_7, 1);
-		btnNewButton_7.setBounds(350, 0, 172, 93);
-		layeredPane.add(btnNewButton_7);
+	
 		
+	}
+	public void turnAllOn() {
+		mon_menu.setEnabled(true);
+		view_self.setEnabled(true);
+		shop.setEnabled(true);
+		pass_time.setEnabled(true);
+		view_inventory.setEnabled(true);
+		disabled = false;
+	}
+	public void startBattle(Battle battle) {
+		super.getFrame().setVisible(false);
+		battleWindow = new BattleWindow(this, battle, player);
+		
+	}
+	
+	
+	public void checkTime() {
+		if (time == 2) {
+			time = 0;
+			printMsg("New Day");
+			battlelist = Environment.generateBattles(player);
+		}
+		else {
+			time += 1;
+		}
 	}
 }

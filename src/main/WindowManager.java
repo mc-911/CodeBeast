@@ -6,13 +6,19 @@ import java.util.List;
 
 public class WindowManager {
 	EnvironmentWindow enviWindow;
+	MainWindow mainWindow;
 	
 	private static Monster[] starters = new Monster[] {new Vesuvius(), new Everest(), new Parihaka(), new Flame(), new Jerry()};
 	public void startEnvi() {
-		enviWindow = new EnvironmentWindow();
+		enviWindow = new EnvironmentWindow(this);
+	}
+	public void closeEnvi() {
+		enviWindow.closeWindow();
+		System.out.println("Exited");
+		startMain();
 	}
 	public void startMain() {
-		mainWindow
+		mainWindow = new MainWindow(enviWindow.getPlayer(), enviWindow.getGameLength(), enviWindow.getHard());
 	}
 	public void pickMonsters(Player player) {
 		List<Monster> starterslist = Arrays.asList(starters);
