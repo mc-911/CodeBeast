@@ -19,6 +19,7 @@ public class MenuWindow extends GameWindow{
 	private JButton viewItems;
 	private JComboBox comboBox_1;
 	private JComboBox comboBox;
+	private MainWindow mainWindow;
 
 	/**
 	 * Launch the application.
@@ -28,7 +29,8 @@ public class MenuWindow extends GameWindow{
 	/**
 	 * Create the application.
 	 */
-	public MenuWindow(Player player) {
+	public MenuWindow(Player player, GameWindow mainWindow) {
+		this.mainWindow = (MainWindow) mainWindow;
 		state = 0;
 		this.player = player;
 		initialize();
@@ -59,7 +61,14 @@ public class MenuWindow extends GameWindow{
 				switch (state) {
 				case 0:
 					printMsg("Monster Order: " + player.getMonsterOrder());
-					printMsg(player.get)
+					for (int i = 0; i != player.getMonsters().size(); i++) {
+						if (player.getMonster(i).getCurrentHealth() == 0) {
+							printMsg(i + ". Downed: " + player.getMonster(i).toString());
+						}
+						else {
+							printMsg(i + ". " + player.getMonster(i).toString());
+						}
+					}
 					comboBox.setEnabled(true);
 					comboBox_1.setEnabled(true);
 					viewItems.setText("Back");

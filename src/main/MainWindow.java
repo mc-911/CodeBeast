@@ -46,6 +46,7 @@ public class MainWindow extends GameWindow{
 	private	int gameLength;
 	private boolean hard;
 	private int day;
+	private MenuWindow menuWindow;
 	/**A string array which holds a string corresponding to the current time**/
 	private static String[] times = {"Morning", "Afternoon", "Night"};
 	
@@ -149,6 +150,12 @@ public class MainWindow extends GameWindow{
 		);
 		
 		mon_menu = new JButton("Open your monsters menu");
+		mon_menu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				menuWindow = new MenuWindow(player, getSelf());
+				
+			}
+		});
 		layeredPane.setLayer(mon_menu, 1);
 		mon_menu.setBounds(0, 90, 184, 93);
 		layeredPane.add(mon_menu);
