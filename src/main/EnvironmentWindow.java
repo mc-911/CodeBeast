@@ -120,7 +120,7 @@ public class EnvironmentWindow extends GameWindow{
 						
 						case 4:
 							if (txtInputHere.getText().strip() == "") {
-					        	player.addMonster(starterList.get(index));
+					        	player.addMonster(starterList.get(index - 1));
 					        	printMsg("worked");
 					        }
 					        else {

@@ -89,10 +89,11 @@ public class MenuWindow extends GameWindow{
 					viewMonsters.setText("Press to swap monsters");
 					break;
 				case 2:
-					firstIndex = player.getMonsters().indexOf(combobox.getSelectedItem());
-					secondIndex = player.getMonsters().indexOf(combobox.getSelectedItem());		
+					firstIndex = player.getMonsters().indexOf((Monster) comboBox.getSelectedItem());
+					secondIndex = player.getMonsters().indexOf((Monster) comboBox_1.getSelectedItem());		
 					if (firstIndex != secondIndex) {
-						printMsg(String.format("%s and %s have been swapped", player.getMonster(firstIndex), player.getMonster(secondIndex)));
+						System.out.println("Shouldnt see this");
+						printMsg(String.format("%s and %s have been swapped", player.getMonster(firstIndex).getName(), player.getMonster(secondIndex).getName()));
 						Collections.swap(player.getMonsters(), firstIndex, secondIndex);
 						comboBox.removeAll();
 						comboBox_1.removeAll();
@@ -139,6 +140,7 @@ public class MenuWindow extends GameWindow{
 						printMsg(i.toString());
 					}
 					viewMonsters.setText("Back");
+					comboBox.removeItem(player.getItems().size()-1);
 					viewItems.setText("Press to select item to use on monster");
 					state = 3;
 					}
@@ -165,6 +167,8 @@ public class MenuWindow extends GameWindow{
 					Items item = (Items) comboBox_1.getSelectedItem();
 					Monster mon = (Monster) comboBox.getSelectedItem();
 					item.drinkPotion(mon, player, getSelf());
+					comboBox_1.removeAllItems();
+					comboBox.removeAllItems();
 					viewItems.setText("View Items");
 					viewMonsters.setText("View Monsters");
 					comboBox.setEnabled(false);

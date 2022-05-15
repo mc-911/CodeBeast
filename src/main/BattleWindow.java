@@ -41,6 +41,7 @@ public class BattleWindow extends GameWindow{
 	private JLayeredPane layeredPane;
 	private JButton exit;
 	private JPanel panel;
+	private boolean hard;
 	/**
 	 * Launch the application.
 	 */
@@ -57,10 +58,13 @@ public class BattleWindow extends GameWindow{
 		}
 		goldEarned =  5* (time +1) * (rank + 1) * mult;
 		dmgIncrease = 5 * (rank + 1) * mult * (time + 1);
+		
 		this.player = player;
 		this.mainWindow = window;	
 		leading = battle.getLeading();
+		if (hard) {
 		leading.setDamageAmount(leading.getDamage() + dmgIncrease);
+		}
 		this.battle = battle;
 		player.setActiveMonster(0);
 		initialize();
@@ -146,7 +150,9 @@ public class BattleWindow extends GameWindow{
 			}
 			else {
 				leading = battle.getLeading();
-				leading.setDamageAmount(leading.getDamage() + dmgIncrease);
+				if (hard) {
+					leading.setDamageAmount(leading.getDamage() + dmgIncrease);
+				}
 			}
 		}
 		else {
@@ -154,6 +160,8 @@ public class BattleWindow extends GameWindow{
 			printMsg(String.format("%s dealt %s damage to %s", leading.getName(), leading.getDamage(), player.getActiveMonster().getName()));
 			if (player.getActiveMonster().getCurrentHealth() == 0) {
 				printMsg(String.format("%s is out!", player.getActiveMonster().getName()));
+				player.getActiveMonster().setDaysFainted(player.getActiveMonster().getdaysFainted() + 1);
+				player.getActiveMonster().setFaintedToday(true);
 				if (battle.checkAllDowned(player)) {
 					lost();
 				}

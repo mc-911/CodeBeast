@@ -110,7 +110,7 @@ public class Player {
 	public String stringMonsters() {
 		String strMon = "";
 		if (userMonsters.size() == 0) {
-			return "No userMonsters in party";
+			return "No Monsters in party";
 		}
 		else {
 			for (int i = 0; i != userMonsters.size(); i++) {
@@ -137,7 +137,9 @@ public class Player {
 	public void sleepMon() {
 		for (Monster i : userMonsters) {
 			i.addHealth(i.getHealAmount());
-			
+			if (!i.getFaintedToday()) {
+				i.setDaysFainted(0);
+			}
 		}
 	}
 }

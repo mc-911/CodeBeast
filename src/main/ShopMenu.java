@@ -90,6 +90,7 @@ public class ShopMenu extends GameWindow{
 						enterButton.setVisible(true);
 						broughtMonster = (Monster) comboBox.getSelectedItem();
 						printMsg("Its time to name your new Monster!\nIf you dont wish to name your monster, simply press the enter button and your monster will be given the default name!");
+						comboBox.setEnabled(false);
 					}
 					break;
 				}
@@ -119,11 +120,11 @@ public class ShopMenu extends GameWindow{
 						textField.setVisible(false);
 						enterButton.setEnabled(false);
 						enterButton.setVisible(false);
-						player.getItems().add((Items) comboBox.getSelectedItem());
 						turnOn();
 						comboBox.removeAllItems();
 						sellItems.setText("Sell Items");
 						viewItems.setText("View Items");
+						comboBox.setEnabled(false);
 						state = 0;
 					}
 					break;
@@ -279,6 +280,7 @@ public class ShopMenu extends GameWindow{
 		frame.getContentPane().add(btnNewButton);
 		enterButton.setVisible(false);
 		frame.setVisible(true);
+		comboBox.setEnabled(false);
 	}
 	public void turnOn() {
 		viewMonsters.setEnabled(true);

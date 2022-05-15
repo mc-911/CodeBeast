@@ -150,6 +150,7 @@ public class Monster extends Purchasable{
 		damage = (int) Math.round(damage * 1.5);
 		maxHealth = (int) Math.round(maxHealth * 1.5);
 		healAmount = (int) Math.round(healAmount * 1.5);
+		currentHealth = maxHealth;
 		window.printMsg(String.format(levelUpFormat, name, level, maxHealth, healAmount));
 		
 	}

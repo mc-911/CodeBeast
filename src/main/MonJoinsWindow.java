@@ -28,6 +28,8 @@ public class MonJoinsWindow extends GameWindow{
 	 * Create the application.
 	 */
 	public MonJoinsWindow(Player player, Monster monster, GameWindow window) {
+		this.player = player;
+		this.monster = monster;
 		this.mainWindow = window;
 		initialize();
 	}
@@ -53,7 +55,7 @@ public class MonJoinsWindow extends GameWindow{
 		enterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (textField.getText().strip() != "") {
-					monster.setName(getText());
+					monster.setName(textField.getText());
 				}
 				player.addMonster(monster);
 				textField.setText("");
@@ -68,6 +70,8 @@ public class MonJoinsWindow extends GameWindow{
 		textField.setBounds(545, 582, 540, 165);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
+		frame.setVisible(true);
+		frame.setEnabled(true);
 	}
 
 }

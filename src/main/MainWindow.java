@@ -202,6 +202,7 @@ public class MainWindow extends GameWindow{
 		btnNewButton_2.setEnabled(false);
 		btnNewButton_2.setBounds(293, 583, 261, 146);
 		frame.getContentPane().add(btnNewButton_2);
+		btnNewButton_1 = btnNewButton_2;
 		
 	
 		
@@ -230,8 +231,19 @@ public class MainWindow extends GameWindow{
 		else if (time == 2) {
 			day++;
 			time = 0;
-			Environment.randomEventCheck(player, getSelf());
+			try {
+				Environment.randomEventCheck(player, getSelf());
+			}
+			catch ( java.util.ConcurrentModificationException e) {
+				
+			}
 			player.sleepMon();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if (player.getMonsters().size() == 0 && player.getGold() < 10) {
 				gameOver();
 			}
@@ -243,7 +255,7 @@ public class MainWindow extends GameWindow{
 		else {
 			time += 1;
 		}
-		printMsg(String.format("Gold: %s Day: %s Days Remaining: %s, Time: %s", player.getGold(), day, gameLength - day, Array.get(times, time) + "\n"));
+		printMsg(String.format("Gold: %s Day: %s Days Remaining: %s, Time: %s", player.getGold(), day, gameLength - day, times[time] + "\n"));
 	}
 	public void startShop() {
 		super.getFrame().setVisible(false);
