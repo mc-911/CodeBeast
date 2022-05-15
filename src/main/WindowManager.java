@@ -14,18 +14,13 @@ public class WindowManager {
 	}
 	public void closeEnvi() {
 		enviWindow.closeWindow();
-		System.out.println("Exited");
 		startMain();
 	}
 	public void startMain() {
 		mainWindow = new MainWindow(enviWindow.getPlayer(), enviWindow.getGameLength(), enviWindow.getHard());
+		enviWindow.getFrame().dispose();
 	}
-	public void pickMonsters(Player player) {
-		List<Monster> starterslist = Arrays.asList(starters);
-        Collections.shuffle(starterslist);
-        enviWindow.printMsg(String.format("Time to pick your Monster\nYou have three options to pick from\n1. %s\n2. %s\n3. %s", starterslist.get(0), starterslist.get(1), starterslist.get(2)));
-        enviWindow.printMsg("Input the number next your choosen monster to pick it!\n(Your input must be an integer)");
-	}
+	
 	public static void main(String[] args) {
 		WindowManager manager = new WindowManager();
 		manager.startEnvi();

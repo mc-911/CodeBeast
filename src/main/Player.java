@@ -68,42 +68,7 @@ public class Player {
 		}
 		return menuString;
 	}
-	public  void monsterMenu() {
-		int input;
-		String menuString = "";
-		for (int i = 0; i != userMonsters.size(); i++) {
-			if (userMonsters.get(i).getCurrentHealth() != 0){
-			menuString = menuString + String.format("%s. %s ", i, userMonsters.get(i).getName()) ;
-			}
-			else {
-				menuString =  menuString + String.format("(x) Downed: %s", userMonsters.get(i).getName());
-			}
-		}
-		Environment.printMsg("Monster Order: " + menuString);
-		Environment.displayList(userMonsters.toArray(new Purchasable[userMonsters.size()]));
-		Environment.printMsg("Input 0 to go back\nInput 1 to enter change order mode");
-		
-		input = Environment.getUserIntBounds(0, 1);
-		switch (input) {
-		case 0:
-			break;
-		case 1:
-			int firstMonIndex;
-			int secondMonIndex;
-			Environment.printMsg("Enter the position of the first monster you'd like to swap");
-			firstMonIndex = Environment.getUserIntBounds(0, userMonsters.size());
-			Environment.printMsg(String.format("First Monster: %s", userMonsters.get(input).getName()));
-			Environment.printMsg("Enter the position of the second monster you'd like to swap");
-			secondMonIndex = Environment.getUserIntBounds(0, userMonsters.size());
-			Environment.printMsg(String.format("First Monster: %s\nSecond Monster: %s", userMonsters.get(firstMonIndex).getName(), userMonsters.get(input).getName()));
-			Collections.swap(userMonsters, firstMonIndex, secondMonIndex);
-			activeMonster = userMonsters.get(0);
-			
-			
-		}
-		
-		
-	}
+	
 	public void addItem(Items item) {
 		userItems.add(item);
 	}
@@ -113,26 +78,7 @@ public class Player {
 	public ArrayList<Items> getItems() {
 		return userItems;
 	}
-	public void getInventory() {
-		if (userItems.size() == 0) {
-			Environment.printMsg("No items in inventory.");
-			Environment.printMsg("Monsters:\n");
-		}
-		else {
-			Environment.printMsg("Items:\n");
-			for (Items item : userItems) {
-				Environment.printMsg(item.toString());
-			}
-		}
-		Environment.printMsg(stringMonsters());
-		if (userItems.size() != 0) {
-		Environment.printMsg("Input a number to select an item.");
-		Items item = userItems.get(Environment.getUserIntBounds(0, userItems.size()));
-		Environment.displayList(userMonsters.toArray(new Purchasable[userMonsters.size()]));
-		Environment.printMsg("Select the monster that you would like to apply the item to.");
-		item.drinkPotion(userMonsters.get(Environment.getUserIntBounds(0, userMonsters.size())), this);
-		}
-	}
+
 	
 	public void addMonster(Monster creep) {
 		userMonsters.add(creep);

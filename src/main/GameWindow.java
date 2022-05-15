@@ -49,7 +49,6 @@ public abstract class GameWindow {
 	/**An instance method, used to set the set in textField, takes a String parameter str as its parameter, returns void**/
 
 	public void setText(String str) {
-		System.out.println(str + "<--");
 		inputHere.setText(str);
 	
 	}

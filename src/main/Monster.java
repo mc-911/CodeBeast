@@ -25,6 +25,7 @@ public class Monster extends Purchasable{
 	private int currentHealth;
 	/**A static String variable which contains the format of the message shown to the user, when one of their monsters levels up**/
 	static String levelUpFormat = "%s is now level %s\nMax Health increased to %s\nHeal Amount increased to %s";
+	private boolean brought = false;
 	/**A constructor that takes a String variable name as its parameter, used so that the name of the monster may be set when an Monster object is created**/
 	public Monster(String name) {
 		this.name = name;
@@ -158,6 +159,12 @@ public class Monster extends Purchasable{
 		if (points >= 100 * level) {
 			levelUp(window);
 		}
+	}
+	public void setBrought(boolean bool) {
+		brought = bool;
+	}
+	public boolean getBrought() {
+		return brought;
 	}
 
 	

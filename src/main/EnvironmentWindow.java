@@ -47,6 +47,7 @@ public class EnvironmentWindow extends GameWindow{
 	public EnvironmentWindow(WindowManager manager) {
 		super.setManager(manager);;
 		initialize();
+		printMsg("Please input your Player name\n(Note: Must be between 3 and 15 characters and no numbers or special characters");
 	}
 
 	/**
@@ -60,11 +61,10 @@ public class EnvironmentWindow extends GameWindow{
 		super.setFrame(frame);
 		JTextPane txtpnpleaseInputYour = new JTextPane();
 		super.setInputhere(txtpnpleaseInputYour);
-		txtpnpleaseInputYour.setText("Please input your Player name");
 		txtpnpleaseInputYour.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		txtpnpleaseInputYour.setEditable(false);
 		txtpnpleaseInputYour.setBounds(20, 11, 1067, 522);
-		getFrame().getContentPane().add(txtpnpleaseInputYour);
+		frame.getContentPane().add(txtpnpleaseInputYour);
 		super.setFrame(frame);
 		JButton btnNewButton = new JButton("Select");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -73,7 +73,6 @@ public class EnvironmentWindow extends GameWindow{
 					case 0:
 						switch (state) {
 						case 0:
-							printMsg("Please input your Player name\n(Note: Must be between 3 and 15 characters and no numbers or special characters");
 							str = txtInputHere.getText();
 							if (!Player.checkName(str)) {
 								printMsg("Invalid name");

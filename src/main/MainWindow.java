@@ -48,6 +48,10 @@ public class MainWindow extends GameWindow{
 	private MenuWindow menuWindow;
 	/**A string array which holds a string corresponding to the current time**/
 	private static String[] times = {"Morning", "Afternoon", "Night"};
+	private Shop shop_o;
+	private ShopMenu shopMenu;
+	private JButton btnNewButton;
+	private JButton btnNewButton_2;
 	
 	/**
 	 * Launch the application.
@@ -58,6 +62,7 @@ public class MainWindow extends GameWindow{
 	 * Create the application.
 	 */
 	public MainWindow(Player player, int gameLength, boolean hard) {
+		shop_o = new Shop();
 		day = 1;
 		this.player = player;
 		this.gameLength = gameLength;
@@ -71,7 +76,7 @@ public class MainWindow extends GameWindow{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		JComboBox combobox = new JComboBox();
+		combobox = new JComboBox();
 		combobox.setEnabled(true);
 		combobox.setBounds(293, 550, 261, 22);
 		JFrame frame = new JFrame();
@@ -81,13 +86,12 @@ public class MainWindow extends GameWindow{
 		frame.getContentPane().setLayout(null);	
 		JTextPane pane = new JTextPane();
 		super.setInputhere(pane);
-		pane.setText("Please input your Player name");
 		pane.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		pane.setEditable(false);
 		pane.setBounds(20, 11, 1067, 522);
-		getFrame().getContentPane().add(pane);
+		frame.getContentPane().add(pane);
 		 
-		JButton btnNewButton = new JButton("Select");
+		btnNewButton = new JButton("Select");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Battle battle = (Battle) combobox.getSelectedItem();
@@ -161,7 +165,7 @@ public class MainWindow extends GameWindow{
 		shop = new JButton("Go to Shop");
 		shop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Create a ShopWindow Class
+				startShop();
 			}
 		});
 		layeredPane.setLayer(shop, 1);
@@ -194,6 +198,11 @@ public class MainWindow extends GameWindow{
 		btnNewButton.setEnabled(false);
 		combobox.setEnabled(false);
 		
+		btnNewButton_2 = new JButton("Exit");
+		btnNewButton_2.setEnabled(false);
+		btnNewButton_2.setBounds(293, 583, 261, 146);
+		frame.getContentPane().add(btnNewButton_2);
+		
 	
 		
 	}
@@ -209,22 +218,55 @@ public class MainWindow extends GameWindow{
 		super.getFrame().setVisible(false);
 		battleWindow = new BattleWindow(this, battle, player, time, hard, battlelist.indexOf(battle));
 		time++;
-		checkTime();
 		turnAllOn();
 		
 	}
 	
 	
 	public void checkTime() {
-		printMsg(String.format("Gold: %s Day: %s Days Remaining: %s, Time: %s", player.getGold(), day, gameLength - day, Array.get(times, time) + "\n"));
-		if (time == 2) {
+		if (time == 2 && day == gameLength) {
+			gameOver();
+		}
+		else if (time == 2) {
 			day++;
 			time = 0;
+			Environment.randomEventCheck(player, getSelf());
+			player.sleepMon();
+			if (player.getMonsters().size() == 0 && player.getGold() < 10) {
+				gameOver();
+			}
+			else {
 			printMsg("New Day");
 			battlelist = Environment.generateBattles(player);
+			}
 		}
 		else {
 			time += 1;
 		}
+		printMsg(String.format("Gold: %s Day: %s Days Remaining: %s, Time: %s", player.getGold(), day, gameLength - day, Array.get(times, time) + "\n"));
+	}
+	public void startShop() {
+		super.getFrame().setVisible(false);
+		shopMenu = new ShopMenu(player, shop_o, this);
+		turnAllOn();
+	}
+	public void Show_2() {
+		show();
+		if (player.getMonsters().size() == 0 && player.getGold() < 10) {
+			gameOver();
+		}
+		checkTime();
+	}
+	/**An instance method,it is used to end the game, takes Player player, and int day as its parameters, returns void**/
+	public void gameOver() {
+		btnNewButton.setEnabled(false);
+		btnNewButton_1.setEnabled(false);
+		battles.setEnabled(false);
+		shop.setEnabled(false);
+		mon_menu.setEnabled(buttonPressed);
+		view_self.setEnabled(false);
+		pass_time.setEnabled(false);
+		printMsg("GAME OVER");
+		printMsg(String.format("Name: %s\nGame Duration: %s/%s days\nGold: %s\nPoints: %s", player.getName(), day, gameLength, player.getGold(), player.getPoints()));
 	}
 }

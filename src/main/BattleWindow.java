@@ -76,11 +76,11 @@ public class BattleWindow extends GameWindow{
 		frame.getContentPane().setLayout(null);	
 		JTextPane pane = new JTextPane();
 		super.setInputhere(pane);
-		pane.setText("Please input your Player name");
+		pane.setText("Battle Started");
 		pane.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		pane.setEditable(false);
 		pane.setBounds(20, 11, 1067, 522);
-		getFrame().getContentPane().add(pane);
+		frame.getContentPane().add(pane);
 		
 		layeredPane = new JLayeredPane();
 		layeredPane.setBounds(283, 550, 522, 183);
@@ -124,7 +124,7 @@ public class BattleWindow extends GameWindow{
 		);
 		exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainWindow.show();
+				mainWindow.Show_2();
 				frame.dispose();
 			}
 		});
@@ -134,11 +134,7 @@ public class BattleWindow extends GameWindow{
 		
 	}
 	
-	public void startBattle() {
-		frame.setVisible(false);
-		
-		
-	}
+
 	
 	
 	public void checkFoe() {

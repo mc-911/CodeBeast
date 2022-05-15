@@ -55,7 +55,6 @@ public class MenuWindow extends GameWindow{
 		JTextPane pane = new JTextPane();
 		frame.getContentPane().add(pane);
 		super.setInputhere(pane);
-		pane.setText("Please input your Player name");
 		pane.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		pane.setEditable(false);
 		pane.setBounds(20, 11, 1067, 522);
@@ -110,6 +109,8 @@ public class MenuWindow extends GameWindow{
 					viewMonsters.setText("View Monsters");
 					comboBox.setEnabled(false);
 					comboBox_1.setEnabled(false);
+					comboBox.removeAllItems();
+					comboBox_1.removeAllItems();
 					state = 0;
 					break;
 					
@@ -127,8 +128,9 @@ public class MenuWindow extends GameWindow{
 			public void actionPerformed(ActionEvent e) {
 				switch (state) {
 				case 0:
+					if (player.getItems().size() != 0) {
 					comboBox.setEnabled(true);
-					comboBox.setEnabled(true);
+					comboBox_1.setEnabled(true);
 					for (Monster i: player.getMonsters()) {
 						comboBox.addItem(i);
 					}
@@ -139,6 +141,10 @@ public class MenuWindow extends GameWindow{
 					viewMonsters.setText("Back");
 					viewItems.setText("Press to select item to use on monster");
 					state = 3;
+					}
+					else {
+						printMsg("You dont have any items!");
+					}
 					break;
 				case 1:
 					viewItems.setText("View Items");
