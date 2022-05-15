@@ -60,6 +60,7 @@ public class BattleWindow extends GameWindow{
 		this.player = player;
 		this.mainWindow = window;	
 		leading = battle.getLeading();
+		leading.setDamageAmount(leading.getDamage() + dmgIncrease);
 		this.battle = battle;
 		player.setActiveMonster(0);
 		initialize();
@@ -145,6 +146,7 @@ public class BattleWindow extends GameWindow{
 			}
 			else {
 				leading = battle.getLeading();
+				leading.setDamageAmount(leading.getDamage() + dmgIncrease);
 			}
 		}
 		else {
