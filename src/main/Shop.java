@@ -36,6 +36,9 @@ public class Shop {
 	public Monster[] getMonsters() {
 		return monsters;
 	}
+	public Items[] getItems() {
+		return items;
+	}
 	/** a method that will buy a monster that the player selects **/
 	public boolean buy(Player player, Monster monster, GameWindow window) {
 		if (player.getMonsters().size() < 4) {
