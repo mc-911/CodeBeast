@@ -24,9 +24,8 @@ import javax.swing.SwingConstants;
 /**An class which uses Java Swing to create a window, used in conjunction with instances of classes Battle, Shop, Player and "Window" classes such as BattleWindow, MenuWindow and ShopWindow, to provide the main game play loop of the game**/
 public class MainWindow extends GameWindow{
 	/**A JComboBox, used to have the user select a battle to fight**/
-	private JComboBox combobox;
-	private JButton btnNewButton_1;
-	/**A JButton that displays the battles avaliable to the user**/
+	private JComboBox comboBox;
+	/**A JButton that displays the battles available to the user**/
 	private JButton battles;
 	/**A JButton which when pressed will open up a ShopMenu**/
 	private JButton shop;
@@ -60,10 +59,12 @@ public class MainWindow extends GameWindow{
 	private Shop shop_o;
 	/**A ShopMenu variable used to contain the ShopWindow Object that will be used to have the user "Go to the Shop"**/
 	private ShopMenu shopMenu;
-	/**A JButton which when pressed will start the battle that the user has selected from comobox (Given the user hasn't already fought this battle)**/
-	private JButton btnNewButton;
+	/**A JButton which when pressed will start the battle that the user has selected from comboBox (Given the user hasn't already fought this battle)**/
+	private JButton selectButton;
 	/**A JButton which when pressed will close the game, used when the game has ended**/
-	private JButton btnNewButton_2;
+	private JButton exitButton;
+	/**An boolean variable used to keep track of whether or not the game is over**/
+	private boolean gameOver;
 	
 	/**
 	 * Launch the application.
@@ -89,9 +90,9 @@ public class MainWindow extends GameWindow{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		combobox = new JComboBox();
-		combobox.setEnabled(true);
-		combobox.setBounds(293, 550, 261, 22);
+		comboBox = new JComboBox();
+		comboBox.setEnabled(true);
+		comboBox.setBounds(293, 550, 261, 22);
 		JFrame frame = new JFrame();
 		super.setFrame(frame);
 		frame.setBounds(100, 100, 1125, 827);
@@ -104,27 +105,28 @@ public class MainWindow extends GameWindow{
 		pane.setBounds(20, 11, 1067, 522);
 		frame.getContentPane().add(pane);
 		 
-		btnNewButton = new JButton("Select");
-		btnNewButton.addActionListener(new ActionListener() {
+		selectButton = new JButton("Select");
+		selectButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Battle battle = (Battle) combobox.getSelectedItem();
+				Battle battle = (Battle) comboBox.getSelectedItem();
 				if(battle.getDone()) {
 					printMsg("You may not select this battle, as you've already fought it!");
 				}
 				else {
 				printMsg(battle.toString());
+				comboBox.removeAllItems();
 				startBattle(battle);
 				}
 			}
 		});
-		btnNewButton.addMouseListener(new MouseAdapter() {
+		selectButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 			
 				
 		}});
-		btnNewButton.setBounds(10, 550, 273, 183);
-		frame.getContentPane().add(btnNewButton);
+		selectButton.setBounds(10, 550, 273, 183);
+		frame.getContentPane().add(selectButton);
 		
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setBounds(565, 550, 522, 183);
@@ -136,8 +138,8 @@ public class MainWindow extends GameWindow{
 		layeredPane.add(battles);
 		battles.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {
 			if (!disabled) {
-				btnNewButton.setEnabled(true);
-				combobox.setEnabled(true);
+				selectButton.setEnabled(true);
+				comboBox.setEnabled(true);
 				showBattles(battlelist);
 				mon_menu.setEnabled(false);
 				view_self.setEnabled(false);
@@ -146,14 +148,14 @@ public class MainWindow extends GameWindow{
 				disabled = true;
 				battles.setText("Back");
 				for (Battle i : battlelist) {
-				combobox.addItem(i);
+				comboBox.addItem(i);
 				}
 			}
 			else {
 				battles.setText("View Battles");
-				combobox.setEnabled(false);
-				btnNewButton.setEnabled(false);
-				combobox.removeAllItems();
+				comboBox.setEnabled(false);
+				selectButton.setEnabled(false);
+				comboBox.removeAllItems();
 				turnAllOn();
 			}
 		}
@@ -202,23 +204,28 @@ public class MainWindow extends GameWindow{
 		pass_time.setBounds(350, 0, 172, 93);
 		layeredPane.add(pass_time);
 	
-		frame.getContentPane().add(combobox);
+		frame.getContentPane().add(comboBox);
 		frame.setVisible(true);
-		btnNewButton.setEnabled(false);
-		combobox.setEnabled(false);
+		selectButton.setEnabled(false);
+		comboBox.setEnabled(false);
 		
-		btnNewButton_2 = new JButton("Exit");
-		btnNewButton_2.setEnabled(false);
-		btnNewButton_2.setBounds(293, 583, 261, 146);
-		frame.getContentPane().add(btnNewButton_2);
-		btnNewButton_1 = btnNewButton_2;
+		exitButton = new JButton("Exit");
+		exitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+		exitButton.setEnabled(false);
+		exitButton.setBounds(293, 583, 261, 146);
+		frame.getContentPane().add(exitButton);
+		
 		
 	
 		
 	}
 	/**A public method which enables all of the JButtons, returns void**/
 	public void turnAllOn() {
-		combobox.setEnabled(false);
+		comboBox.setEnabled(false);
 		mon_menu.setEnabled(true);
 		view_self.setEnabled(true);
 		shop.setEnabled(true);
@@ -229,8 +236,9 @@ public class MainWindow extends GameWindow{
 	public void startBattle(Battle battle) {
 		super.getFrame().setVisible(false);
 		battleWindow = new BattleWindow(this, battle, player, time, hard, battlelist.indexOf(battle));
-		time++;
 		turnAllOn();
+		battles.setText("View Battles");
+		selectButton.setEnabled(false);
 		
 	}
 	
@@ -261,12 +269,16 @@ public class MainWindow extends GameWindow{
 			else {
 			printMsg("New Day");
 			battlelist = generateBattles(player);
+			comboBox.removeAllItems();
 			}
 		}
 		else {
 			time += 1;
 		}
+		if (gameOver) {
 		printMsg(String.format("Gold: %s Day: %s Days Remaining: %s, Time: %s", player.getGold(), day, gameLength - day, times[time] + "\n"));
+		}
+		
 	}
 	/**A method used to open the Shop, creates a new instance of ShopMenu, returns void**/
 	public void startShop() {
@@ -280,17 +292,21 @@ public class MainWindow extends GameWindow{
 		if (player.getMonsters().size() == 0 && player.getGold() < 10) {
 			gameOver();
 		}
+		else {
 		checkTime();
+		}
 	}
 	/**An instance method,it is used to end the game, takes Player player, and int day as its parameters, returns void**/
 	public void gameOver() {
-		btnNewButton.setEnabled(false);
-		btnNewButton_1.setEnabled(false);
+		selectButton.setEnabled(false);
+		exitButton.setEnabled(true);
 		battles.setEnabled(false);
 		shop.setEnabled(false);
 		mon_menu.setEnabled(false);
 		view_self.setEnabled(false);
 		pass_time.setEnabled(false);
+		gameOver = true;
+		setTextPane("");
 		printMsg("GAME OVER");
 		printMsg(String.format("Name: %s\nGame Duration: %s/%s days\nGold: %s\nPoints: %s", player.getName(), day, gameLength, player.getGold(), player.getPoints()));
 	}
@@ -315,7 +331,7 @@ public class MainWindow extends GameWindow{
 		ArrayList<RandomEvent> randList;
 		/**A forEarch loop used to iterate through the user's list of monsters, and to determine for each one if an event should fire which event should fire then fires that event via calling startEvent(mon,player)**/
 		for (Monster mon : player.getMonsters()) {
-			/**Sets the regular probabiltiy of a monster leveling up (monRandLvlUp occuring) , or a monser leaving (monLeaves occuring)**/
+			/**Sets the regular probability of a monster leveling up (monRandLvlUp occurring) , or a monster leaving (monLeaves occurring)**/
 			randList = new ArrayList<>(Arrays.asList(monLeave, monLeave, monLeave, monLeave, up, up, up, up, up, up, up, up));
 			/**A for loop used to add monLeave to randList the amount of times this is done is the amount of days a monster has fainted in a row (given by mon.getDaysFainted()), used to increase the likelihood a specific monster leaves**/
 			for (int i = mon.getdaysFainted(); i != 0; i-- ) {randList.add(monLeave);}
@@ -339,7 +355,7 @@ public class MainWindow extends GameWindow{
 				occured = true;
 			}
 		}
-		/**An if statement checks if occured is false, if occured is false it will print "Nothing happaend! this should only occur when no Random Event has occured"**/
+		/**An if statement checks if occured is false, if occured is false it will print "Nothing happened! this should only occur when no Random Event has occured"**/
 		if (!occured) {
 			getSelf().printMsg("Nothing happened!");
 		}

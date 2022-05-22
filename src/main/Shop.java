@@ -79,7 +79,7 @@ public class Shop {
 		int price = item.getPurchasePrice();
 		player.setGold(coins+price);
 		player.removeItem(item);
-		window.printMsg(String.format("Succesfully bought the item. Your gold balance is now %s", player.getGold()));
+		window.printMsg(String.format("Succesfully sold the item. Your gold balance is now %s", player.getGold()));
 	}
 	
 	/** a method that will sell a monster that the player selects **/
@@ -88,7 +88,7 @@ public class Shop {
 		int price = monster.getPurchasePrice();
 		player.setGold(coins+price);
 		player.removeMonster(monster);
-		window.printMsg(String.format("Succesfully bought the item. Your gold balance is now %s", player.getGold()));
+		window.printMsg(String.format("Succesfully sold the Monster. Your gold balance is now %s", player.getGold()));
 	}
 	
 	/** adds a rarity system to the shop **/
@@ -105,7 +105,7 @@ public class Shop {
 		}
 	}
 	
-	/** a method that has the shop menu. the player will select the item or monster they want to buy. they can also view their inventory **/
+	
 
 	
 	}
