@@ -112,6 +112,9 @@ public class MainWindow extends GameWindow{
 				if(battle.getDone()) {
 					printMsg("You may not select this battle, as you've already fought it!");
 				}
+				else if (player.getMonsters().size() == 0) {
+					printMsg("You may not fight as you have no monsters to fight with!");
+				}
 				else {
 				printMsg(battle.toString());
 				comboBox.removeAllItems();
