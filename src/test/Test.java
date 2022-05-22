@@ -46,4 +46,5 @@ class BattleTest {
 		assertEquals(5, monsters.size());
 	}
 	
+	
 }

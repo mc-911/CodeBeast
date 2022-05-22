@@ -20,7 +20,7 @@ public class Parihaka extends Monster{
 		super.sethealAmount(5);
 		super.setPurchasePrice(10);
 		super.setSellBackPrice(5);
-		super.setDescription("Sexy dark man.");
+		super.setDescription("A low cost monster that will always do it's best.");
 	}	
 
 }

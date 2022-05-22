@@ -14,11 +14,11 @@ public class Goolops extends Monster{
 	}
 	/**An instance method used to change some of the instance variables found in its super class Monster**/
 	public void setter() {
-		super.setCurrentHealth(500);
-		super.setDamageAmount(30);
-		super.setMaxHealth(500);
+		super.setCurrentHealth(850);
+		super.setDamageAmount(45);
+		super.setMaxHealth(850);
 		super.sethealAmount(50);
-		super.setPurchasePrice(35);
+		super.setPurchasePrice(65);
 		super.setSellBackPrice(0);
 		super.setDescription("An incredibly rare monster that has a large amount of health.");
 	}	

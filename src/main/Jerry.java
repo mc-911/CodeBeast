@@ -19,9 +19,9 @@ public class Jerry extends Monster{
 		super.setDamageAmount(55);
 		super.setMaxHealth(150);
 		super.sethealAmount(15);
-		super.setPurchasePrice(10);
-		super.setSellBackPrice(5);
-		super.setDescription("A classic white guy.");
+		super.setPurchasePrice(15);
+		super.setSellBackPrice(10);
+		super.setDescription("A classic monster that will get the job done.");
 	}	
 
 }

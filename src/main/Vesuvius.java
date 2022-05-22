@@ -18,9 +18,9 @@ public class Vesuvius extends Monster {
 		super.setDamageAmount(15);
 		super.setMaxHealth(100);
 		super.sethealAmount(1);
-		super.setPurchasePrice(10);
+		super.setPurchasePrice(20);
 		super.setSellBackPrice(5);
-		super.setDescription("Italian mafia don.");
+		super.setDescription("A fantastic beast.");
 	}
 	
 }

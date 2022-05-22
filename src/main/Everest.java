@@ -16,11 +16,11 @@ public class Everest extends Monster{
 	/**An instance method used to change some of the instance variables found in its super class Monster**/
 	public void setter() {
 		super.setCurrentHealth(250);
-		super.setDamageAmount(25);
+		super.setDamageAmount(20);
 		super.setMaxHealth(250);
 		super.sethealAmount(5);
-		super.setPurchasePrice(10);
+		super.setPurchasePrice(25);
 		super.setSellBackPrice(5);
-		super.setDescription("big juicy furry vulumptious balls.");
+		super.setDescription("A monster as impevious as the mountain it is named after.");
 	}	
 }

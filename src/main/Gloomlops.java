@@ -15,12 +15,12 @@ public class Gloomlops extends Monster{
 	/**An instance method used to change some of the instance variables found in its super class Monster**/
 	public void setter() {
 		super.setCurrentHealth(1);
-		super.setDamageAmount(25);
+		super.setDamageAmount(40);
 		super.setMaxHealth(1000);
 		super.sethealAmount(999);
 		super.setPurchasePrice(45);
 		super.setSellBackPrice(0);
-		super.setDescription("An incredibly rare monster that has a large amount of heal.");
+		super.setDescription("An incredibly rare monster that has a large amount of heal at night.");
 	}	
 
 }
