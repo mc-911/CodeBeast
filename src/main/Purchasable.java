@@ -1,7 +1,8 @@
 package main;
-/** A class in which the items and monsters that are bought from the shop have their details set **/
+
 import java.util.ArrayList;
 
+/** A class in which the items and monsters that are bought from the shop have their details set and will extend **/
 public abstract class Purchasable {
 	/** The name of the monster or item in the shop **/
 	private String name;

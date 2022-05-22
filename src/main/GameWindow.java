@@ -44,20 +44,20 @@ public abstract class GameWindow {
 	public void setTextPane(String text) {
 		getInputhere().setText(text);
 	}
+	/**An instance method, used to get inputHere, returns JTextPane**/
 	public JTextPane getInputhere() {
 		return inputHere;
 	}
-	public void setInputhere(JTextPane inputhere) {
-		this.inputHere = inputhere;
+	/**An instance method, used to set inputHere, takes a JTextPane parameter inputHere as its parameters, returns void**/
+	public void setInputhere(JTextPane inputHere) {
+		this.inputHere = inputHere;
 	}
 	/**An instance method, used to set the set in textField, takes a String parameter str as its parameter, returns void**/
-
 	public void setText(String str) {
 		inputHere.setText(str);
 	
 	}
 	/**An instance method, used to get the text in textField, returns String**/
-
 	public String getText() {
 		return inputHere.getText();
 	}

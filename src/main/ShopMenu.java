@@ -11,8 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
+/**An class which uses Java Swing to create a window, used in conjunction with an instance of Shop, that the user may go to the Shop**/
 public class ShopMenu extends GameWindow{
-
 	private JFrame frame;
 	/**An int variable used to keep track of what the JButtons should do when pressed**/
 	private int state;

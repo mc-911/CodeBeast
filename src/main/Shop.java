@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 /** The shop class will have the place where the player can buy and sell monsters and items **/
-
 public class Shop {
 	/** an array of items that will be sold in the shop **/
 	private static Items[] items = new Items[] {new HealthPotion(), new AttackPotion(), new MaxHealthPotion(), new LvlUpPotion()};

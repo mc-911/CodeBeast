@@ -161,9 +161,12 @@ public class Monster extends Purchasable{
 			levelUp(window);
 		}
 	}
+	
+	/**An instance method, used to set the state of brought, takes a boolean parameter bool, returns void**/
 	public void setBrought(boolean bool) {
 		brought = bool;
 	}
+	/**An instance method, used to check if this instance of Monster has been brought, returns boolean**/
 	public boolean getBrought() {
 		return brought;
 	}
