@@ -278,7 +278,7 @@ public class MainWindow extends GameWindow{
 		else {
 			time += 1;
 		}
-		if (gameOver) {
+		if (!gameOver) {
 		printMsg(String.format("Gold: %s Day: %s Days Remaining: %s, Time: %s", player.getGold(), day, gameLength - day, times[time] + "\n"));
 		}
 		
