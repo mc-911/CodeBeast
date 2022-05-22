@@ -4,18 +4,23 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**This class is used to start the game, only manages two windows enviWindow and mainWindow**/
 public class WindowManager {
+	/**An EnvironmentWindow variable, used to "open" a new instance of EnvironmentWindow**/
 	EnvironmentWindow enviWindow;
+	/**An MainWindow variable, used to "open" a new instance of EnvironmentWindow**/
 	MainWindow mainWindow;
 	
-	private static Monster[] starters = new Monster[] {new Vesuvius(), new Everest(), new Parihaka(), new Flame(), new Jerry()};
+	/**An instance method, which will create a new instance of Environment**/
 	public void startEnvi() {
 		enviWindow = new EnvironmentWindow(this);
 	}
+	/**An instance method, which will close enviWindow*/
 	public void closeEnvi() {
 		enviWindow.closeWindow();
 		startMain();
 	}
+	/**An instance method, which will create a new instance of MainWindow**/
 	public void startMain() {
 		mainWindow = new MainWindow(enviWindow.getPlayer(), enviWindow.getGameLength(), enviWindow.getHard());
 		enviWindow.getFrame().dispose();

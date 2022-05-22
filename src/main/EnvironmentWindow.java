@@ -19,22 +19,28 @@ import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**An class which uses Java Swing to create a window, used in conjunction with an instance of Player, to start the game*/
 public class EnvironmentWindow extends GameWindow{
-
+	/**A JTextField variable, used to hold an instance of JTextField, used to get input from the user**/
 	private JTextField txtInputHere;
+	/**A JFrame, used to hold components to make the window work**/
 	private JFrame frame;
-	private JComboBox combobox;
+	/**A JLayeredPane, used to hold components and be able to swap them**/
 	private JLayeredPane pane;
-	private boolean buttonPressed = false;
-	private JButton btnNewButton_1;
+	/**An int variable used to keep track of what the JButtons in this class should do when pressed**/
 	private int state = 0;
-	private int p_state = 0;
 	private String str;
+	/**A Player variable which contains the player object associated with the user, used to perform several operations such as Battling, Using the Shop, getting a monster**/
 	private Player player = new Player();
+	/**An array of new Monster objects, used to have the user pick a starting monster**/
 	private Monster[] starters = new Monster[] {new Vesuvius(), new Everest(), new Parihaka(), new Flame(), new Jerry()};
+	/**A List of Monster objects,  used to have the user pick a starting monster**/
 	private List<Monster> starterList;
+	/**An int variable, which holds the users chosen starter Monster's index in starterList**/
 	private int index;
+	/**a boolean variable used to determine the difficulty of the game, used to scale battles**/
 	private boolean hard = false;
+	/**A int variable which contains the max amount of days the game can go on for**/
 	private int gameLength;
 	/**
 	 * Launch the application.
@@ -44,6 +50,7 @@ public class EnvironmentWindow extends GameWindow{
 	/**
 	 * Create the application.
 	 */
+	/**A public constructor that takes a WindowManager parameter manager as its parameter**/
 	public EnvironmentWindow(WindowManager manager) {
 		super.setManager(manager);;
 		initialize();
@@ -69,8 +76,6 @@ public class EnvironmentWindow extends GameWindow{
 		JButton btnNewButton = new JButton("Select");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				switch (p_state) {
-					case 0:
 						switch (state) {
 						case 0:
 							str = txtInputHere.getText();
@@ -127,8 +132,7 @@ public class EnvironmentWindow extends GameWindow{
 					        	starterList.get(index - 1).setName(txtInputHere.getText());
 					        	player.getMonsters().add(starterList.get(index-1));
 					        	printMsg("Picked" + starterList.get(index-1));
-					        	state = 0;
-					        	p_state += 1;					        						        	
+					        	state = 0;				        						        	
 					        }
 							player.setActiveMonster(0);
 							exit();
@@ -136,7 +140,7 @@ public class EnvironmentWindow extends GameWindow{
 						}
 						
 						
-				}
+				
 				
 				
 			}
@@ -160,27 +164,8 @@ public class EnvironmentWindow extends GameWindow{
 		frame.setVisible(true);
 		
 	}
-	/**An instance method, used to swap the positions of this windows ComboBox and textField, returns void**/
-	public void swapCombo() {
-		int firstp = pane.getLayer(combobox);
-		int secondp = pane.getLayer(txtInputHere);
-		pane.setLayer(combobox, secondp);
-		pane.setLayer(txtInputHere, firstp);
-		if (pane.getLayer(combobox) < pane.getLayer(txtInputHere)) {
-			combobox.setEnabled(false);
-			txtInputHere.setEnabled(true);
-		}
-		else {
-			combobox.setEnabled(true);
-			txtInputHere.setEnabled(false);
-		}
-		
-		
-	}
-	/**An instance method returns the layer of this windows ComboBox, returns int**/
-	public int getLayerCombo() {
-		return pane.getLayer(combobox);
-	}
+
+	
 	
 	
 	
@@ -194,12 +179,15 @@ public class EnvironmentWindow extends GameWindow{
         return starterslist;
        
 	}
+	/**An instance method, returns player, returns Player**/
 	public Player getPlayer() {
 		return player;
 	}
+	/**An instance method, returns gameLength, returns int**/
 	public int getGameLength() {
 		return gameLength;
 	}
+	/**An instance method, returns hard, returns boolean**/
 	public boolean getHard() {
 		return hard;
 	}

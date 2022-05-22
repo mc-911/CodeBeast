@@ -10,19 +10,25 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.awt.event.ActionEvent;
-
+/**An class which uses Java Swing to create a window, used in conjunction with an instance of Player, that the user may manage their monsters and items**/
 public class MenuWindow extends GameWindow{
-
-	private JFrame frame;
+	/**An int variable used to keep track of what the JButtons in this class should do when pressed**/
 	private int state;
+	/**A Player variable which contains the player object associated with the user, used to perform several operations such as Battling, Using the Shop, getting a monster**/
 	private Player player;
+	/**A JButton which when pressed will either, display the users monster to the user, enter "Monster order change mode", get the indexes from firtIndex and secondIndex and swap the positions of the monsters at those indexes, or act as a  "Back" button**/
 	private JButton viewMonsters;
+	/**A JButton which when pressed will either, display the users items to the user, enter, use the selected item in comboBox_1 on the selected monster in comboBox_2,  or act as a  "Back" button**/
 	private JButton viewItems;
+	/**A JComboBox, or a dropdown menu, which is used to hold a list of the users monsters or items so that the user may swap the postitions of two of their monsters, or so that they may use an item on a monster, is used in conjuction with comboBox to achieve this**/
 	private JComboBox comboBox_1;
 	private JComboBox comboBox;
-	private MainWindow mainWindow;
+	/**A GameWindow variable, contains the window that created this window, used to that the user may go back to that window once the user is done with this one**/
+	private GameWindow window;
 	private JButton btnNewButton;
+	/**An int variable used to hold the index of the first monster the user wishes to swap, used in conjuction with secondIndex to swap the position of two monsters in the users list of monsters/party**/
 	private int firstIndex;
+	/**An int variable used to hold the index of the second monster the user wishes to swap, used in conjuction with firtIndex to swap the position of two monsters in the users list of monsters/party**/
 	private int secondIndex;
 
 	/**
@@ -33,8 +39,9 @@ public class MenuWindow extends GameWindow{
 	/**
 	 * Create the application.
 	 */
-	public MenuWindow(Player player, GameWindow mainWindow) {
-		this.mainWindow = (MainWindow) mainWindow;
+	/**A public constructor, takes an Player parameter player, and a GameWindow parameter window as its a parameters**/
+	public MenuWindow(Player player, GameWindow window) {
+		this.window =  window;
 		state = 0;
 		this.player = player;
 		initialize();
@@ -194,7 +201,7 @@ public class MenuWindow extends GameWindow{
 		btnNewButton = new JButton("Exit");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainWindow.show();
+				window.show();
 				frame.dispose();
 			}
 		});

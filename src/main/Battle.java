@@ -4,7 +4,7 @@ package main;
 
 import java.util.ArrayList;
 import java.util.Random;
-/**An instance of this class is used to have the user battle**/
+/**An instance of this class is used to have the user battle, can also be thought of as a battle**/
 public class Battle {
 	/**An ArrayList<Monster> object which contains the monsters that the user will be battling against in this battle**/
 	ArrayList<Monster> foeMonsters = new ArrayList<Monster>();
@@ -72,7 +72,7 @@ public class Battle {
 	public boolean getDone() {
 		return done;
 	}
-	
+	/**An instance method, used to get the monster that the user will be fighting against, returns Monster**/
 	public Monster getLeading() {
 		Monster mon;
 		mon = foeMonsters.get(0);
@@ -84,15 +84,16 @@ public class Battle {
 		}
 		return mon;
 	}
+	/**An instance method, gets the list of monsters that the user will be fighting against, returns ArrayList<Monster>**/
 	public ArrayList<Monster> getFoeMonsters(){
 		return foeMonsters;
 	}
+	/**An instance method, sets done to be the boolean parameter bool, returns void**/
 	public void setDone(boolean bool) {
 		done = bool;
 	}
 	
-	/**A constructor takes a Player variable player as its parameter, will then run genMonsters()**/
-
+	/**A constructor that will run genMonsters()**/
 	public Battle() {
 		genMonsters();
 

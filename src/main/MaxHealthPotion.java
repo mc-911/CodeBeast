@@ -7,7 +7,7 @@ public class MaxHealthPotion extends Items{
 		super("Max Health Potion", 50, 25, "Will increase you max health by 50.");
 	}
 	
-	/** a method that will allow the player to drink the potion thereby removing it from the player's inventory and adding the affects to the monster **/
+	/** a method that will allow the player to drink the potion thereby removing it from the player's inventory and adding the affects to the monster, takes an Monster parameter monster, Player parameter as its parameters, returns void**/
 	public void drinkPotion(Monster monster, Player player) {
 		int maxHealth = monster.getMaxHealth();
 		monster.setMaxHealth(maxHealth + 50);

@@ -21,25 +21,28 @@ import javax.swing.JLayeredPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
-
+/**An class which uses Java Swing to create a window, used in conjunction with instances of classes Battle, Shop, Player and "Window" classes such as BattleWindow, MenuWindow and ShopWindow, to provide the main game play loop of the game**/
 public class MainWindow extends GameWindow{
-
-
-	private JTextField txtInputHere;
+	/**A JComboBox, used to have the user select a battle to fight**/
 	private JComboBox combobox;
-	private JLayeredPane pane;
-	private boolean buttonPressed = false;
 	private JButton btnNewButton_1;
+	/**A JButton that displays the battles avaliable to the user**/
 	private JButton battles;
+	/**A JButton which when pressed will open up a ShopMenu**/
 	private JButton shop;
+	/**A JButton which when pressed will take the user to a window where they can manage their items/monsters**/
 	private JButton mon_menu;
+	/**A JButton which when pressed will display to the user, a description of themselves**/
 	private JButton view_self;
+	/**A JButton which when pressed will call checkTime() essentially it "passes the time"**/ 
 	private JButton pass_time;
+	/**A Player variable which contains the player object associated with the user, used to perform several operations such as Battling, Using the Shop, getting a monster**/
 	private Player player;
+	/**A JFrame variable , used to create the window**/ 
 	private JFrame frame;
-	private WindowManager manager;
+	/**A boolean variable, used to keep track if certain JButtons have been disabled**/
 	private boolean disabled = false;
-	
+	/**A ArrayList<Battle> variable used to contain the battles that the user may fight**/
 	private ArrayList<Battle> battlelist;
 	/**An int variable used to keep track of the current time of day, can either be 0, 1 or 2**/
 	private int time;
@@ -55,8 +58,11 @@ public class MainWindow extends GameWindow{
 	private static String[] times = {"Morning", "Afternoon", "Night"};
 	/**A Shop variable which contains an instance of the Shop class**/
 	private Shop shop_o;
+	/**A ShopMenu variable used to contain the ShopWindow Object that will be used to have the user "Go to the Shop"**/
 	private ShopMenu shopMenu;
+	/**A JButton which when pressed will start the battle that the user has selected from comobox (Given the user hasn't already fought this battle)**/
 	private JButton btnNewButton;
+	/**A JButton which when pressed will close the game, used when the game has ended**/
 	private JButton btnNewButton_2;
 	
 	/**
@@ -67,6 +73,7 @@ public class MainWindow extends GameWindow{
 	/**
 	 * Create the application.
 	 */
+	/**The public constructor for this class, takes a Player parameter player, an int parameter gameLength, and a boolean parameter hard, as its parameters**/
 	public MainWindow(Player player, int gameLength, boolean hard) {
 		shop_o = new Shop();
 		day = 1;
@@ -122,12 +129,6 @@ public class MainWindow extends GameWindow{
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setBounds(565, 550, 522, 183);
 		frame.getContentPane().add(layeredPane);
-		txtInputHere = new JTextField();
-		txtInputHere.setBounds(0, 0, 522, 183);
-		layeredPane.add(txtInputHere);
-		txtInputHere.setToolTipText("Enter herre");
-		txtInputHere.setHorizontalAlignment(SwingConstants.LEFT);
-		txtInputHere.setColumns(10);
 		
 		battles = new JButton("View Battles");
 		layeredPane.setLayer(battles, 1);
@@ -143,11 +144,13 @@ public class MainWindow extends GameWindow{
 				shop.setEnabled(false);
 				pass_time.setEnabled(false);
 				disabled = true;
+				battles.setText("Back");
 				for (Battle i : battlelist) {
 				combobox.addItem(i);
 				}
 			}
 			else {
+				battles.setText("View Battles");
 				combobox.setEnabled(false);
 				btnNewButton.setEnabled(false);
 				combobox.removeAllItems();
@@ -213,6 +216,7 @@ public class MainWindow extends GameWindow{
 	
 		
 	}
+	/**A public method which enables all of the JButtons, returns void**/
 	public void turnAllOn() {
 		combobox.setEnabled(false);
 		mon_menu.setEnabled(true);
@@ -221,6 +225,7 @@ public class MainWindow extends GameWindow{
 		pass_time.setEnabled(true);
 		disabled = false;
 	}
+	/**A public method, which "Starts a Battle", takes a Battle parameter battle, returns void**/
 	public void startBattle(Battle battle) {
 		super.getFrame().setVisible(false);
 		battleWindow = new BattleWindow(this, battle, player, time, hard, battlelist.indexOf(battle));
@@ -229,7 +234,7 @@ public class MainWindow extends GameWindow{
 		
 	}
 	
-	
+	/**A public method, runs checks to see if day or time should increment or if the game is over, returns void**/
 	public void checkTime() {
 		if (time == 2 && day == gameLength) {
 			gameOver();
@@ -263,11 +268,13 @@ public class MainWindow extends GameWindow{
 		}
 		printMsg(String.format("Gold: %s Day: %s Days Remaining: %s, Time: %s", player.getGold(), day, gameLength - day, times[time] + "\n"));
 	}
+	/**A method used to open the Shop, creates a new instance of ShopMenu, returns void**/
 	public void startShop() {
 		super.getFrame().setVisible(false);
 		shopMenu = new ShopMenu(player, shop_o, this);
 		turnAllOn();
 	}
+	/**A method used to display this instance of MainWindow, check if the user has lost, and calls checkTime, called for actions where time would increase e.g Battling, Going to the Shop, returns void**/
 	public void Show_2() {
 		show();
 		if (player.getMonsters().size() == 0 && player.getGold() < 10) {
@@ -281,33 +288,13 @@ public class MainWindow extends GameWindow{
 		btnNewButton_1.setEnabled(false);
 		battles.setEnabled(false);
 		shop.setEnabled(false);
-		mon_menu.setEnabled(buttonPressed);
+		mon_menu.setEnabled(false);
 		view_self.setEnabled(false);
 		pass_time.setEnabled(false);
 		printMsg("GAME OVER");
 		printMsg(String.format("Name: %s\nGame Duration: %s/%s days\nGold: %s\nPoints: %s", player.getName(), day, gameLength, player.getGold(), player.getPoints()));
 	}
-	/**A method that gets the user's input as an integer makes sure that the input is between num1 and num2 (inclusive) returns an integer**/
-	public boolean  getUserIntBounds(int num1, int num2, GameWindow window, int input) {
-		boolean picked;
-		picked = false;
-		if (input < num1|| input > num2) {
-			window.printMsg(String.format("Your input must be between %s, and %s (inclusive)", num1, num2));
-		}
-		else {
-			picked = true;
-		}
-		return picked;
-	}
-	/**A static method used to display an array of purchasable items (which will contain either monsters or items but not both) in an ordered manner to the user returns void**/
-	public  void displayList(Purchasable[] p) {
-		int i = 0;
-		for (Purchasable d : p) {
-			getSelf().printMsg(String.format("%s. %s", i, d));
-			i++;
-		}
-		
-	}
+	
 	
 	/**A method which is used to see if a Random Event should occur, if one should occur it runs it, returns void**/
 	public  void  randomEventCheck(Player player) {

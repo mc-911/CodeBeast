@@ -7,8 +7,8 @@ public class AttackPotion extends Items{
 		super("Attack Potion", 15, 10, "Will increase your monster's attack by 20.");
 	}
 	
-	/** a method that will allow the player to drink the potion thereby removing it from the player's inventory and adding the affects to the monster **/
-	public void drinkPotion(Monster monster, Player player, GameWindow window) {
+	/** a method that will allow the player to drink the potion thereby removing it from the player's inventory and adding the affects to the monster, takes an Monster parameter monster, Player parameter as its parameters, returns void**/
+	public void drinkPotion(Monster monster, Player player) {
 		int attack = monster.getDamage();
 		monster.setDamageAmount(attack + 20);
 		player.removeItem(this);

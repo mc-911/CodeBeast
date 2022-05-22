@@ -8,7 +8,7 @@ public class HealthPotion extends Items{
 		super("Health Potion", 10, 5, "Will increse your current health by 25.");
 	}
 	
-	/** a method that will allow the player to drink the potion thereby removing it from the player's inventory and adding the affects to the monster **/
+	/** a method that will allow the player to drink the potion thereby removing it from the player's inventory and adding the affects to the monster, takes an Monster parameter monster, Player parameter, GameWindow parameter window as its parameters, returns void**/
 	public void drinkPotion(Monster monster, Player player, GameWindow window) {
 		int currentHealth = monster.getCurrentHealth();
 		if (currentHealth == monster.getMaxHealth()) {

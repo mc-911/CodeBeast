@@ -14,20 +14,33 @@ import javax.swing.JTextField;
 public class ShopMenu extends GameWindow{
 
 	private JFrame frame;
+	/**An int variable used to keep track of what the JButtons should do when pressed**/
 	private int state;
 	private JTextPane pane;
+	/**A JButton which when pressed will either display the items the user can buy, buy the item the user has selected from the dropdown menu (assuming the user has enough gold), or it may act has a "Back" button**/
 	private JButton viewItems;
+	/**A JButton which when pressed will either display the monsters the user can buy, buy the monster the user has selected from the dropdown menu (assuming the user has enough gold), or it may act has a "Back" button**/
 	private JButton viewMonsters;
+	/**A JButton which when pressed will either display the monsters the user can sell, sell the monster the user has selected from the dropdown menu, or it may act has a "Back" button**/
 	private JButton sellMonsters;
+	/**A JButton which when pressed will either display the items the user can sell, sell the item the user has selected from the dropdown menu, or it may act has a "Back" button**/
 	private JButton sellItems;
+	/**A JComboBox or a dropdown menu, used to have the user pick from a list of Monsters or Items they want to buy/sell**/
 	private JComboBox comboBox;
+	/**A Shop variable which contains an instance of the Shop class used in conjunction with an instance of this class, to provide a "Shop" to the user**/
 	private Shop shop;
+	/**A Player variable which contains the player object associated with the user, used to perform several operations such as Battling, Using the Shop, getting a monster**/
 	private Player player;
+	/**An Items Array that contains items that the user can buy**/
 	private Items[] items = new Items[] {new HealthPotion(), new AttackPotion(), new MaxHealthPotion(), new LvlUpPotion()};
 	private JTextField textField;
+	/**A Monster variable that contains the monster that the user has brought**/
 	private Monster broughtMonster;
+	/**A JButton used so that the user may name a monster they brought**/
 	private JButton enterButton;
+	/**A JButton which the user can press to close this window, and show the previous window**/
 	private JButton btnNewButton;
+	/**A MainWindow variable which contains the window that created this window/ShopMenu object**/
 	private MainWindow mainWindow;
 
 	/**
@@ -38,6 +51,7 @@ public class ShopMenu extends GameWindow{
 	/**
 	 * Create the application.
 	 */
+	/**A public constructor for this class, takes a Player parameter player, a Shop parameter shop, and a MainWindow parameter window, as its parameters, the purpose of these parameters is so that we can add/remove items/monsters to/from the user via buy and sell using an instance of Shop that contains monsters, and so that the user can exit this window and go back to the previous window**/
 	public ShopMenu(Player player, Shop shop, MainWindow window) {
 		this.mainWindow = window;
 		this.shop = shop;
@@ -282,6 +296,7 @@ public class ShopMenu extends GameWindow{
 		frame.setVisible(true);
 		comboBox.setEnabled(false);
 	}
+	/**A public method which enables all of the JButtons, returns void**/
 	public void turnOn() {
 		viewMonsters.setEnabled(true);
 		viewItems.setEnabled(true);

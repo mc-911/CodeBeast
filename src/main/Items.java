@@ -9,7 +9,7 @@ public class Items extends Purchasable{
 		super.setSellBackPrice(sellBack);
 		super.setDescription(description);
 	}
-	
+	/**An instance method which all subclasses of Items implement, takes an Monster parameter monster, Player parameter, GameWindow parameter window as its parameters, returns void**/
 	public void drinkPotion(Monster monster, Player player, GameWindow window) {
 	}
 
