@@ -21,18 +21,12 @@ import javax.swing.JPanel;
 public class BattleWindow extends GameWindow{
 	private JComboBox combobox;
 	private JLayeredPane pane;
-	private boolean buttonPressed = false;
 	private JButton btnNewButton_1;
 	private JButton Attack;
 	private JButton View;
 	private JButton pass_time;
 	private Player player = new Player();
 	private JFrame frame;
-	private WindowManager manager;
-	private boolean disabled = false;
-	private int mode;
-	private ArrayList<Battle> battlelist;
-	private int time;
 	private MainWindow mainWindow;
 	private Monster leading;
 	private Battle battle;

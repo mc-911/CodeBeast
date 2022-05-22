@@ -150,16 +150,7 @@ public class EnvironmentWindow extends GameWindow{
 		btnNewButton.setBounds(10, 550, 545, 183);
 		getFrame().getContentPane().add(btnNewButton);
 		
-		btnNewButton_1 = new JButton("clear");
-		btnNewButton_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				txtpnpleaseInputYour.setText("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-				
-			}
-		});
-		btnNewButton_1.setBounds(10, 454, 89, 23);
-		getFrame().getContentPane().add(btnNewButton_1);
+		
 		txtInputHere = new JTextField();
 		txtInputHere.setToolTipText("Enter herre");
 		txtInputHere.setHorizontalAlignment(SwingConstants.LEFT);
